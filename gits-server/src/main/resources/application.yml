@@ -1,0 +1,126 @@
+# 日志配置
+logging:
+  level:
+    xyz.gits.boot: debug
+server:
+  port: 8200
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值10
+    min-spare-threads: 30
+
+spring:
+  application:
+    name: gits
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/gits?useUnicode=true&characterEncoding=utf-8&serverTimezon=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+    druid:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /open/druid/*
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8300
+  session:
+    redis:
+      # spring session redis 前缀
+      namespace: gits:spring:session
+
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  local:
+    default:
+      type: linkedhashmap
+      keyConvertor: fastjson
+  remote:
+    default:
+      type: redis.springdata
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+
+# mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: xyz.gits.boot.*.entity
+  type-enums-package: xyz.gits.boot.*.enums
+  configuration:
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+  global-config:
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #刷新mapper 调试神器
+    #refresh-mapper: true
+    db-config:
+      field-strategy: not_empty
+      id-type: id_worker_str
+
+# swagger配置
+swagger:
+  enabled: true
+  title: Gits_接口文档
+  version: ${revision}
+  docket:
+    system:
+      base-package: xyz.gits.boot.system
+    server:
+      base-package: xyz.gits.boot.controller
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    jmx:
+      exposure:
+        include: '*'

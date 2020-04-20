@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.gits.boot.system.mapper.RoleMapper">
+
+    <!-- 通过用户ID，查询角色信息-->
+    <select id="getRolesByUserId" resultType="xyz.gits.boot.api.system.entity.Role">
+        SELECT
+            r.*
+        FROM
+        system_role r, system_user_role_rel ur WHERE r.role_id = ur.role_id AND r.status = '1' and  ur.user_id = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,5 @@
+server:
+  port: 8300
+spring:
+  application:
+    name: gits-admin
