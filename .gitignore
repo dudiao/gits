@@ -33,3 +33,4 @@ build/
 ### other ###
 .flattened-pom.xml
 application-dev.yml
+*.log

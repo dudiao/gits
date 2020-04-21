@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<springProperty scop="context" name="appName" source="spring.application.name" defaultValue=""/>
+	<springProperty scop="context" name="maxHistory" source="gits.logging.max-history" defaultValue="60"/>
+	<springProperty scop="context" name="maxFileSize" source="gits.logging.max-file-size" defaultValue="512MB"/>
+	<springProperty scop="context" name="totalSizeCap" source="gits.logging.total-size-cap" defaultValue="1GB"/>
+	<springProperty scop="context" name="log.path" source="gits.logging.path" value="logs/${appName}" />
+	<!-- 彩色日志格式 -->
+	<property name="CONSOLE_LOG_PATTERN"
+			  value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+	<!-- 彩色日志依赖的渲染类 -->
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+	<!-- Console log output -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- file log output -->
+	<appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+		<!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则
+            如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天
+            的日志改名为今天的日期。即，<File> 的日志都是当天的。
+        -->
+		<File>${log.path}.log</File>
+		<!--滚动策略，按照时间滚动 TimeBasedRollingPolicy-->
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+			<FileNamePattern>${log.path}/${appName}.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+			<!--只保留最近60天的日志-->
+			<maxHistory>${maxHistory}</maxHistory>
+			<!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+			<maxFileSize>${maxFileSize}</maxFileSize>
+			<totalSizeCap>${totalSizeCap}</totalSizeCap>
+		</rollingPolicy>
+		<!--日志输出编码格式化-->
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} %line - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Log file info output -->
+	<appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/info.log</file>
+		<!--滚动策略，按照时间滚动 TimeBasedRollingPolicy-->
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+			<FileNamePattern>${log.path}/${appName}-info.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+			<!--只保留最近60天的日志-->
+			<maxHistory>${maxHistory}</maxHistory>
+			<!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+			<maxFileSize>${maxFileSize}</maxFileSize>
+			<totalSizeCap>${totalSizeCap}</totalSizeCap>
+		</rollingPolicy>
+		<!--日志输出编码格式化-->
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} %line - %msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<logger name="org.activiti.engine.impl.db" level="DEBUG">
+		<appender-ref ref="debug" />
+	</logger>
+
+	<!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
+	<root level="INFO">
+		<appender-ref ref="console" />
+		<appender-ref ref="debug" />
+	</root>
+</configuration>

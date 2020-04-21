@@ -2,6 +2,9 @@
 logging:
   level:
     xyz.gits.boot: debug
+gits:
+  logging:
+    path: E:\logs\gits
 server:
   port: 8200
   servlet:
