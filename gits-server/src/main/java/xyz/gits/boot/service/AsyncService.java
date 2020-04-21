@@ -1,4 +1,4 @@
-package xyz.gits.boot.system.service;
+package xyz.gits.boot.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -25,35 +25,24 @@ public class AsyncService {
     }
 
     @Async("doSomethingExecutor")
-    public CompletableFuture<String> doSomething1(String message) {
+    public CompletableFuture<String> doSomething1(String message) throws InterruptedException {
         log.info("do something1: {}", message);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(1000);
         return CompletableFuture.completedFuture("do something1: " + message);
     }
 
     @Async("doSomethingExecutor")
-    public CompletableFuture<String> doSomething2(String message) {
+    public CompletableFuture<String> doSomething2(String message) throws InterruptedException {
         log.info("do something2: {}", message);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(1000);
         return CompletableFuture.completedFuture("; do something2: " + message);
     }
 
     @Async("doSomethingExecutor")
-    public CompletableFuture<String> doSomething3(String message) {
+    public CompletableFuture<String> doSomething3(String message) throws InterruptedException {
         log.info("do something3: {}", message);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(1000);
         return CompletableFuture.completedFuture("; do something3: " + message);
     }
+
 }
