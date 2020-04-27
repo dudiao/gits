@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.gits.boot.api.system.vo.UserVO;
-import xyz.gits.boot.auth.LoginUser;
-import xyz.gits.boot.common.response.RestResponse;
-import xyz.gits.boot.common.utils.BeanUtils;
+import xyz.gits.boot.common.core.response.RestResponse;
+import xyz.gits.boot.common.core.utils.BeanUtils;
+import xyz.gits.boot.common.security.LoginUser;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;

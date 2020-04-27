@@ -1,7 +1,6 @@
 package xyz.gits.boot.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.api.R;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +11,14 @@ import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.UserVO;
-import xyz.gits.boot.common.basic.BasicController;
-import xyz.gits.boot.common.response.RestResponse;
-import xyz.gits.boot.common.response.TableResponse;
-import xyz.gits.boot.common.utils.BeanUtils;
-import xyz.gits.boot.common.validate.CreateGroup;
-import xyz.gits.boot.common.validate.UpdateGroup;
+import xyz.gits.boot.common.core.basic.BasicController;
+import xyz.gits.boot.common.core.response.RestResponse;
+import xyz.gits.boot.common.core.response.TableResponse;
+import xyz.gits.boot.common.core.utils.BeanUtils;
+import xyz.gits.boot.common.core.validate.CreateGroup;
+import xyz.gits.boot.common.core.validate.UpdateGroup;
 import xyz.gits.boot.system.service.IUserService;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 

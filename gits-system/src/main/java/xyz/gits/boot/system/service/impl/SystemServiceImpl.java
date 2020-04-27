@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import xyz.gits.boot.api.system.entity.Role;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.UserVO;
-import xyz.gits.boot.common.utils.BeanUtils;
+import xyz.gits.boot.common.core.utils.BeanUtils;
 import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.system.service.IResourceService;

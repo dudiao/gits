@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>xyz.gits.boot</groupId>
+        <artifactId>gits-common</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>gits-common-security</artifactId>
+    <packaging>jar</packaging>
+
+    <description>gits 安全</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>xyz.gits.boot</groupId>
+            <artifactId>gits-common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.gits.boot</groupId>
+            <artifactId>gits-api-interface</artifactId>
+        </dependency>
+
+        <!--spring security-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- spring session redis -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+    </dependencies>
+</project>

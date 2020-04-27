@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xyz.gits.boot.system.config.GitsSystemAutoConfiguration,\
+  xyz.gits.boot.system.config.GitsSystemServiceAutoConfiguration,\
+  xyz.gits.boot.system.config.GitsSystemControllerAutoConfiguration

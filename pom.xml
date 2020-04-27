@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <version>${revision}</version>
     <name>gits</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Gits project for Spring Boot</description>
 
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
@@ -28,7 +28,6 @@
     <modules>
         <module>gits-admin</module>
         <module>gits-api</module>
-        <module>gits-auth</module>
         <module>gits-common</module>
         <module>gits-system</module>
         <module>gits-server</module>
@@ -107,7 +106,12 @@
 
             <dependency>
                 <groupId>xyz.gits.boot</groupId>
-                <artifactId>gits-common</artifactId>
+                <artifactId>gits-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.gits.boot</groupId>
+                <artifactId>gits-common-security</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -127,7 +131,7 @@
             </dependency>
             <dependency>
                 <groupId>xyz.gits.boot</groupId>
-                <artifactId>gits-auth</artifactId>
+                <artifactId>gits-cloud-auth</artifactId>
                 <version>${revision}</version>
             </dependency>
 

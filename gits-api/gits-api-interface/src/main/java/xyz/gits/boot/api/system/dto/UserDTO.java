@@ -3,8 +3,8 @@ package xyz.gits.boot.api.system.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import xyz.gits.boot.common.validate.CreateGroup;
-import xyz.gits.boot.common.validate.UpdateGroup;
+import xyz.gits.boot.common.core.validate.CreateGroup;
+import xyz.gits.boot.common.core.validate.UpdateGroup;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

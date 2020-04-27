@@ -1,7 +1,7 @@
 package xyz.gits.boot.system.service;
 
 import xyz.gits.boot.api.system.entity.Resource;
-import xyz.gits.boot.common.basic.BasicService;
+import xyz.gits.boot.common.core.basic.BasicService;
 
 import java.util.List;
 

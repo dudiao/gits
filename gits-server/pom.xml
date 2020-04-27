@@ -10,45 +10,15 @@
     </parent>
 
     <artifactId>gits-server</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>gits-single</module>
+        <module>gits-cloud-auth</module>
+    </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-system</artifactId>
-        </dependency>
-
-        <!-- 单体项目时，auth 和 system 一起集成到 server 项目中 -->
-        <dependency>
-            <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-auth</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>${spring-boot-admin.version}</version>
-        </dependency>
 
     </dependencies>
 
-    <build>
-        <finalName>${project.name}-${project.version}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>

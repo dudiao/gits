@@ -3,8 +3,8 @@ package xyz.gits.boot.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.entity.User;
-import xyz.gits.boot.common.basic.BasicService;
-import xyz.gits.boot.common.response.RestResponse;
+import xyz.gits.boot.common.core.basic.BasicService;
+import xyz.gits.boot.common.core.response.RestResponse;
 
 /**
  * <p>

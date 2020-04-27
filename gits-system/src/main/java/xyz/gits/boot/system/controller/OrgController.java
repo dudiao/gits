@@ -4,7 +4,7 @@ package xyz.gits.boot.system.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-import xyz.gits.boot.common.basic.BasicController;
+import xyz.gits.boot.common.core.basic.BasicController;
 
 /**
  * <p>

@@ -1,7 +1,7 @@
 package xyz.gits.boot.system.enums;
 
 import lombok.Getter;
-import xyz.gits.boot.common.enums.CodeEnum;
+import xyz.gits.boot.common.core.enums.CodeEnum;
 
 /**
  * 状态：是否

@@ -1,7 +1,7 @@
 package xyz.gits.boot.system.service;
 
 import xyz.gits.boot.api.system.entity.UserRoleRel;
-import xyz.gits.boot.common.basic.BasicService;
+import xyz.gits.boot.common.core.basic.BasicService;
 
 /**
  * <p>

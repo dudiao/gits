@@ -1,7 +1,7 @@
 package xyz.gits.boot.system.mapper;
 
 import xyz.gits.boot.api.system.entity.Org;
-import xyz.gits.boot.common.basic.BasicMapper;
+import xyz.gits.boot.common.core.basic.BasicMapper;
 
 /**
  * <p>

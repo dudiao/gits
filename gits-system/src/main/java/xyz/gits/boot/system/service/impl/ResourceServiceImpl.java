@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.system.mapper.ResourceMapper;
 import xyz.gits.boot.system.service.IResourceService;
-import xyz.gits.boot.common.basic.BasicServiceImpl;
+import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

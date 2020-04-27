@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-auth</artifactId>
+            <artifactId>gits-common-security</artifactId>
         </dependency>
 
         <!--阿里数据库连接池 -->

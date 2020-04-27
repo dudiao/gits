@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-common</artifactId>
+            <artifactId>gits-common-core</artifactId>
         </dependency>
     </dependencies>
 </project>

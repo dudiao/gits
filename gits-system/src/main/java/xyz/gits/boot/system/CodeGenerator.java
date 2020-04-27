@@ -108,10 +108,10 @@ public class CodeGenerator {
         strategy.setRestControllerStyle(true);
         strategy.setEntityTableFieldAnnotationEnable(true);
         // 公共父类
-        strategy.setSuperControllerClass("xyz.gits.boot.common.basic.BasicController");
-        strategy.setSuperServiceClass("xyz.gits.boot.common.basic.BasicService");
-        strategy.setSuperServiceImplClass("xyz.gits.boot.common.basic.BasicServiceImpl");
-        strategy.setSuperMapperClass("xyz.gits.boot.common.basic.BasicMapper");
+        strategy.setSuperControllerClass("xyz.gits.boot.common.core.basic.BasicController");
+        strategy.setSuperServiceClass("xyz.gits.boot.common.core.basic.BasicService");
+        strategy.setSuperServiceImplClass("xyz.gits.boot.common.core.basic.BasicServiceImpl");
+        strategy.setSuperMapperClass("xyz.gits.boot.common.core.basic.BasicMapper");
 
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);

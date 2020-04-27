@@ -1,26 +1,26 @@
 package xyz.gits.boot.system.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.entity.UserRoleRel;
-import xyz.gits.boot.auth.UserUtil;
-import xyz.gits.boot.common.constants.SystemConstants;
-import xyz.gits.boot.common.response.ResponseCode;
-import xyz.gits.boot.common.response.RestResponse;
-import xyz.gits.boot.common.utils.BeanUtils;
+import xyz.gits.boot.common.core.constants.SystemConstants;
+import xyz.gits.boot.common.core.response.ResponseCode;
+import xyz.gits.boot.common.core.response.RestResponse;
+import xyz.gits.boot.common.core.utils.BeanUtils;
+import xyz.gits.boot.common.security.UserUtil;
 import xyz.gits.boot.system.mapper.UserMapper;
 import xyz.gits.boot.system.service.IUserRoleRelService;
 import xyz.gits.boot.system.service.IUserService;
-import xyz.gits.boot.common.basic.BasicServiceImpl;
+import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
