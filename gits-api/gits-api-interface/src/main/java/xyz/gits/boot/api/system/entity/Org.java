@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import xyz.gits.boot.api.system.enums.StopFlag;
 
 /**
  * <p>
@@ -66,7 +67,7 @@ public class Org implements Serializable {
 
     @ApiModelProperty(value = "启停标志（0:停用,1:启用 用于数据是否有效）")
     @TableField("record_stop_flag")
-    private String recordStopFlag;
+    private StopFlag recordStopFlag;
 
     @ApiModelProperty(value = "停用原因")
     @TableField("stop_reason")

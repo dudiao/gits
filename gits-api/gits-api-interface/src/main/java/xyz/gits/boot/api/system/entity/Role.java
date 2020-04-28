@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import xyz.gits.boot.api.system.enums.Status;
 
 /**
  * <p>
@@ -46,7 +47,7 @@ public class Role implements Serializable {
 
     @ApiModelProperty(value = "启停标志（1启用0停用）")
     @TableField("status")
-    private String status;
+    private Status status;
 
     @ApiModelProperty(value = "停用原因")
     @TableField("stop_reason")

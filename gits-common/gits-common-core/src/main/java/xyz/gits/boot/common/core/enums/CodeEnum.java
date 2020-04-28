@@ -13,6 +13,6 @@ public interface CodeEnum {
      * @author dingmingyang
      * @date 2020/1/30 14:27
      */
-    Integer getCode();
+    String getCode();
 
 }

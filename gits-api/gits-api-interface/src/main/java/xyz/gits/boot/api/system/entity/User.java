@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import xyz.gits.boot.api.system.enums.LockFlag;
+import xyz.gits.boot.api.system.enums.StopFlag;
 
 /**
  * <p>
@@ -75,7 +77,7 @@ public class User implements Serializable {
 
     @ApiModelProperty(value = "停用标志（0:停用，1:启用）")
     @TableField("stop_flag")
-    private String stopFlag;
+    private StopFlag stopFlag;
 
     @ApiModelProperty(value = "停用时间")
     @TableField("stop_time")
@@ -91,7 +93,7 @@ public class User implements Serializable {
 
     @ApiModelProperty(value = "密码锁定标志（0-未锁定，1-密码错误锁定）")
     @TableField("pwd_lock_flag")
-    private String pwdLockFlag;
+    private LockFlag pwdLockFlag;
 
     @ApiModelProperty(value = "用户锁定时间")
     @TableField("lock_time")

@@ -1,4 +1,4 @@
-package xyz.gits.boot.system.enums;
+package xyz.gits.boot.api.system.enums;
 
 import lombok.Getter;
 import xyz.gits.boot.common.core.enums.CodeEnum;
@@ -12,14 +12,14 @@ import xyz.gits.boot.common.core.enums.CodeEnum;
 @Getter
 public enum Status implements CodeEnum {
 
-    YES(1, "是"),
-    NO(0, "否");
+    YES("1", "是"),
+    NO("0", "否");
 
-    private Integer code;
+    private String code;
 
     private String message;
 
-    Status(Integer code, String message) {
+    Status(String code, String message) {
         this.code = code;
         this.message = message;
     }

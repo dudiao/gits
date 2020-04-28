@@ -1,16 +1,19 @@
 package xyz.gits.boot.api.system.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.enums.VisibleType;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -24,7 +27,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("system_resource")
-@ApiModel(value="Resource对象", description="资源表")
+@ApiModel(value = "Resource对象", description = "资源表")
 public class Resource implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,11 +50,11 @@ public class Resource implements Serializable {
 
     @ApiModelProperty(value = "资源类型(A-系统、B-菜单、C-按钮、D-链接)")
     @TableField("resource_type")
-    private String resourceType;
+    private StopFlag resourceType;
 
     @ApiModelProperty(value = "资源状态（1显示 0隐藏）")
     @TableField("visible")
-    private String visible;
+    private VisibleType visible;
 
     @ApiModelProperty(value = "资源排序，越大越排在上边")
     @TableField("order_num")

@@ -3,7 +3,7 @@ package xyz.gits.boot.system.mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.common.core.basic.BasicMapper;
-import xyz.gits.boot.system.enums.ResourceType;
+import xyz.gits.boot.api.system.enums.ResourceType;
 
 import java.util.List;
 
