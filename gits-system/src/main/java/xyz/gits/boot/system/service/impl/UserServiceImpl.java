@@ -6,12 +6,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.entity.UserRoleRel;
+import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
@@ -20,8 +20,6 @@ import xyz.gits.boot.common.security.UserUtil;
 import xyz.gits.boot.system.mapper.UserMapper;
 import xyz.gits.boot.system.service.IUserRoleRelService;
 import xyz.gits.boot.system.service.IUserService;
-import xyz.gits.boot.common.core.basic.BasicServiceImpl;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,7 +34,6 @@ import java.util.stream.Collectors;
  * @date 2020-02-29
  */
 @Slf4j
-@Service
 public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implements IUserService {
 
     @Autowired

@@ -2,10 +2,9 @@ package xyz.gits.boot.system.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.gits.boot.api.system.entity.Role;
+import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.system.mapper.RoleMapper;
 import xyz.gits.boot.system.service.IRoleService;
-import xyz.gits.boot.common.core.basic.BasicServiceImpl;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ import java.util.List;
  * @author songyinyin
  * @date 2020-02-29
  */
-@Service
 public class RoleServiceImpl extends BasicServiceImpl<RoleMapper, Role> implements IRoleService {
 
     @Autowired

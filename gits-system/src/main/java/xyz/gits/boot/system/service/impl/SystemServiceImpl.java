@@ -2,13 +2,12 @@ package xyz.gits.boot.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.api.system.entity.Role;
+import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.utils.BeanUtils;
-import xyz.gits.boot.api.system.entity.Resource;
-import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.system.service.IResourceService;
 import xyz.gits.boot.system.service.IRoleService;
 import xyz.gits.boot.system.service.IUserService;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
  * @author songyinyin
  * @date 2020/4/7 下午 10:51
  */
-@Service
 public class SystemServiceImpl implements SystemService {
 
     @Autowired

@@ -14,13 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-api-interface</artifactId>
+            <artifactId>gits-api-remote</artifactId>
         </dependency>
 
         <dependency>
             <groupId>xyz.gits.boot</groupId>
             <artifactId>gits-common-security</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

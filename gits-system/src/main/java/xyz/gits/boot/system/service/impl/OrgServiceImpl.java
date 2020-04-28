@@ -1,10 +1,9 @@
 package xyz.gits.boot.system.service.impl;
 
 import xyz.gits.boot.api.system.entity.Org;
+import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.system.mapper.OrgMapper;
 import xyz.gits.boot.system.service.IOrgService;
-import xyz.gits.boot.common.core.basic.BasicServiceImpl;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
  * @author songyinyin
  * @date 2020-02-29
  */
-@Service
 public class OrgServiceImpl extends BasicServiceImpl<OrgMapper, Org> implements IOrgService {
 
 }
