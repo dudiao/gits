@@ -15,6 +15,7 @@
     <modules>
         <module>gits-single</module>
         <module>gits-cloud-auth</module>
+        <module>gits-cloud-gateway</module>
     </modules>
 
     <dependencies>

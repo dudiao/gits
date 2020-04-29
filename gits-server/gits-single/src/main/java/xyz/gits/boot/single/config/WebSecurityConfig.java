@@ -1,22 +1,15 @@
 package xyz.gits.boot.single.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.HttpSessionIdResolver;
-import xyz.gits.boot.common.security.PermissionService;
 import xyz.gits.boot.common.security.RestHttpSessionIdResolver;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
@@ -27,16 +20,10 @@ import xyz.gits.boot.single.auth.LoginSuccessHandler;
 import xyz.gits.boot.single.auth.LogoutSuccessHandler;
 
 /**
- * 'prePostEnabled = true' --> 使{@link PreAuthorize PostAuthorize} {@link PostAuthorize}和{@link PermissionService}生效 <br/>
- * <p>
- * 'securedEnabled = true' --> 使{@link Secured}生效
- *
  * @author songyinyin
  * @date 2020/2/19 下午 10:16
  */
 @Configuration
-@EnableWebSecurity
-@EnableRedisHttpSession
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

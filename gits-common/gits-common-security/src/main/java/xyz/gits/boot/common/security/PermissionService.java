@@ -1,7 +1,6 @@
 package xyz.gits.boot.common.security;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 /**
  * 自定义权限实现
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
  * @date 2020/3/6 上午 10:58
  */
 @Slf4j
-@Service("ps")
 public class PermissionService {
 
     public boolean permission(String permission) {

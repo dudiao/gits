@@ -16,12 +16,29 @@ public class UserUtil {
 
     public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
 
+    /**
+     * 获取当前登录用户
+     */
     public static LoginUser loginUser() {
         try {
             return (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         } catch (Exception e) {
             throw new SystemException(ResponseCode.CURRENT_USER_FAIL, e);
         }
+    }
+
+    /**
+     * 获取当前登录用户id
+     */
+    public static String getUserId() {
+        return loginUser().getUser().getUserId();
+    }
+
+    /**
+     * 获取当前登录用户名称
+     */
+    public static String getUserName() {
+        return loginUser().getUser().getUserName();
     }
 
     public static String loginUsername(HttpServletRequest request) {

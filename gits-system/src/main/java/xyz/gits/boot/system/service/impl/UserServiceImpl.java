@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.entity.UserRoleRel;
+import xyz.gits.boot.api.system.enums.LockFlag;
+import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.response.ResponseCode;
@@ -58,8 +60,8 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         User user = new User();
         BeanUtils.copyPropertiesIgnoreNull(userDTO, user);
 
-        user.setPwdLockFlag(SystemConstants.PWD_UNLOCK);
-        user.setStopFlag(SystemConstants.USER_ENABLE);
+        user.setPwdLockFlag(LockFlag.UN_LOCKED);
+        user.setStopFlag(StopFlag.ENABLE);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         baseMapper.insert(user);
 
@@ -80,7 +82,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         User user = new User();
         BeanUtils.copyPropertiesIgnoreNull(userDTO, user);
         LocalDateTime now = LocalDateTime.now();
-        String userId = UserUtil.loginUser().getUser().getUserId();
+        String userId = UserUtil.getUserId();
         user.setUpdateTime(now);
         user.setUpdateUserId(userId);
         // 不能修改密码

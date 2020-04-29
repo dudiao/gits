@@ -2,18 +2,11 @@ package xyz.gits.boot.single.config;
 
 import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
 import com.alibaba.druid.util.Utils;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import xyz.gits.boot.common.core.filesystem.FileSystemProvider;
 import xyz.gits.boot.common.core.filesystem.SimpleFileSystemProvider;
 import xyz.gits.boot.single.endpoint.ExecutorEndpoint;
@@ -28,7 +21,7 @@ import java.io.IOException;
 @Configuration
 public class GitsConfiguration {
 
-    private final RedisConnectionFactory redisConnectionFactory;
+    /*private final RedisConnectionFactory redisConnectionFactory;
 
     public GitsConfiguration(RedisConnectionFactory redisConnectionFactory) {
         this.redisConnectionFactory = redisConnectionFactory;
@@ -61,7 +54,7 @@ public class GitsConfiguration {
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         return om;
-    }
+    }*/
 
     @Bean
     @ConditionalOnMissingBean(FileSystemProvider.class)
