@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.enums.ResourceType;
 import xyz.gits.boot.api.system.enums.VisibleType;
 
 import java.io.Serializable;
@@ -50,7 +50,7 @@ public class Resource implements Serializable {
 
     @ApiModelProperty(value = "资源类型(A-系统、B-菜单、C-按钮、D-链接)")
     @TableField("resource_type")
-    private StopFlag resourceType;
+    private ResourceType resourceType;
 
     @ApiModelProperty(value = "资源状态（1显示 0隐藏）")
     @TableField("visible")
