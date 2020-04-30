@@ -13,9 +13,9 @@ import xyz.gits.boot.common.core.enums.CodeEnum;
  */
 @Getter
 public enum StopFlag implements CodeEnum {
-    ENABLE("1", "启用"),
+    ENABLE("0", "启用"),
 
-    STOP("0", "停用");
+    STOP("1", "停用");
     @EnumValue
     private String code;
     @JsonValue

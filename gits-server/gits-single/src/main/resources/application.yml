@@ -97,7 +97,7 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
   type-aliases-package: xyz.gits.boot.*.entity
-  type-enums-package: xyz.gits.boot.*.enums
+  type-enums-package: xyz.gits.boot.api.*.enums
   configuration:
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
   global-config:

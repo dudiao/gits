@@ -12,8 +12,8 @@ import xyz.gits.boot.common.core.enums.CodeEnum;
 @Getter
 public enum Status implements CodeEnum {
 
-    YES("1", "是"),
-    NO("0", "否");
+    YES("0", "是"),
+    NO("1", "否");
 
     private String code;
 

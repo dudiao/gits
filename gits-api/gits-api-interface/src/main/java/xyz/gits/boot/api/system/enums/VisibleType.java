@@ -16,12 +16,12 @@ public enum VisibleType implements CodeEnum {
     /**
      * 显示
      */
-    SHOW("1", "显示"),
+    SHOW("0", "显示"),
 
     /**
-     * 不显示
+     * 隐藏
      */
-    UN_SHOW("0", "不显示");
+    HIDE("1", "隐藏");
 
 
     @EnumValue

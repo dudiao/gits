@@ -75,7 +75,7 @@ public class LoginUser implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return ObjectUtil.equal(user.getPwdLockFlag(), LockFlag.LOCKED);
+        return ObjectUtil.equal(user.getPwdLockFlag(), LockFlag.UN_LOCKED);
     }
 
     /**
@@ -91,6 +91,6 @@ public class LoginUser implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return ObjectUtil.equal(user.getStopFlag(), StopFlag.STOP);
+        return ObjectUtil.equal(user.getStopFlag(), StopFlag.ENABLE);
     }
 }

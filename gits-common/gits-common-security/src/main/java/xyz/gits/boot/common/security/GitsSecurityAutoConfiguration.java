@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.HttpSessionIdResolver;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
@@ -18,7 +17,6 @@ import xyz.gits.boot.common.security.hander.LoginUserAccessDeniedHandler;
 import xyz.gits.boot.common.security.hander.SessionInformationExpiredHandler;
 
 /**
- *
  * <pre>@EnableGlobalMethodSecurity</pre>
  * <p>
  * 'prePostEnabled = true' --> 使{@link PreAuthorize PostAuthorize} {@link PostAuthorize}和{@link PermissionService}生效 <br/>
@@ -31,7 +29,6 @@ import xyz.gits.boot.common.security.hander.SessionInformationExpiredHandler;
  */
 @Configuration
 @EnableWebSecurity
-@EnableRedisHttpSession(redisNamespace = "gits:spring:session")
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class GitsSecurityAutoConfiguration {
 

@@ -22,7 +22,7 @@ public enum ResponseCode {
     USER_MAX_LOGIN(11002,"该用户已在其它地方登录"),
     USER_LOGIN_TIMEOUT(11003,"长时间未操作，自动退出"),
     USER_DISABLED(11004,"用户被禁用"),
-    USER_LOCKED(11005,"用户被禁用"),
+    USER_LOCKED(11005,"用户被锁定"),
     USER_PASSWORD_ERROR(11006,"用户名或密码错误"),
     USER_PASSWORD_EXPIRED(11007,"用户密码过期"),
     USER_ACCOUNT_EXPIRED(11008,"用户账号过期"),
