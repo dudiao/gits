@@ -11,7 +11,7 @@ import xyz.gits.boot.common.security.annotation.EnableGitsClientServer;
 @EnableGitsClientServer
 @SpringCloudApplication
 @EnableCreateCacheAnnotation
-@EnableMethodCache(basePackages = {"xyz.gits.boot.system", "xyz.gits.cloud.system"})
+//@EnableMethodCache(basePackages = {"xyz.gits.boot.system", "xyz.gits.cloud.system"})
 public class GitsSystemApplication {
 
     public static void main(String[] args) {

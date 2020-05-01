@@ -74,11 +74,20 @@ public class UserController extends BasicController {
         return userService.updateUserInfo(userDTO);
     }
 
-    @GetMapping("/{userName}")
+    @GetMapping("/info/{userName}")
     @ApiOperation(value = "查看用户详情")
-    public RestResponse<UserVO> detail(@ApiParam(name = "userName", value = "用户名") @RequestParam("userName") @PathVariable String userName) {
+    public RestResponse<UserVO> info(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
         UserVO userVO = systemService.loadUserByUsername(userName);
+        userVO.setPassword(null);
         return RestResponse.success(userVO);
+    }
+
+    @GetMapping("/{userName}")
+    @ApiOperation(value = "查看用户详情（内部接口调用）")
+    public UserVO detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
+        // TODO 需要鉴权
+        UserVO userVO = systemService.loadUserByUsername(userName);
+        return userVO;
     }
 
 }

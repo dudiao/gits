@@ -1,13 +1,10 @@
 package xyz.gits.boot.api.system.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import xyz.gits.boot.api.system.entity.User;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -19,7 +16,6 @@ import java.util.Set;
 public class UserVO extends User {
 
     @Override
-    @JsonIgnore
     public String getPassword() {
         return super.getPassword();
     }

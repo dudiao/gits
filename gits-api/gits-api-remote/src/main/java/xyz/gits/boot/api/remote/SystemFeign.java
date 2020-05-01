@@ -16,6 +16,6 @@ import xyz.gits.boot.api.system.vo.UserVO;
 public interface SystemFeign extends SystemService {
 
     @Override
-    @GetMapping("/system/info/{userName}")
+    @GetMapping("/system/user/{userName}")
     UserVO loadUserByUsername(@PathVariable("userName") String userName);
 }
