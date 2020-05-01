@@ -7,9 +7,9 @@
         <artifactId>gits-server</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>gits-cloud-gateway</artifactId>
+    <artifactId>gits-cloud-system</artifactId>
 
-    <description>gits 网关</description>
+    <description>gits 系统管理</description>
 
     <dependencies>
         <dependency>
@@ -17,16 +17,24 @@
             <artifactId>gits-common-sentinel</artifactId>
         </dependency>
 
-        <!--gateway 网关依赖,内置webflux 依赖-->
+        <!-- 系统管理核心代码 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <groupId>xyz.gits.boot</groupId>
+            <artifactId>gits-system</artifactId>
         </dependency>
+
+        <!--web 模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!--注册中心客户端-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
         <!--配置中心客户端-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

@@ -15,6 +15,7 @@
     <modules>
         <module>gits-common-core</module>
         <module>gits-common-security</module>
+        <module>gits-common-sentinel</module>
     </modules>
 
     <dependencies>

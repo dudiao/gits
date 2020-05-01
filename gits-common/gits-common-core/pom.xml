@@ -66,10 +66,10 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
-        <!--mybatis plus-->
+        <!-- mybatis plus 包含 mybatis-plus-core -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-extension</artifactId>
         </dependency>
 
         <!--hibernate-validator-->

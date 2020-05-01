@@ -76,7 +76,6 @@ public class UserController extends BasicController {
 
     @GetMapping("/{userName}")
     @ApiOperation(value = "查看用户详情")
-    @PreAuthorize("@ps.permission('system:user:detail')")
     public RestResponse<UserVO> detail(@ApiParam(name = "userName", value = "用户名") @RequestParam("userName") @PathVariable String userName) {
         UserVO userVO = systemService.loadUserByUsername(userName);
         return RestResponse.success(userVO);

@@ -99,10 +99,15 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
-            <!--mybatis-->
+            <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <!-- mybatis-plus 代码生成 -->
@@ -132,6 +137,11 @@
             <dependency>
                 <groupId>xyz.gits.boot</groupId>
                 <artifactId>gits-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.gits.boot</groupId>
+                <artifactId>gits-common-sentinel</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

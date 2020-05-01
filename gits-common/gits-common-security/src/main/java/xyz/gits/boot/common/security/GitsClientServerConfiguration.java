@@ -77,7 +77,10 @@ public class GitsClientServerConfiguration extends WebSecurityConfigurerAdapter 
             "/swagger-ui.html",
             "/webjars/**",
             "/swagger-resources/**",
-            "/v2/api-docs"
+            "/v2/api-docs",
+
+            // TODO feign调用接口，暂时放行，后续需要加上鉴权
+            "/system/info/**"
     };
 
 }

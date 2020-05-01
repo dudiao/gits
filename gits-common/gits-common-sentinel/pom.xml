@@ -4,17 +4,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>xyz.gits.boot</groupId>
-        <artifactId>gits-api</artifactId>
+        <artifactId>gits-common</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>gits-api-remote</artifactId>
+    <artifactId>gits-common-sentinel</artifactId>
+    <packaging>jar</packaging>
 
-    <description>gits 跨服务接口定义</description>
+    <description>gits 服务降级熔断、限流</description>
 
     <dependencies>
         <dependency>
             <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-api-interface</artifactId>
+            <artifactId>gits-common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
 
         <!-- Feign 支持 -->

@@ -1,8 +1,7 @@
-package xyz.gits.boot.auth.handler;
+package xyz.gits.cloud.auth.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
@@ -13,19 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 登录成功处理逻辑
+ * 注销成功回调
  *
  * @author songyinyin
- * @date 2020/2/25 下午 09:05
+ * @date 2020/2/25 下午 09:28
  */
 @Slf4j
 @Component
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class LogoutSuccessHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
-        // TODO 登录成功 需要查询用户相关信息
+        // TODO 登出成功 记录登出日志
         ServletUtils.render(request, response, RestResponse.success());
     }
 }

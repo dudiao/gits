@@ -1,11 +1,13 @@
 package xyz.gits.boot.common.core.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import xyz.gits.boot.common.core.exception.handler.GlobalExceptionHandler;
 
 /**
  * @author songyinyin
@@ -24,5 +26,11 @@ public class GitsAutoConfiguration {
 //        passwordEncoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder());
         passwordEncoder.setDefaultPasswordEncoderForMatches(NoOpPasswordEncoder.getInstance());
         return passwordEncoder;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public GlobalExceptionHandler globalExceptionHandler() {
+        return new GlobalExceptionHandler();
     }
 }

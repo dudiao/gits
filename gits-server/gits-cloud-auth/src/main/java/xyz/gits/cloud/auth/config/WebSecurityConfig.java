@@ -1,4 +1,4 @@
-package xyz.gits.boot.auth.config;
+package xyz.gits.cloud.auth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import xyz.gits.boot.auth.handler.LoginFailureHandler;
-import xyz.gits.boot.auth.handler.LoginSuccessHandler;
-import xyz.gits.boot.auth.handler.LogoutSuccessHandler;
+import xyz.gits.cloud.auth.handler.LoginFailureHandler;
+import xyz.gits.cloud.auth.handler.LoginSuccessHandler;
+import xyz.gits.cloud.auth.handler.LogoutSuccessHandler;
 import xyz.gits.boot.common.security.PermissionService;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;

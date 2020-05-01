@@ -11,6 +11,8 @@ public enum ResponseCode {
     FAIL(-1, "系统繁忙"),
     SUCCESS(0, "请求成功"),
 
+    TOO_MANY_REQUESTS(429, "Too Many Requests"),
+
     GLOBAL_PARAM_ERROR(4000, "参数错误"),
     /**
      * 获取当前用户失败

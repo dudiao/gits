@@ -17,12 +17,6 @@
             <artifactId>gits-system</artifactId>
         </dependency>
 
-        <!-- 微服务项目时，资源服务器只需要引入gits-common-security就行 -->
-        <!--<dependency>
-            <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-common-security</artifactId>
-        </dependency>-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

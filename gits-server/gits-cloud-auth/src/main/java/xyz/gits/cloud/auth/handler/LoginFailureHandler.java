@@ -1,4 +1,4 @@
-package xyz.gits.boot.auth.handler;
+package xyz.gits.cloud.auth.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
@@ -31,27 +31,27 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         String username = UserUtil.loginUsername(request);
         if (e instanceof AccountExpiredException) {
             // 账号过期
-            log.debug("[登录失败] - 用户[{}]账号过期", username);
+            log.info("[登录失败] - 用户[{}]账号过期", username);
             result = RestResponse.build(ResponseCode.USER_ACCOUNT_EXPIRED);
 
         } else if (e instanceof BadCredentialsException) {
             // 密码错误
-            log.debug("[登录失败] - 用户[{}]密码错误", username);
+            log.info("[登录失败] - 用户[{}]密码错误", username);
             result = RestResponse.build(ResponseCode.USER_PASSWORD_ERROR);
 
         } else if (e instanceof CredentialsExpiredException) {
             // 密码过期
-            log.debug("[登录失败] - 用户[{}]密码过期", username);
+            log.info("[登录失败] - 用户[{}]密码过期", username);
             result = RestResponse.build(ResponseCode.USER_PASSWORD_EXPIRED);
 
         } else if (e instanceof DisabledException) {
             // 用户被禁用
-            log.debug("[登录失败] - 用户[{}]被禁用", username);
+            log.info("[登录失败] - 用户[{}]被禁用", username);
             result = RestResponse.build(ResponseCode.USER_DISABLED);
 
         } else if (e instanceof LockedException) {
             // 用户被锁定
-            log.debug("[登录失败] - 用户[{}]被锁定", username);
+            log.info("[登录失败] - 用户[{}]被锁定", username);
             result = RestResponse.build(ResponseCode.USER_LOCKED);
 
         } else if (e instanceof InternalAuthenticationServiceException) {

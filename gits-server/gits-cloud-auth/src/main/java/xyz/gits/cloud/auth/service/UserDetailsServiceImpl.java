@@ -1,4 +1,4 @@
-package xyz.gits.boot.auth.service;
+package xyz.gits.cloud.auth.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // 查出密码
         UserVO userVO = systemService.loadUserByUsername(username);
-        if (ObjectUtil.isNull(userVO)) {
+        if (ObjectUtil.isNull(userVO) || StrUtil.isBlank(userVO.getUserId())) {
             log.info("登录用户：{} 不存在", username);
             throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
         }

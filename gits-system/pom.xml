@@ -29,6 +29,12 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!--mybatis-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
         <!-- mybatis-plus generator -->
         <dependency>
             <groupId>com.baomidou</groupId>
