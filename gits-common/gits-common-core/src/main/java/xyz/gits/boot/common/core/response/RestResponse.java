@@ -36,6 +36,14 @@ public class RestResponse<T> extends BaseResponse {
     }
 
     /**
+     * 未知异常，返回系统繁忙响应
+     * @param data 错误信息
+     */
+    public static <T> RestResponse<T> fail(T data) {
+        return build(ResponseCode.FAIL, data);
+    }
+
+    /**
      * 包含具体错误信息的响应
      *
      * @param respCode

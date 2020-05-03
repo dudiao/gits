@@ -16,6 +16,11 @@
             <groupId>xyz.gits.boot</groupId>
             <artifactId>gits-common-sentinel</artifactId>
         </dependency>
+        <!-- Sentinel Spring Cloud Gateway 适配模块 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
+        </dependency>
 
         <!--gateway 网关依赖,内置webflux 依赖-->
         <dependency>

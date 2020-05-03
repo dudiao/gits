@@ -29,15 +29,14 @@ import java.util.stream.Collectors;
  * @date 2020-02-29
  */
 @RestController
-@RequestMapping("/system/user")
 public class UserController extends BasicController {
 
     @Autowired
-    private IUserService userService;
+    protected IUserService userService;
     @Autowired
-    private SystemService systemService;
+    protected SystemService systemService;
 
-    @GetMapping("/page")
+    @GetMapping("/user/page")
     @ApiOperation(value = "分页查询用户")
     @PreAuthorize("@ps.permission('system:user:page')")
     public TableResponse<UserVO> page() {
@@ -52,7 +51,7 @@ public class UserController extends BasicController {
         return TableResponse.success(page.getTotal(), userVOList);
     }
 
-    @PostMapping
+    @PostMapping("/user")
     @ApiOperation(value = "新增用户")
     @PreAuthorize("@ps.permission('system:user:add')")
     public RestResponse save(@Validated(CreateGroup.class) @RequestBody UserDTO userDTO) {
@@ -60,7 +59,7 @@ public class UserController extends BasicController {
         return RestResponse.success();
     }
 
-    @PutMapping
+    @PutMapping("/user")
     @ApiOperation(value = "更新用户")
     @PreAuthorize("@ps.permission('system:user:update')")
     public RestResponse updateUser(@Validated(UpdateGroup.class) @RequestBody UserDTO userDTO) {
@@ -68,26 +67,18 @@ public class UserController extends BasicController {
         return RestResponse.success();
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/user/edit")
     @ApiOperation(value = "修改个人信息（包括密码等）")
     public RestResponse updateUserInfo(@Validated(UpdateGroup.class) @RequestBody UserDTO userDTO) {
         return userService.updateUserInfo(userDTO);
     }
 
-    @GetMapping("/info/{userName}")
+    @GetMapping("/user/{userName}")
     @ApiOperation(value = "查看用户详情")
-    public RestResponse<UserVO> info(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
+    public RestResponse<UserVO> detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
         UserVO userVO = systemService.loadUserByUsername(userName);
         userVO.setPassword(null);
         return RestResponse.success(userVO);
-    }
-
-    @GetMapping("/{userName}")
-    @ApiOperation(value = "查看用户详情（内部接口调用）")
-    public UserVO detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
-        // TODO 需要鉴权
-        UserVO userVO = systemService.loadUserByUsername(userName);
-        return userVO;
     }
 
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.gits.boot.api.system.vo.UserVO;
@@ -28,14 +27,13 @@ import java.util.stream.Collectors;
  */
 @Api(tags = "在线用户")
 @RestController
-@RequestMapping("/session")
 public class ConcurrentSessionController {
 
     @Autowired
     private SessionRegistry sessionRegistry;
 
     @ApiOperation("在线用户列表")
-    @GetMapping("/list")
+    @GetMapping("/session/list")
     public RestResponse getCurrentUser() {
         List<Object> list = sessionRegistry.getAllPrincipals();
 
@@ -50,7 +48,7 @@ public class ConcurrentSessionController {
     }
 
     @ApiOperation("用户在线详情")
-    @GetMapping("/detail")
+    @GetMapping("/session/detail")
     public RestResponse detail(@ApiParam(name = "userId", value = "用户Id")
                                @RequestParam("userId")
                                @NotNull(message = "用户id不能为空") String userId) {
@@ -82,7 +80,7 @@ public class ConcurrentSessionController {
     }
 
     @ApiOperation("踢出用户")
-    @GetMapping("/kick")
+    @GetMapping("/session/kick")
     public RestResponse kick(@ApiParam(name = "sessionId", value = "用户会话id")
                              @RequestParam("sessionId")
                              @NotNull(message = "用户会话id不能为空") String sessionId) {

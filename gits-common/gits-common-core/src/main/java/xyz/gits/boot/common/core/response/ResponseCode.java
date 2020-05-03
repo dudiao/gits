@@ -29,6 +29,7 @@ public enum ResponseCode {
     USER_PASSWORD_EXPIRED(11007,"用户密码过期"),
     USER_ACCOUNT_EXPIRED(11008,"用户账号过期"),
     USER_NOT_FIND(11009,"没有该用户"),
+    USER_LOGIN_FAIL(11010,"用户登录失败"),
     NO_AUTHENTICATION(1003006,"无权访问"),
 
     //文件系统

@@ -57,12 +57,12 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         } else if (e instanceof InternalAuthenticationServiceException) {
             // 内部错误
             log.error(String.format("[登录失败] - [%s]内部错误", username), e);
-            result = RestResponse.fail();
+            result = RestResponse.fail(ResponseCode.USER_LOGIN_FAIL);
 
         } else {
             // 其他错误
             log.error(String.format("[登录失败] - [%s]其他错误", username), e);
-            result = RestResponse.fail();
+            result = RestResponse.fail(ResponseCode.USER_LOGIN_FAIL);
         }
         ServletUtils.render(request, response, result);
     }

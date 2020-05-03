@@ -22,6 +22,11 @@
             <artifactId>gits-common-security</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>xyz.gits.boot</groupId>
+            <artifactId>gits-common-sentinel</artifactId>
+        </dependency>
+
         <!--web 模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
