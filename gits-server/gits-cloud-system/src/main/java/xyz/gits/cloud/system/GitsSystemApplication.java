@@ -5,13 +5,13 @@ import com.alicp.jetcache.anno.config.EnableMethodCache;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import xyz.gits.boot.common.security.annotation.EnableGitsClientServer;
+import xyz.gits.boot.common.security.annotation.EnableGitsResourceServer;
 
 @EnableFeignClients
-@EnableGitsClientServer
+@EnableGitsResourceServer
 @SpringCloudApplication
 @EnableCreateCacheAnnotation
-//@EnableMethodCache(basePackages = {"xyz.gits.boot.system", "xyz.gits.cloud.system"})
+@EnableMethodCache(basePackages = {"xyz.gits.boot.system", "xyz.gits.cloud.system"})
 public class GitsSystemApplication {
 
     public static void main(String[] args) {

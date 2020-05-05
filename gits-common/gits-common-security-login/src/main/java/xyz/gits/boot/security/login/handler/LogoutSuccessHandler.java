@@ -1,8 +1,7 @@
-package xyz.gits.boot.single.auth;
+package xyz.gits.boot.security.login.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
 
@@ -18,7 +17,6 @@ import java.io.IOException;
  * @date 2020/2/25 下午 09:28
  */
 @Slf4j
-@Component
 public class LogoutSuccessHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {
 
     @Override

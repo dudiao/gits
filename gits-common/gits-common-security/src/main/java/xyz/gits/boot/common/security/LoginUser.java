@@ -2,7 +2,9 @@ package xyz.gits.boot.common.security;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.Data;
+import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.UserDetails;
 import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
@@ -18,7 +20,9 @@ import java.util.Collection;
  * @date 2020/3/14 下午 05:29
  */
 @Data
-public class LoginUser implements UserDetails {
+public class LoginUser implements UserDetails, CredentialsContainer {
+
+    private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
     /**
      * 用户
@@ -92,5 +96,13 @@ public class LoginUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return ObjectUtil.equal(user.getStopFlag(), StopFlag.ENABLE);
+    }
+
+    /**
+     * 认证完成后，擦除密码
+     */
+    @Override
+    public void eraseCredentials() {
+        user.setPassword(null);
     }
 }

@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xyz.gits.boot.security.login.GitsSecurityLoginAutoConfiguration,\
+  xyz.gits.boot.security.login.extend.ExtendAuthenticationSecurityConfig

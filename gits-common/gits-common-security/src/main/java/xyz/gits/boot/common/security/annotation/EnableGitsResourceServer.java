@@ -1,7 +1,7 @@
 package xyz.gits.boot.common.security.annotation;
 
 import org.springframework.context.annotation.Import;
-import xyz.gits.boot.common.security.GitsClientServerConfiguration;
+import xyz.gits.boot.common.security.GitsResourceServerConfiguration;
 
 import java.lang.annotation.*;
 
@@ -15,6 +15,6 @@ import java.lang.annotation.*;
 @Inherited
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import({GitsClientServerConfiguration.class})
-public @interface EnableGitsClientServer {
+@Import({GitsResourceServerConfiguration.class})
+public @interface EnableGitsResourceServer {
 }

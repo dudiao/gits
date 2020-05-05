@@ -1,16 +1,9 @@
 package xyz.gits.boot.common.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.session.web.http.HttpSessionIdResolver;
-import xyz.gits.boot.common.security.filter.GitsLogoutFilter;
-import xyz.gits.boot.common.security.filter.GitsUsernamePasswordAuthenticationFilter;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
 import xyz.gits.boot.common.security.hander.LoginUserAccessDeniedHandler;
@@ -21,7 +14,7 @@ import xyz.gits.boot.common.security.hander.SessionInformationExpiredHandler;
  * @date 2020/4/27 上午 12:42
  */
 @Configuration
-public class GitsClientServerConfiguration extends WebSecurityConfigurerAdapter {
+public class GitsResourceServerConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * 未登录的处理
@@ -62,11 +55,10 @@ public class GitsClientServerConfiguration extends WebSecurityConfigurerAdapter 
                 .expiredSessionStrategy(sessionInformationExpiredHandler) // 顶号处理
         ;
         // 资源服务器，需要跳过登录登出filter
-        http.addFilter(new GitsUsernamePasswordAuthenticationFilter());
-        http.addFilter(new GitsLogoutFilter());
+        http.formLogin().disable().logout().disable();
     }
 
-    private static final String[] AUTH_WHITELIST = {
+    public static final String[] AUTH_WHITELIST = {
             "/open/**",
             "/assets/**",
             "/instances",

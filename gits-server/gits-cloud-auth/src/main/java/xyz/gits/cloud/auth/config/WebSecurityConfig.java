@@ -9,15 +9,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import xyz.gits.cloud.auth.handler.LoginFailureHandler;
-import xyz.gits.cloud.auth.handler.LoginSuccessHandler;
-import xyz.gits.cloud.auth.handler.LogoutSuccessHandler;
+import xyz.gits.boot.common.security.GitsResourceServerConfiguration;
 import xyz.gits.boot.common.security.PermissionService;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
 import xyz.gits.boot.common.security.hander.LoginUserAccessDeniedHandler;
 import xyz.gits.boot.common.security.hander.SessionInformationExpiredHandler;
+import xyz.gits.boot.security.login.extend.ExtendAuthenticationSecurityConfig;
+import xyz.gits.boot.security.login.handler.LoginFailureHandler;
+import xyz.gits.boot.security.login.handler.LoginSuccessHandler;
+import xyz.gits.boot.security.login.handler.LogoutSuccessHandler;
+import xyz.gits.boot.security.login.service.DefaultUserDetailsService;
 
 /**
  * 'prePostEnabled = true' --> 使{@link PreAuthorize PostAuthorize} {@link PostAuthorize}和{@link PermissionService}生效 <br/>
@@ -32,7 +34,7 @@ import xyz.gits.boot.common.security.hander.SessionInformationExpiredHandler;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private DefaultUserDetailsService userDetailsService;
     /**
      * 登出成功的处理
      */
@@ -68,6 +70,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     private LoginUserAccessDeniedHandler accessDeniedHandler;
+    /**
+     * 扩展用户登录
+     */
+    @Autowired
+    private ExtendAuthenticationSecurityConfig extendAuthenticationSecurityConfig;
 
     /**
      * 配置认证方式等
@@ -89,9 +96,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.authorizeRequests()
+        http.apply(extendAuthenticationSecurityConfig) // 扩展用户登录
+                .and().authorizeRequests()
                 // 放行接口
-                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(GitsResourceServerConfiguration.AUTH_WHITELIST).permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 // 异常处理(权限拒绝、登录失效等)
@@ -113,20 +121,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ;
 
     }
-
-    private static final String[] AUTH_WHITELIST = {
-            "/open/**",
-            "/assets/**",
-            "/instances",
-            "/actuator/**",
-            "/favicon.ico",
-
-            // swagger 相关
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/swagger-resources/**",
-            "/v2/api-docs"
-    };
 
     /**
      * 重写 spring session redis 序列化

@@ -17,9 +17,15 @@
             <artifactId>gits-api-remote</artifactId>
         </dependency>
 
+        <!-- 鉴权模块 -->
         <dependency>
             <groupId>xyz.gits.boot</groupId>
             <artifactId>gits-common-security</artifactId>
+        </dependency>
+        <!-- 登录模块 -->
+        <dependency>
+            <groupId>xyz.gits.boot</groupId>
+            <artifactId>gits-common-security-login</artifactId>
         </dependency>
 
         <dependency>

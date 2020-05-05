@@ -4,22 +4,19 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>xyz.gits.boot</groupId>
-        <artifactId>gits</artifactId>
+        <artifactId>gits-common</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>gits-common</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>gits-common-security-login</artifactId>
+    <packaging>jar</packaging>
 
-    <description>gits 公共包</description>
-
-    <modules>
-        <module>gits-common-core</module>
-        <module>gits-common-security</module>
-        <module>gits-common-security-login</module>
-        <module>gits-common-sentinel</module>
-    </modules>
+    <description>gits 登录模块</description>
 
     <dependencies>
+        <dependency>
+            <groupId>xyz.gits.boot</groupId>
+            <artifactId>gits-common-security</artifactId>
+        </dependency>
 
     </dependencies>
 </project>

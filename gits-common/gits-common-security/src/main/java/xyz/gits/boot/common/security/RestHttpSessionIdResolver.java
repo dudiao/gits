@@ -2,6 +2,7 @@ package xyz.gits.boot.common.security;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.session.web.http.CookieHttpSessionIdResolver;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.session.web.http.HttpSessionIdResolver;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author songyinyin
  * @date 2020/3/18 下午 05:53
  */
+@Slf4j
 public class RestHttpSessionIdResolver implements HttpSessionIdResolver {
 
     public static final String AUTH_TOKEN = "GitsSessionID";
@@ -61,6 +63,7 @@ public class RestHttpSessionIdResolver implements HttpSessionIdResolver {
 
     @Override
     public void setSessionId(HttpServletRequest request, HttpServletResponse response, String sessionId) {
+        log.info(AUTH_TOKEN + "={}", sessionId);
         response.setHeader(this.sessionIdName, sessionId);
         this.cookieHttpSessionIdResolver.setSessionId(request, response, sessionId);
     }

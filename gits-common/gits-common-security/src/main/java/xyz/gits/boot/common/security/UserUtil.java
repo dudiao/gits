@@ -17,6 +17,15 @@ public class UserUtil {
     public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
 
     /**
+     * 扩展类型
+     */
+    public static String EXTEND_TYPE_PARAMETER = "extendType";
+    /**
+     * 用户登录扩展参数
+     */
+    public static String EXTEND_KEY_PARAMETER = "extendKey";
+
+    /**
      * 获取当前登录用户
      */
     public static LoginUser loginUser() {
@@ -41,7 +50,24 @@ public class UserUtil {
         return loginUser().getUser().getUserName();
     }
 
+    /**
+     * 从登录请求中，获取登录用户的用户名
+     */
     public static String loginUsername(HttpServletRequest request) {
         return request.getParameter(SPRING_SECURITY_FORM_USERNAME_KEY);
+    }
+
+    /**
+     * 从登录请求中，获取扩展登录的 extendKey
+     */
+    public static String loginExtendKey(HttpServletRequest request) {
+        return request.getParameter(EXTEND_KEY_PARAMETER);
+    }
+
+    /**
+     * 从登录请求中，获取扩展登录的 extendType
+     */
+    public static String loginExtendType(HttpServletRequest request) {
+        return request.getParameter(EXTEND_TYPE_PARAMETER);
     }
 }
