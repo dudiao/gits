@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import xyz.gits.boot.common.security.GitsResourceServerConfiguration;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
@@ -15,6 +14,7 @@ import xyz.gits.boot.security.login.extend.ExtendAuthenticationSecurityConfig;
 import xyz.gits.boot.security.login.handler.LoginFailureHandler;
 import xyz.gits.boot.security.login.handler.LoginSuccessHandler;
 import xyz.gits.boot.security.login.handler.LogoutSuccessHandler;
+import xyz.gits.boot.security.login.service.DefaultUserDetailsService;
 
 /**
  * @author songyinyin
@@ -24,7 +24,7 @@ import xyz.gits.boot.security.login.handler.LogoutSuccessHandler;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private DefaultUserDetailsService userDetailsService;
     /**
      * 登出成功的处理
      */
