@@ -23,7 +23,7 @@ public class AnonymousAuthenticationEntryPoint implements AuthenticationEntryPoi
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        log.info("用户需要登录，访问[{}]失败", request.getRequestURI());
+        log.warn("用户需要登录，访问[{}]失败，AuthenticationException={}", request.getRequestURI(), e);
 
         ServletUtils.render(request, response, RestResponse.fail(ResponseCode.USER_NEED_LOGIN));
     }

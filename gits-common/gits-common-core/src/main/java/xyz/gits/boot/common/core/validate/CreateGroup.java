@@ -6,5 +6,5 @@ package xyz.gits.boot.common.core.validate;
  * @author songyinyin
  * @date 2020/4/12 下午 10:56
  */
-public class CreateGroup {
+public interface CreateGroup {
 }

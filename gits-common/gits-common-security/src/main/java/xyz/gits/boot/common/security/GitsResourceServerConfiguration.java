@@ -72,7 +72,9 @@ public class GitsResourceServerConfiguration extends WebSecurityConfigurerAdapte
             "/v2/api-docs",
 
             // TODO feign调用接口，暂时放行，后续需要加上鉴权
-            "/user/info/**"
+            "/user/info/**",
+            "/user/register",
+            "/user/find"
     };
 
 }

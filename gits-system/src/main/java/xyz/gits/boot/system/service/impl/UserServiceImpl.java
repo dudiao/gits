@@ -1,5 +1,6 @@
 package xyz.gits.boot.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -13,6 +14,7 @@ import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.entity.UserRoleRel;
 import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.response.ResponseCode;
@@ -24,6 +26,7 @@ import xyz.gits.boot.system.service.IUserRoleRelService;
 import xyz.gits.boot.system.service.IUserService;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,16 +59,27 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveUser(UserDTO userDTO) {
+    public UserVO saveUser(UserDTO userDTO) {
         User user = new User();
         BeanUtils.copyPropertiesIgnoreNull(userDTO, user);
 
         user.setPwdLockFlag(LockFlag.UN_LOCKED);
         user.setStopFlag(StopFlag.ENABLE);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (StrUtil.isNotBlank(user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }else {
+            // TODO 默认密码需要从配置中心读取
+            user.setPassword(passwordEncoder.encode("111111-a"));
+        }
         baseMapper.insert(user);
 
+        UserVO userVO = new UserVO();
+        BeanUtils.copyPropertiesIgnoreNull(user, userVO);
+
         // 保存用户的角色
+        if (CollUtil.isEmpty(userDTO.getRole())) {
+            return userVO;
+        }
         List<UserRoleRel> userRoleList = userDTO.getRole()
                 .stream().map(roleId -> {
                     UserRoleRel userRole = new UserRoleRel();
@@ -74,6 +88,10 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
                     return userRole;
                 }).collect(Collectors.toList());
         userRoleRelService.saveBatch(userRoleList);
+
+        // TODO 缺少用户权限
+        userVO.setRoles(new HashSet<>(userDTO.getRole()));
+        return userVO;
     }
 
     @Override

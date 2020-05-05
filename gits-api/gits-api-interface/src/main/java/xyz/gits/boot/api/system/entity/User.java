@@ -119,5 +119,9 @@ public class User implements Serializable {
     @TableField("login_success_time")
     private LocalDateTime loginSuccessTime;
 
+    @ApiModelProperty(value = "gitee用户id")
+    @TableField("gitee_id")
+    private String giteeId;
+
 
 }

@@ -69,4 +69,7 @@ public class UserDTO {
      */
     @ApiModelProperty(value = "新密码")
     private String newPassword;
+
+    @ApiModelProperty(value = "gitee用户id")
+    private String giteeId;
 }

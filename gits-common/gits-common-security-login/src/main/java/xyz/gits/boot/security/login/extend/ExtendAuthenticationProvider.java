@@ -175,7 +175,7 @@ public class ExtendAuthenticationProvider implements AuthenticationProvider, Ini
                                        ExtendAuthenticationToken authentication)
             throws AuthenticationException {
         try {
-            UserDetails loadedUser = this.getExtendUserDetailsService().loadUserByExtendKey(extendKey, authentication);
+            UserDetails loadedUser = this.getExtendUserDetailsService().loadUserByExtendKey(authentication);
             if (loadedUser == null) {
                 throw new InternalAuthenticationServiceException(
                         "UserDetailsService returned null, which is an interface contract violation");

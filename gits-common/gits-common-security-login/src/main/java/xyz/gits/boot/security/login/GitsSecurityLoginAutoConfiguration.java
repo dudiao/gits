@@ -3,6 +3,8 @@ package xyz.gits.boot.security.login;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import xyz.gits.boot.security.login.extend.ExtendLoginController;
 import xyz.gits.boot.security.login.extend.ExtendUserDetailsService;
 import xyz.gits.boot.security.login.handler.LoginFailureHandler;
 import xyz.gits.boot.security.login.handler.LoginSuccessHandler;
@@ -41,6 +43,13 @@ public class GitsSecurityLoginAutoConfiguration {
     @ConditionalOnMissingBean
     public ExtendUserDetailsService extendUserDetailsService() {
         return new ExtendUserDetailsServiceImpl();
+    }
+
+    @Bean
+    @Lazy
+    @ConditionalOnMissingBean
+    public ExtendLoginController extendLoginController() {
+        return new ExtendLoginController();
     }
 
 }

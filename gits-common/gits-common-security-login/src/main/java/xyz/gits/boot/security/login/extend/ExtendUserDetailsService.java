@@ -9,5 +9,5 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  */
 public interface ExtendUserDetailsService {
 
-    UserDetails loadUserByExtendKey(String extendKey, ExtendAuthenticationToken token) throws UsernameNotFoundException;
+    UserDetails loadUserByExtendKey(ExtendAuthenticationToken token) throws UsernameNotFoundException;
 }

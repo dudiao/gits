@@ -26,7 +26,6 @@ public class ExtendAuthenticationToken extends AbstractAuthenticationToken {
 
     /**
      * 认证前使用
-     *
      */
     public ExtendAuthenticationToken(String extendKey, String extendType) {
         super(null);
@@ -37,10 +36,19 @@ public class ExtendAuthenticationToken extends AbstractAuthenticationToken {
     }
 
     /**
+     * justauth 使用
+     */
+    public ExtendAuthenticationToken(Object authUser) {
+        super(null);
+        this.principal = authUser;
+        setAuthenticated(false);
+    }
+
+    /**
      * 认证成功之后使用
      */
     public ExtendAuthenticationToken(String extendKey, String extendType, Object principal,
-                                               Collection<? extends GrantedAuthority> authorities) {
+                                     Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.extendKey = extendKey;
         this.extendType = extendType;
