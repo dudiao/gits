@@ -1,10 +1,12 @@
 package xyz.gits.boot.common.security.hander;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
+import xyz.gits.boot.common.security.RestHttpSessionIdResolver;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +22,13 @@ import java.io.IOException;
 @Slf4j
 public class InvalidSessionHandler implements InvalidSessionStrategy {
 
+    @Autowired
+    private RestHttpSessionIdResolver restHttpSessionIdResolver;
 
     @Override
     public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         log.info("用户登录超时，访问[{}]失败", request.getRequestURI());
+        restHttpSessionIdResolver.expireSession(request, response);
         ServletUtils.render(request, response, RestResponse.fail(ResponseCode.USER_LOGIN_TIMEOUT));
     }
 }

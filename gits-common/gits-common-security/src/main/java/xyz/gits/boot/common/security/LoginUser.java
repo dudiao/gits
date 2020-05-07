@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.common.core.enums.LoginType;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -39,13 +40,26 @@ public class LoginUser implements UserDetails, CredentialsContainer {
      */
     private LocalDateTime loginTime;
 
+    /**
+     * 登陆类型
+     */
+    private LoginType loginType;
+
     public LoginUser() {
     }
 
-    public LoginUser(UserVO user, String loginIp, LocalDateTime loginTime) {
+    public LoginUser(UserVO user, String loginIp, LocalDateTime loginTime, LoginType loginType) {
         this.user = user;
         this.loginIp = loginIp;
         this.loginTime = loginTime;
+        this.loginType = loginType;
+    }
+
+    public LoginUser(UserVO user, String loginIp, LocalDateTime loginTime, String loginType) {
+        this.user = user;
+        this.loginIp = loginIp;
+        this.loginTime = loginTime;
+        this.loginType = LoginType.valueOf(loginType);
     }
 
     @Override

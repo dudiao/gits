@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.common.core.enums.LoginType;
 import xyz.gits.boot.common.core.utils.IpUtils;
 import xyz.gits.boot.common.core.utils.ServletUtils;
 import xyz.gits.boot.common.security.LoginUser;
@@ -62,11 +63,11 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
                 user.setGiteeId(authUser.getUuid());
             }
             UserVO registerUser = systemService.registerUser(user);
-            return new LoginUser(registerUser, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now());
+            return new LoginUser(registerUser, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now(), authUser.getSource());
         }
 
         // 3. 用户存在 --> 返回 UserDetails
-        return new LoginUser(userVO, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now());
+        return new LoginUser(userVO, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now(), LoginType.EXTEND);
     }
 
 }

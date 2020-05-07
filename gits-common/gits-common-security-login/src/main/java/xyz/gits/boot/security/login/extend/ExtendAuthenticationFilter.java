@@ -41,7 +41,7 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
      */
     protected ExtendAuthenticationFilter() {
         // TODO: pattern 可以抽取成配置，最后通过配置文件进行修改，这样作为共用组件只需要实现一个 default，具体值可以有调用者指定
-        super(new AntPathRequestMatcher(EXTEND_LOGIN_URL, "POST"));
+        super(new AntPathRequestMatcher(EXTEND_LOGIN_URL, null));
     }
 
     @Override
@@ -54,8 +54,6 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
             // 1. 从请求中获取参数 用户登录扩展参数
             String extendKey = obtainExtendKey(request);
             String extendType = obtainExtendType(request);
-            extendKey = extendKey.trim();
-
 
             // 2. 封装成 Token 调用 AuthenticationManager 的 authenticate 方法，该方法中根据 Token 的类型去调用对应 Provider 的 authenticated
             ExtendAuthenticationToken token;

@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import xyz.gits.boot.common.security.GitsResourceServerConfiguration;
 import xyz.gits.boot.common.security.PermissionService;
+import xyz.gits.boot.common.security.RestHttpSessionIdResolver;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
 import xyz.gits.boot.common.security.hander.LoginUserAccessDeniedHandler;
@@ -115,7 +116,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 登出
                 .and().logout().permitAll()//允许所有用户
                 .logoutSuccessHandler(logoutSuccessHandler)//登出成功处理逻辑
-                .deleteCookies("SESSION")
+                .deleteCookies(RestHttpSessionIdResolver.AUTH_TOKEN)
                 // 会话管理
                 .and().sessionManagement().invalidSessionStrategy(invalidSessionHandler) // 超时处理
                 .maximumSessions(1)//同一账号同时登录最大用户数
