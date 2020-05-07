@@ -1,5 +1,6 @@
 package xyz.gits.boot.security.login.extend;
 
+import com.xkcoding.justauth.AuthRequestFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class ExtendAuthenticationSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     @Autowired
+    private AuthRequestFactory authRequestFactory;
+    @Autowired
     private ExtendUserDetailsService extendUserDetailsService;
     @Autowired
     private AuthenticationSuccessHandler successHandler;
@@ -34,6 +37,7 @@ public class ExtendAuthenticationSecurityConfig extends SecurityConfigurerAdapte
         filter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
+        filter.setAuthRequestFactory(authRequestFactory);
 
         // 2. 初始化 ExtendAuthenticationProvider
         ExtendAuthenticationProvider provider = new ExtendAuthenticationProvider();

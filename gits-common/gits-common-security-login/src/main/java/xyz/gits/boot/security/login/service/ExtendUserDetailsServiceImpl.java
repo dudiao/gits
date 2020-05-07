@@ -39,33 +39,34 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
      */
     @Override
     public UserDetails loadUserByExtendKey(ExtendAuthenticationToken token) throws UsernameNotFoundException {
-        if (token.getPrincipal() instanceof AuthUser) {
-            AuthUser authUser = (AuthUser) token.getPrincipal();
-            // 1. 根据 gitee 唯一id 查找用户信息
-            /**
-             * 这里要求 user 表中有 authUser.getSource()+'_id' 字段（小写，如 gitee_id），authUser.getSource()的取值见 {@link AuthDefaultSource}
-             */
-            UserVO userVO = systemService.loadUserByBiz(authUser.getSource().toLowerCase() + "_id", authUser.getUuid());
-
-            // 2. 用户不存在 --> 新增（注册）用户，之后返回 UserDetails
-            if (ObjectUtil.isNull(userVO) || StrUtil.isBlank(userVO.getUserId())) {
-                UserDTO user = new UserDTO();
-                user.setUserName(authUser.getUsername());
-                user.setNickName(authUser.getNickname());
-                user.setAvatar(authUser.getAvatar());
-                user.setRemark(authUser.getRemark());
-                if (StrUtil.equalsIgnoreCase(authUser.getSource(), AuthDefaultSource.GITEE.getName())) {
-                    user.setGiteeId(authUser.getUuid());
-                }
-                UserVO registerUser = systemService.registerUser(user);
-                return new LoginUser(registerUser, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now());
-            }
-
-            // 3. 用户存在 --> 返回 UserDetails
-            return new LoginUser(userVO, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now());
+        if (!(ObjectUtil.isNotEmpty(token.getPrincipal()) && token.getPrincipal() instanceof AuthUser)) {
+            log.info("extend, type={}", token.getExtendType());
+            return userDetailsService.loadUserByUsername(token.getExtendKey());
         }
-        log.info("extend, type={}", token.getExtendType());
-        return userDetailsService.loadUserByUsername(token.getExtendKey());
+
+        AuthUser authUser = (AuthUser) token.getPrincipal();
+        // 1. 根据 gitee 唯一id 查找用户信息
+        /**
+         * 这里要求 user 表中有 authUser.getSource()+'_id' 字段（小写，如 gitee_id），authUser.getSource()的取值见 {@link AuthDefaultSource}
+         */
+        UserVO userVO = systemService.loadUserByBiz(authUser.getSource().toLowerCase() + "_id", authUser.getUuid());
+
+        // 2. 用户不存在 --> 新增（注册）用户，之后返回 UserDetails
+        if (ObjectUtil.isNull(userVO) || StrUtil.isBlank(userVO.getUserId())) {
+            UserDTO user = new UserDTO();
+            user.setUserName(authUser.getUsername());
+            user.setNickName(authUser.getNickname());
+            user.setAvatar(authUser.getAvatar());
+            user.setRemark(authUser.getRemark());
+            if (StrUtil.equalsIgnoreCase(authUser.getSource(), AuthDefaultSource.GITEE.getName())) {
+                user.setGiteeId(authUser.getUuid());
+            }
+            UserVO registerUser = systemService.registerUser(user);
+            return new LoginUser(registerUser, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now());
+        }
+
+        // 3. 用户存在 --> 返回 UserDetails
+        return new LoginUser(userVO, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now());
     }
 
 }
