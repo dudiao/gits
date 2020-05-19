@@ -70,6 +70,9 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
         }
     }
 
+    /**
+     * 获取扩展登录extendKey，可以是用户名等，根据业务需要去扩展
+     */
     protected String obtainExtendKey(HttpServletRequest request) {
         return request.getParameter(UserUtil.EXTEND_KEY_PARAMETER);
     }
@@ -113,10 +116,20 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
         return authCallback;
     }
 
+    /**
+     * 获取路径参数：回调类型
+     */
     private String getCallbackType(HttpServletRequest request) {
+        // /context/open/oauth/callback/gitee
         String uri = request.getRequestURI();
+        // "/open/oauth/callback/".length()
         int common = EXTEND_LOGIN_URL.length() - 2;
         int start = uri.indexOf(EXTEND_LOGIN_URL.substring(0, common));
+        if(start == -1) {
+            log.warn("【justauth 第三方登录 response】回调类型为空，uri={}", uri);
+            return null;
+        }
+        // gitee
         return uri.substring(start + common);
     }
 

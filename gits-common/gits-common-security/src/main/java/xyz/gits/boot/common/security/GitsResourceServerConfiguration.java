@@ -70,6 +70,8 @@ public class GitsResourceServerConfiguration extends WebSecurityConfigurerAdapte
             "/webjars/**",
             "/swagger-resources/**",
             "/v2/api-docs",
+            "/csrf",
+            "/",
 
             // TODO feign调用接口，暂时放行，后续需要加上鉴权
             "/user/info/**",
