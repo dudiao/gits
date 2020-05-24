@@ -20,6 +20,7 @@ public class ExtendAuthenticationToken extends AbstractAuthenticationToken {
     private String extendType;
     private String extendKey;
     private final Object principal;
+    private Object credentials;
 
     // ~ Constructors
     // ===================================================================================================
@@ -27,11 +28,12 @@ public class ExtendAuthenticationToken extends AbstractAuthenticationToken {
     /**
      * 认证前使用
      */
-    public ExtendAuthenticationToken(String extendKey, String extendType) {
+    public ExtendAuthenticationToken(String extendKey, String extendType, Object credentials) {
         super(null);
         this.extendKey = extendKey;
         this.extendType = extendType;
         this.principal = extendKey;
+        this.credentials = credentials;
         setAuthenticated(false);
     }
 
@@ -70,7 +72,7 @@ public class ExtendAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return this.credentials;
     }
 
     @Override
@@ -91,5 +93,6 @@ public class ExtendAuthenticationToken extends AbstractAuthenticationToken {
     @Override
     public void eraseCredentials() {
         super.eraseCredentials();
+        credentials = null;
     }
 }

@@ -53,12 +53,13 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
 
             // 1. 从请求中获取参数 用户登录扩展参数
             String extendKey = obtainExtendKey(request);
+            String extendCredentials = obtainCredentials(request);
             String extendType = obtainExtendType(request);
 
             // 2. 封装成 Token 调用 AuthenticationManager 的 authenticate 方法，该方法中根据 Token 的类型去调用对应 Provider 的 authenticated
             ExtendAuthenticationToken token;
             if (StrUtil.isNotBlank(extendKey)) {
-                token = new ExtendAuthenticationToken(extendKey, extendType);
+                token = new ExtendAuthenticationToken(extendKey, extendType, extendCredentials);
             }else {
                 // 从第三方拿到用户信息
                 token = new ExtendAuthenticationToken(obtainAuthUser(request));
@@ -70,13 +71,25 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
         }
     }
 
+
+
     /**
-     * 获取扩展登录extendKey，可以是用户名等，根据业务需要去扩展
+     * 获取扩展登录extendKey，可以是用户名、手机号等，根据业务需要去扩展
      */
     protected String obtainExtendKey(HttpServletRequest request) {
         return request.getParameter(UserUtil.EXTEND_KEY_PARAMETER);
     }
 
+    /**
+     * 获取扩展登录extendCredentials，可以是手机号的验证码等，根据业务需要去扩展
+     */
+    protected String obtainCredentials(HttpServletRequest request) {
+        return request.getParameter(UserUtil.EXTEND_CREDENTIALS_PARAMETER);
+    }
+
+    /**
+     * 获取扩展登录类型
+     */
     protected String obtainExtendType(HttpServletRequest request) {
         return request.getParameter(UserUtil.EXTEND_TYPE_PARAMETER);
     }

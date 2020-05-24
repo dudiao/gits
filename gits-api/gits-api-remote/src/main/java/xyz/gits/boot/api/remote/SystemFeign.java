@@ -12,7 +12,7 @@ import xyz.gits.boot.api.system.vo.UserVO;
  * @author songyinyin
  * @date 2020/4/4 下午 09:25
  */
-@FeignClient(name = "gits-system")
+@FeignClient(name = "gits-system", url = "${gits.system-url:}")
 public interface SystemFeign extends SystemService {
 
     @Override

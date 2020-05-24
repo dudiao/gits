@@ -21,9 +21,13 @@ public class UserUtil {
      */
     public static String EXTEND_TYPE_PARAMETER = "extendType";
     /**
-     * 用户登录扩展参数
+     * 用户登录扩展key，如手机号
      */
     public static String EXTEND_KEY_PARAMETER = "extendKey";
+    /**
+     * 用户登录扩展凭证，如手机号的验证码
+     */
+    public static String EXTEND_CREDENTIALS_PARAMETER = "extendCredentials";
 
     /**
      * 获取当前登录用户
