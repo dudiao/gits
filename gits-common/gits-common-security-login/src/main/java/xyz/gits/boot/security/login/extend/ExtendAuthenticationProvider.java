@@ -1,5 +1,6 @@
 package xyz.gits.boot.security.login.extend;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.MessageSource;
@@ -14,6 +15,8 @@ import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.userdetails.cache.NullUserCache;
 import org.springframework.util.Assert;
+import xyz.gits.boot.common.core.enums.LoginType;
+import xyz.gits.boot.common.security.LoginUser;
 
 /**
  * @author songyinyin
@@ -169,7 +172,7 @@ public class ExtendAuthenticationProvider implements AuthenticationProvider, Ini
     }
 
     /**
-     * 获取用户详情，默认按照 username 进行查找，子类可以根据需求覆盖此方法
+     * 获取用户详情
      */
     protected UserDetails retrieveUser(String extendKey,
                                        ExtendAuthenticationToken authentication)
@@ -278,6 +281,10 @@ public class ExtendAuthenticationProvider implements AuthenticationProvider, Ini
     private class DefaultPostAuthenticationChecks implements UserDetailsChecker {
         @Override
         public void check(UserDetails user) {
+            LoginUser loginUser = (LoginUser) user;
+            if (!LoginType.PASSWORD.equals(loginUser.getLoginType())) {
+                return;
+            }
             if (!user.isCredentialsNonExpired()) {
                 log.debug("User account credentials have expired");
 
