@@ -45,11 +45,6 @@
             <artifactId>velocity-engine-core</artifactId>
             <version>2.2</version>
         </dependency>
-        <!-- jetcache -->
-        <dependency>
-            <groupId>com.alicp.jetcache</groupId>
-            <artifactId>jetcache-starter-redis-springdata</artifactId>
-        </dependency>
 
         <!-- p6spy-->
         <dependency>

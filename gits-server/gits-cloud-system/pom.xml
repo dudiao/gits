@@ -23,6 +23,12 @@
             <artifactId>gits-system</artifactId>
         </dependency>
 
+        <!-- 缓存 jetcache https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-starter-redis-springdata -->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redis-springdata</artifactId>
+        </dependency>
+
         <!--web 模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

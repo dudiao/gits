@@ -23,10 +23,11 @@
         <poi.version>3.17</poi.version>
         <druid.version>1.1.21</druid.version>
         <mybatis-plus.version>3.3.1</mybatis-plus.version>
-        <jetcache.version>2.6.0.RC</jetcache.version>
+        <jetcache.version>2.6.0</jetcache.version>
         <spring-boot-admin.version>2.2.2</spring-boot-admin.version>
         <p6spy.version>3.8.5</p6spy.version>
         <justauth.version>1.3.3</justauth.version>
+        <kaptcha.version>1.6.2</kaptcha.version>
     </properties>
 
     <modules>
@@ -51,6 +52,13 @@
             <version>${swagger-spring4all.version}</version>
         </dependency>
         <!-- swagger2 end -->
+
+        <!--配置文件处理器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -195,19 +203,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <!--javac编译器需要指定-parameters参数以后才会把参数名信息写入到字节码中，然后才能被反射机制读取，默认情况下这个参数是没有指定的。-->
+                    <compilerArgument>-parameters</compilerArgument>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <skip>true</skip>
                     <compilerArguments>

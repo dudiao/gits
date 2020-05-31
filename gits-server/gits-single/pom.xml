@@ -34,6 +34,12 @@
             <version>${spring-boot-admin.version}</version>
         </dependency>
 
+        <!-- 缓存 jetcache https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-starter-redis-springdata -->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redis-springdata</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

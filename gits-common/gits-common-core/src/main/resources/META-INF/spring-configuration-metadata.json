@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "gits",
+      "type": "xyz.gits.boot.common.core.config.GitsProperties",
+      "sourceType": "xyz.gits.boot.common.core.config.GitsProperties"
+    },
+    {
+      "name": "gits.security",
+      "type": "xyz.gits.boot.common.core.config.GitsProperties$Security",
+      "sourceType": "xyz.gits.boot.common.core.config.GitsProperties",
+      "sourceMethod": "getSecurity()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "gits.security.code-expire-time",
+      "type": "java.lang.Long",
+      "description": "验证码过期时间，单位：秒，默认120秒",
+      "sourceType": "xyz.gits.boot.common.core.config.GitsProperties$Security",
+      "defaultValue": 120
+    },
+    {
+      "name": "gits.security.verify-code-enable",
+      "type": "java.lang.Boolean",
+      "description": "是否开启验证码，默认为 true，开启",
+      "sourceType": "xyz.gits.boot.common.core.config.GitsProperties$Security",
+      "defaultValue": true
+    }
+  ],
+  "hints": []
+}

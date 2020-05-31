@@ -8,6 +8,7 @@ import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
 import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.security.login.verifycode.VerifyCodeException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             // 用户被锁定
             log.info("[登录失败] - 用户[{}]被锁定", username);
             result = RestResponse.build(ResponseCode.USER_LOCKED);
+
+        } else if (e instanceof VerifyCodeException) {
+            // 内部错误
+            log.error(String.format("[登录失败] - 用户[%s]验证码错误", username));
+            result = RestResponse.fail(ResponseCode.VERIFY_CODE_ERROR);
 
         } else if (e instanceof InternalAuthenticationServiceException) {
             // 内部错误

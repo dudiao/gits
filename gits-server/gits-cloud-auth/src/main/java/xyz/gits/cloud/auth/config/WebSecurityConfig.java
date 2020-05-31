@@ -2,6 +2,7 @@ package xyz.gits.cloud.auth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import xyz.gits.boot.common.core.config.GitsProperties;
 import xyz.gits.boot.common.security.GitsResourceServerConfiguration;
 import xyz.gits.boot.common.security.PermissionService;
 import xyz.gits.boot.common.security.RestHttpSessionIdResolver;
@@ -21,6 +24,7 @@ import xyz.gits.boot.security.login.handler.LoginFailureHandler;
 import xyz.gits.boot.security.login.handler.LoginSuccessHandler;
 import xyz.gits.boot.security.login.handler.LogoutSuccessHandler;
 import xyz.gits.boot.security.login.service.DefaultUserDetailsService;
+import xyz.gits.boot.security.login.verifycode.VerifyCodeFilter;
 
 /**
  * 'prePostEnabled = true' --> 使{@link PreAuthorize PostAuthorize} {@link PostAuthorize}和{@link PermissionService}生效 <br/>
@@ -76,6 +80,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     private ExtendAuthenticationSecurityConfig extendAuthenticationSecurityConfig;
+    /**
+     * 验证码过滤器
+     */
+    @Lazy
+    @Autowired
+    private VerifyCodeFilter verifyCodeFilter;
+
+    @Autowired
+    private GitsProperties properties;
 
     /**
      * 配置认证方式等
@@ -121,6 +134,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredSessionStrategy(sessionInformationExpiredHandler) // 顶号处理
         ;
 
+        // 验证码过滤器
+        if (properties.getSecurity().isVerifyCodeEnable()) {
+            http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
+        }
     }
 
     /**
