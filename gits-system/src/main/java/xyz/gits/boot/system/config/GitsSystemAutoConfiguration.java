@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = {"xyz.gits.boot.*.mapper"})
+@MapperScan(basePackages = {"xyz.gits.*.system.mapper"})
 public class GitsSystemAutoConfiguration {
 
     /**
