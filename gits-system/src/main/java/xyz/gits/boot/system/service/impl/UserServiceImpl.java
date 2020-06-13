@@ -1,7 +1,9 @@
 package xyz.gits.boot.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -16,7 +18,6 @@ import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
-import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
@@ -46,9 +47,16 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
     @Autowired
     private IUserRoleRelService userRoleRelService;
 
+    /**
+     * 分页获取用户列表
+     * @param queryWrapper
+     * @return
+     */
     @Override
-    public IPage<User> getPage() {
-        QueryWrapper<User> queryWrapper = parseParameter();
+    public IPage<User> getPage(Wrapper<User> queryWrapper) {
+        if (ObjectUtil.isEmpty(queryWrapper)) {
+            return page(parseParameter());
+        }
         return page(queryWrapper);
     }
 

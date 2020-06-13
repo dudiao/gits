@@ -41,6 +41,10 @@ public class Org implements Serializable {
     @TableField("parent_org_id")
     private String parentOrgId;
 
+    @ApiModelProperty(value = "排序值，值越大排序越靠前")
+    @TableField("org_order")
+    private Integer orgOrder;
+
     @ApiModelProperty(value = "机构所在地区代码")
     @TableField("area_code")
     private String areaCode;

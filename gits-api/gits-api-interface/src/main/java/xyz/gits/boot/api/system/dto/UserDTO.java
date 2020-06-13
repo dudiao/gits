@@ -7,6 +7,7 @@ import xyz.gits.boot.common.core.validate.CreateGroup;
 import xyz.gits.boot.common.core.validate.UpdateGroup;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "系统用户传输对象")
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     @ApiModelProperty(value = "用户id")
     @NotBlank(groups = UpdateGroup.class)

@@ -13,7 +13,7 @@ public interface PageParameterConstants {
      */
     long PAGE_DEFAULT = 1L;
     /**
-     * 每页展示数据大小默认值
+     * TODO 需要放到配置中心，每页展示数据大小默认值
      */
     long SIZE_DEFAULT = 10L;
     /**

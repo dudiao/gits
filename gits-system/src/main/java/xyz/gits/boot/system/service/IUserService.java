@@ -1,5 +1,7 @@
 package xyz.gits.boot.system.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.entity.User;
@@ -18,7 +20,12 @@ import xyz.gits.boot.common.core.response.RestResponse;
 public interface IUserService extends BasicService<User> {
 
 
-    IPage<User> getPage();
+    /**
+     * 分页获取用户列表
+     * @param queryWrapper
+     * @return
+     */
+    IPage<User> getPage(Wrapper<User> queryWrapper);
 
     /**
      * 根据用户名获取用户信息

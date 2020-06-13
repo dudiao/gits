@@ -6,4 +6,8 @@ package xyz.gits.boot.common.core.constants;
  */
 public interface SystemConstants {
 
+    /**
+     * 根机构id
+     */
+    String ORG_ROOT_ID = "0000";
 }

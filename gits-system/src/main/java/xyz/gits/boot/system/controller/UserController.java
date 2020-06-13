@@ -36,11 +36,11 @@ public class UserController extends BasicController {
     @Autowired
     protected SystemService systemService;
 
-    @GetMapping("/user/page")
+    @GetMapping("/system/user/page")
     @ApiOperation(value = "分页查询用户")
     @PreAuthorize("@ps.permission('system:user:page')")
     public TableResponse<UserVO> page() {
-        IPage<User> page = userService.getPage();
+        IPage<User> page = userService.getPage(null);
 
         List<UserVO> userVOList = page.getRecords().stream().map(e -> {
             UserVO userVO = new UserVO();
@@ -51,7 +51,7 @@ public class UserController extends BasicController {
         return TableResponse.success(page.getTotal(), userVOList);
     }
 
-    @PostMapping("/user")
+    @PostMapping("/system/user")
     @ApiOperation(value = "新增用户")
     @PreAuthorize("@ps.permission('system:user:add')")
     public RestResponse save(@Validated(CreateGroup.class) @RequestBody UserDTO userDTO) {
@@ -59,7 +59,7 @@ public class UserController extends BasicController {
         return RestResponse.success();
     }
 
-    @PutMapping("/user")
+    @PutMapping("/system/user")
     @ApiOperation(value = "更新用户")
     @PreAuthorize("@ps.permission('system:user:update')")
     public RestResponse updateUser(@Validated(UpdateGroup.class) @RequestBody UserDTO userDTO) {
@@ -67,13 +67,13 @@ public class UserController extends BasicController {
         return RestResponse.success();
     }
 
-    @PutMapping("/user/edit")
+    @PutMapping("/system/user/edit")
     @ApiOperation(value = "修改个人信息（包括密码等）")
     public RestResponse updateUserInfo(@Validated(UpdateGroup.class) @RequestBody UserDTO userDTO) {
         return userService.updateUserInfo(userDTO);
     }
 
-    @GetMapping("/user/{userName}")
+    @GetMapping("/system/user/{userName}")
     @ApiOperation(value = "查看用户详情")
     public RestResponse<UserVO> detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
         UserVO userVO = systemService.loadUserByUsername(userName);

@@ -20,8 +20,8 @@ public class TableResponse<T> extends BaseResponse {
         this.data = new TableData<T>(total, rows);
     }
 
-    public static TableResponse success(long total, List rows) {
-        return new TableResponse<>(total, rows);
+    public static <T> TableResponse<T> success(long total, List rows) {
+        return new TableResponse<T>(total, rows);
     }
 
     public class TableData<T> {

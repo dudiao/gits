@@ -31,7 +31,12 @@ public enum ResponseCode {
     USER_NOT_FIND(11009,"没有该用户"),
     USER_LOGIN_FAIL(11010,"用户登录失败"),
     VERIFY_CODE_ERROR(11011,"验证码错误"),
-    NO_AUTHENTICATION(1003006,"无权访问"),
+    NO_AUTHENTICATION(11012,"无权访问"),
+
+    //机构管理
+    ORG_NOT_EXIST(17002, "机构不存在"),
+    ORG_HAVE_USER(17003, "机构下存在用户"),
+    ORG_HAVE_SUB(17004, "机构存在子机构"),
 
     //文件系统
     FILE_DOES_NOT_EXIST(16001,"文件不存在"),
