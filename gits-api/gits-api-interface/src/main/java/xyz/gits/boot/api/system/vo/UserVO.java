@@ -26,9 +26,9 @@ public class UserVO extends User {
     @ApiModelProperty(value = "权限标识集合")
     private Set<String> permissions;
     /**
-     * 角色集合
+     * 角色id集合
      */
-    @ApiModelProperty(value = "角色标识集合")
+    @ApiModelProperty(value = "角色id集合")
     private Set<String> roles;
 
     // session

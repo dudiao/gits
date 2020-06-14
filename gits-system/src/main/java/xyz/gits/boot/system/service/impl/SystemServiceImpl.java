@@ -17,6 +17,7 @@ import xyz.gits.boot.system.service.IRoleService;
 import xyz.gits.boot.system.service.IUserService;
 
 import java.sql.Struct;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -64,15 +65,22 @@ public class SystemServiceImpl implements SystemService {
         UserVO userVO = new UserVO();
         BeanUtils.copyPropertiesIgnoreNull(user, userVO);
 
-        // 权限
-        List<Resource> resources = resourceService.selectListByUser(user.getUserId());
-        Set<String> permissions = resources.stream().map(Resource::getPermission).collect(Collectors.toSet());
-        userVO.setPermissions(permissions);
+        // 角色 Role::getRoleId
+        Set<String> roleIds = roleService.getRolesByUserId(user.getUserId())
+                .stream().map(Role::getRoleId).collect(Collectors.toSet());
+        userVO.setRoles(roleIds);
 
-        // 角色
-        Set<String> roles = roleService.getRolesByUserId(user.getUserId())
-                .stream().map(Role::getRoleName).collect(Collectors.toSet());
-        userVO.setRoles(roles);
+        // 权限 Resource::getPermission
+        Set<String> permissions = new HashSet<>();
+        roleIds.forEach(roleId -> {
+            List<String> permissionList = resourceService.findResourceByRoleId(roleId)
+                .stream()
+                .filter(resource -> StrUtil.isNotEmpty(resource.getPermission()))
+                .map(Resource::getPermission)
+                .collect(Collectors.toList());
+            permissions.addAll(permissionList);
+        });
+        userVO.setPermissions(permissions);
         return userVO;
     }
 

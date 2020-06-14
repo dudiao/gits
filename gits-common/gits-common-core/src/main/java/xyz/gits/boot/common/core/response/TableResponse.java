@@ -20,11 +20,11 @@ public class TableResponse<T> extends BaseResponse {
         this.data = new TableData<T>(total, rows);
     }
 
-    public static <T> TableResponse<T> success(long total, List rows) {
+    public static <T> TableResponse<T> success(long total, List<T> rows) {
         return new TableResponse<T>(total, rows);
     }
 
-    public class TableData<T> {
+    public static class TableData<T> {
         long total;
         List<T> rows;
 

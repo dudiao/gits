@@ -1,6 +1,7 @@
 package xyz.gits.boot.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
  * @date 2020-02-29
  */
 @RestController
+@Api(value = "user", tags = "用户管理")
 public class UserController extends BasicController {
 
     @Autowired

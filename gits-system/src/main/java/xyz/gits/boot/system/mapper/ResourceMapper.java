@@ -3,7 +3,6 @@ package xyz.gits.boot.system.mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.common.core.basic.BasicMapper;
-import xyz.gits.boot.api.system.enums.ResourceType;
 
 import java.util.List;
 
@@ -18,15 +17,11 @@ import java.util.List;
 public interface ResourceMapper extends BasicMapper<Resource> {
 
     /**
-     * 查询用户的权限
+     * 通过角色id查询资源
      *
-     * @param userId
-     * @param systemId
-     * @param resourceTypes
+     * @param roleId 角色id
      * @return
      */
-    List<Resource> selectListByUser(@Param("userId") String userId,
-                                    @Param("systemId") String systemId,
-                                    @Param("resourceTypes") ResourceType... resourceTypes);
+    List<Resource> findResourceByRoleId(@Param("roleId") String roleId);
 
 }

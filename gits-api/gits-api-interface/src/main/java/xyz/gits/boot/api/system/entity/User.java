@@ -1,6 +1,8 @@
 package xyz.gits.boot.api.system.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
@@ -123,5 +125,9 @@ public class User implements Serializable {
     @TableField("gitee_id")
     private String giteeId;
 
+    @TableLogic
+    @ApiModelProperty(value = "删除标记，0:正常，1:已删除")
+    @TableField("delete_flag")
+    private String deleteFlag;
 
 }

@@ -18,6 +18,8 @@ import java.util.List;
 @ApiModel(value = "系统用户传输对象")
 public class UserDTO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @ApiModelProperty(value = "用户id")
     @NotBlank(groups = UpdateGroup.class)
     private String userId;

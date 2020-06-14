@@ -6,6 +6,7 @@ import xyz.gits.boot.common.core.exception.SystemException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
 
 /**
  * @author songyinyin
@@ -52,6 +53,20 @@ public class UserUtil {
      */
     public static String getUserName() {
         return loginUser().getUser().getUserName();
+    }
+
+    /**
+     * 获取当前登录用户机构id
+     */
+    public static String getUserOrgId() {
+        return loginUser().getUser().getOrgId();
+    }
+
+    /**
+     * 获取当前登录用户角色集合
+     */
+    public static Set<String> getUserRoles() {
+        return loginUser().getUser().getRoles();
     }
 
     /**

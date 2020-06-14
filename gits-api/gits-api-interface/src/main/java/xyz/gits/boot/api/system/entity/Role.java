@@ -1,5 +1,6 @@
 package xyz.gits.boot.api.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import xyz.gits.boot.api.system.enums.Status;
+import xyz.gits.boot.api.system.enums.StopFlag;
 
 /**
  * <p>
@@ -33,6 +35,10 @@ public class Role implements Serializable {
     @TableId("role_id")
     private String roleId;
 
+    @ApiModelProperty(value = "角色代码")
+    @TableField("role_code")
+    private String roleCode;
+
     @ApiModelProperty(value = "角色名称")
     @TableField("role_name")
     private String roleName;
@@ -45,9 +51,9 @@ public class Role implements Serializable {
     @TableField("create_org_id")
     private String createOrgId;
 
-    @ApiModelProperty(value = "启停标志（1启用0停用）")
-    @TableField("status")
-    private Status status;
+    @ApiModelProperty(value = "启停标志（0启用1停用）")
+    @TableField("stop_flag")
+    private StopFlag stopFlag;
 
     @ApiModelProperty(value = "停用原因")
     @TableField("stop_reason")
@@ -69,5 +75,9 @@ public class Role implements Serializable {
     @TableField("update_time")
     private LocalDateTime updateTime;
 
+    @TableLogic
+    @ApiModelProperty(value = "删除标记，0:正常，1:已删除")
+    @TableField("delete_flag")
+    private String deleteFlag;
 
 }

@@ -1,7 +1,9 @@
 package xyz.gits.boot.api.system.entity;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +14,6 @@ import xyz.gits.boot.api.system.enums.ResourceType;
 import xyz.gits.boot.api.system.enums.VisibleType;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -52,13 +53,13 @@ public class Resource implements Serializable {
     @TableField("resource_type")
     private ResourceType resourceType;
 
-    @ApiModelProperty(value = "资源状态（1显示 0隐藏）")
+    @ApiModelProperty(value = "资源状态（0显示 1隐藏）")
     @TableField("visible")
     private VisibleType visible;
 
     @ApiModelProperty(value = "资源排序，越大越排在上边")
     @TableField("order_num")
-    private BigDecimal orderNum;
+    private Integer orderNum;
 
     @ApiModelProperty(value = "权限字符串")
     @TableField("permission")
@@ -88,5 +89,17 @@ public class Resource implements Serializable {
     @TableField("remark")
     private String remark;
 
+    @TableLogic
+    @ApiModelProperty(value = "删除标记，0:正常，1:已删除")
+    @TableField("delete_flag")
+    private String deleteFlag;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Resource) {
+            String targetResourceId = ((Resource) obj).getResourceId();
+            return StrUtil.equals(resourceId, targetResourceId);
+        }
+        return super.equals(obj);
+    }
 }

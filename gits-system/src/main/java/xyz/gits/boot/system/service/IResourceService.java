@@ -17,4 +17,11 @@ public interface IResourceService extends BasicService<Resource> {
 
     List<Resource> selectListByUser(String userId);
 
+    /**
+     * 通过角色id查询资源
+     * @param roleId 角色id
+     * @return
+     */
+    List<Resource> findResourceByRoleId(String roleId);
+
 }

@@ -25,4 +25,15 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
     public List<Resource> selectListByUser(String userId) {
         return resourceMapper.selectListByUser(userId, null, null);
     }
+
+    /**
+     * TODO 加缓存 通过角色id查询资源
+     *
+     * @param roleId 角色id
+     * @return
+     */
+    @Override
+    public List<Resource> findResourceByRoleId(String roleId) {
+        return resourceMapper.findResourceByRoleId(roleId);
+    }
 }

@@ -1,5 +1,6 @@
 package xyz.gits.boot.api.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
@@ -97,5 +98,8 @@ public class Org implements Serializable {
     @TableField("update_time")
     private LocalDateTime updateTime;
 
-
+    @TableLogic
+    @ApiModelProperty(value = "删除标记，0:正常，1:已删除")
+    @TableField("delete_flag")
+    private String deleteFlag;
 }

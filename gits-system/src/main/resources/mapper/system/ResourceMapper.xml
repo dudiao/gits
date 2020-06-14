@@ -2,30 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.gits.boot.system.mapper.ResourceMapper">
 
-    <!--根据用户ID和系统ID查询菜单-->
-    <select id="selectListByUser" resultType="xyz.gits.boot.api.system.entity.Resource">
-        select DISTINCT r.resource_id, r.parent_resource_id, r.resource_name, r.url, r.permission, r.resource_type,
-        r.icon, r.order_num, r.create_time
-        from system_resource r
-        LEFT JOIN system_role_resource_rel rrr ON r.resource_id = rrr.resource_id
-        LEFT JOIN system_role ro ON ro.role_id = rrr.role_id
-        LEFT JOIN system_user_role_rel ur ON ur.role_id = ro.role_id
-        <where>
-            r.visible = '1'
-            <if test="resourceTypes!=null and resourceTypes.length>0">
-                AND r.resource_type in
-                <foreach collection="resourceTypes" item="item" index="index" open="(" separator="," close=")">
-                    #{item.type}
-                </foreach>
-            </if>
-            <if test="userId != null and userId != ''">
-                AND ur.user_id = #{userId}
-            </if>
-            <if test="systemId != null and systemId != ''">
-                AND r.system_id = #{systemId}
-            </if>
-        </where>
-        order by r.parent_resource_id desc, r.order_num desc
+    <!-- 通过角色查询资源信息 -->
+    <select id="findResourceByRoleId" resultType="xyz.gits.boot.api.system.entity.Resource">
+		SELECT
+			sr.*
+		FROM
+			system_resource sr
+		LEFT JOIN system_role_resource_rel srrr ON sr.resource_id = srrr.resource_id
+		WHERE
+			sr.delete_flag = '0'
+		AND srrr.role_id = #{roleId}
+		ORDER BY
+			sr.order_num DESC
     </select>
 
 </mapper>

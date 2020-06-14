@@ -10,4 +10,9 @@ public interface SystemConstants {
      * 根机构id
      */
     String ORG_ROOT_ID = "0000";
+
+    /**
+     * 根资源id
+     */
+    String RESOURCE_ROOT_ID = "0";
 }
