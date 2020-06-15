@@ -1,13 +1,11 @@
 package xyz.gits.boot.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import xyz.gits.boot.api.system.dto.UserDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicService;
-import xyz.gits.boot.common.core.response.RestResponse;
 
 /**
  * <p>
@@ -22,6 +20,7 @@ public interface IUserService extends BasicService<User> {
 
     /**
      * 分页获取用户列表
+     *
      * @param queryWrapper
      * @return
      */
@@ -43,5 +42,5 @@ public interface IUserService extends BasicService<User> {
      */
     void updateUser(UserDTO userDTO);
 
-    RestResponse updateUserInfo(UserDTO userDTO);
+    void updateUserInfo(UserDTO userDTO);
 }

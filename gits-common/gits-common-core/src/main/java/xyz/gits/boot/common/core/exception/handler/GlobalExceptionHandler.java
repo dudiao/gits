@@ -9,7 +9,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import xyz.gits.boot.common.core.exception.BaseException;
+import xyz.gits.boot.common.core.exception.SystemException;
+import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 
@@ -27,14 +28,25 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     /**
-     * 自定义异常基类
+     * 系统异常
      *
      * @param exception
      * @return
      */
-    @ExceptionHandler(BaseException.class)
-    public RestResponse<ResponseCode> basicExceptionHandler(BaseException exception) {
+    @ExceptionHandler(SystemException.class)
+    public RestResponse<ResponseCode> systemExceptionHandler(SystemException exception) {
         log.error(String.format("处理异常 code=%s，message=%s", exception.getCode(), exception.getMessage()), exception);
+        return RestResponse.build(exception.getCode(), exception.getMessage());
+    }
+
+    /**
+     * 系统异常，不打印日志，直接返回前端
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(SystemNoLogException.class)
+    public RestResponse<ResponseCode> systemNoLogExceptionHandler(SystemNoLogException exception) {
         return RestResponse.build(exception.getCode(), exception.getMessage());
     }
 
@@ -89,7 +101,7 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage(), ex);
         StringBuffer errorMsg = new StringBuffer();
         errors.stream().forEach(x ->
-                errorMsg.append(x.getDefaultMessage()).append("\n")
+            errorMsg.append(x.getDefaultMessage()).append("\n")
         );
         return RestResponse.build(ResponseCode.GLOBAL_PARAM_ERROR.getCode(), errorMsg.toString(), null);
     }

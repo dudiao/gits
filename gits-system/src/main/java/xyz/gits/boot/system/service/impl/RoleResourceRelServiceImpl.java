@@ -1,10 +1,13 @@
 package xyz.gits.boot.system.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.alicp.jetcache.anno.CacheInvalidate;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.springframework.transaction.annotation.Transactional;
 import xyz.gits.boot.api.system.dto.RoleResourceDTO;
 import xyz.gits.boot.api.system.entity.RoleResourceRel;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
+import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.system.mapper.RoleResourceRelMapper;
 import xyz.gits.boot.system.service.IRoleResourceRelService;
 
@@ -28,16 +31,18 @@ public class RoleResourceRelServiceImpl extends BasicServiceImpl<RoleResourceRel
      * @param dto
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @CacheInvalidate(name= CacheConstants.ROLE_RESOURCE, key="#dto.roleId")
     public void updateResource(RoleResourceDTO dto) {
         this.remove(Wrappers.<RoleResourceRel>query().lambda()
             .eq(RoleResourceRel::getRoleId, dto.getRoleId()));
 
-        if (StrUtil.isBlank(dto.getMenuIds())) {
+        if (StrUtil.isBlank(dto.getResourceIds())) {
             return;
         }
 
         List<RoleResourceRel> list = Arrays
-            .stream(dto.getMenuIds().split(","))
+            .stream(dto.getResourceIds().split(","))
             .map(resourceId -> {
                 RoleResourceRel roleResourceRel = new RoleResourceRel();
                 roleResourceRel.setRoleId(dto.getRoleId());

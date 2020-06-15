@@ -22,5 +22,5 @@ public class RoleResourceDTO implements Serializable {
     private String roleId;
 
     @ApiModelProperty(value = "菜单id列表，多个用英文逗号分隔")
-    private String menuIds;
+    private String resourceIds;
 }

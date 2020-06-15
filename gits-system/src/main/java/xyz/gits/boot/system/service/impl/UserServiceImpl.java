@@ -18,8 +18,8 @@ import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
+import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
-import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
 import xyz.gits.boot.common.security.UserUtil;
 import xyz.gits.boot.system.mapper.UserMapper;
@@ -49,6 +49,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
     /**
      * 分页获取用户列表
+     *
      * @param queryWrapper
      * @return
      */
@@ -75,7 +76,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         user.setStopFlag(StopFlag.ENABLE);
         if (StrUtil.isNotBlank(user.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }else {
+        } else {
             // TODO 默认密码需要从配置中心读取
             user.setPassword(passwordEncoder.encode("111111-a"));
         }
@@ -89,12 +90,12 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
             return userVO;
         }
         List<UserRoleRel> userRoleList = userDTO.getRole()
-                .stream().map(roleId -> {
-                    UserRoleRel userRole = new UserRoleRel();
-                    userRole.setUserId(user.getUserId());
-                    userRole.setRoleId(roleId);
-                    return userRole;
-                }).collect(Collectors.toList());
+            .stream().map(roleId -> {
+                UserRoleRel userRole = new UserRoleRel();
+                userRole.setUserId(user.getUserId());
+                userRole.setRoleId(roleId);
+                return userRole;
+            }).collect(Collectors.toList());
         userRoleRelService.saveBatch(userRoleList);
 
         // TODO 缺少用户权限
@@ -117,7 +118,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
         // 删除用户角色
         userRoleRelService.remove(Wrappers.<UserRoleRel>update().lambda()
-                .eq(UserRoleRel::getUserId, userDTO.getUserId()));
+            .eq(UserRoleRel::getUserId, userDTO.getUserId()));
         // 新增用户角色
         List<UserRoleRel> userRoleRels = userDTO.getRole().stream().map(e -> {
             UserRoleRel userRoleRel = new UserRoleRel();
@@ -129,18 +130,18 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
     }
 
     @Override
-    public RestResponse updateUserInfo(UserDTO userDTO) {
+    public void updateUserInfo(UserDTO userDTO) {
         User user = baseMapper.selectById(userDTO.getUserId());
         if (null == user) {
             log.warn("[修改个人信息] - 用户[userId={}, userName={}]不存在", userDTO.getUserId(), userDTO.getUserName());
-            return RestResponse.build(ResponseCode.USER_NOT_FIND);
+            throw new SystemNoLogException(ResponseCode.USER_NOT_FIND);
         }
 
         User currentUser = UserUtil.loginUser().getUser();
         if (!StrUtil.equals(currentUser.getUserId(), userDTO.getUserId())) {
             log.warn("[修改个人信息] - 不是本人的操作，当前登录用户[userId={}, userName={}]，被操作用户[userId={}, userName={}]",
-                    currentUser.getUserId(), currentUser.getUserName(), userDTO.getUserId(), userDTO.getUserName());
-            return RestResponse.build(ResponseCode.NO_AUTHENTICATION);
+                currentUser.getUserId(), currentUser.getUserName(), userDTO.getUserId(), userDTO.getUserName());
+            throw new SystemNoLogException(ResponseCode.NO_AUTHENTICATION);
         }
 
         if (StrUtil.isNotBlank(userDTO.getPassword()) && StrUtil.isNotBlank(userDTO.getNewPassword())) {
@@ -149,7 +150,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
                 user.setPwdUpdateTime(LocalDateTime.now());
             } else {
                 log.warn("[修改个人信息] - 用户[userId={}, userName={}]原密码错误，修改密码失败", userDTO.getUserId(), userDTO.getUserName());
-                return RestResponse.build(ResponseCode.USER_PASSWORD_ERROR);
+                throw new SystemNoLogException(ResponseCode.USER_PASSWORD_ERROR);
             }
         }
         user.setAvatar(userDTO.getAvatar());
@@ -159,6 +160,5 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         user.setUpdateUserId(userDTO.getUserId());
         user.setUpdateTime(LocalDateTime.now());
         baseMapper.updateById(user);
-        return RestResponse.success();
     }
 }

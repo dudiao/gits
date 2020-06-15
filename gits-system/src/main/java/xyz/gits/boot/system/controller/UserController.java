@@ -72,7 +72,8 @@ public class UserController extends BasicController {
     @PutMapping("/system/user/edit")
     @ApiOperation(value = "修改个人信息（包括密码等）")
     public RestResponse updateUserInfo(@Validated(UpdateGroup.class) @RequestBody UserDTO userDTO) {
-        return userService.updateUserInfo(userDTO);
+        userService.updateUserInfo(userDTO);
+        return RestResponse.success();
     }
 
     @GetMapping("/system/user/{userName}")

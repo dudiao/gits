@@ -1,5 +1,6 @@
 package xyz.gits.boot.common.core.constants;
 
+
 /**
  * 缓存key
  *
@@ -9,8 +10,28 @@ package xyz.gits.boot.common.core.constants;
 public interface CacheConstants {
 
     /**
+     * 缓存前缀
+     */
+    String CACHE_PREFIX = "gits:";
+
+    /**
      * 验证码
      */
-    String VALIDATE_CODE = "validate_code:";
+    String VALIDATE_CODE = CACHE_PREFIX + "validate_code:";
+
+    /**
+     * 机构树
+     */
+    String ORG_TREE = CACHE_PREFIX + "org_tree:";
+
+    /**
+     * 角色资源
+     */
+    String ROLE_RESOURCE = CACHE_PREFIX + "role_resource:";
+
+    /**
+     * 登录用户
+     */
+    String LOGIN_USER = CACHE_PREFIX + "login_user:";
 
 }

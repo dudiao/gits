@@ -36,11 +36,5 @@
             <artifactId>easy-captcha</artifactId>
             <version>${kaptcha.version}</version>
         </dependency>
-        <!--jetcache-core 包括注解-->
-        <dependency>
-            <groupId>com.alicp.jetcache</groupId>
-            <artifactId>jetcache-core</artifactId>
-            <version>${jetcache.version}</version>
-        </dependency>
     </dependencies>
 </project>

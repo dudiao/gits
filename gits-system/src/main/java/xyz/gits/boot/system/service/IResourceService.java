@@ -1,5 +1,6 @@
 package xyz.gits.boot.system.service;
 
+import xyz.gits.boot.api.system.dto.ResourceDTO;
 import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.common.core.basic.BasicService;
 
@@ -15,8 +16,6 @@ import java.util.List;
  */
 public interface IResourceService extends BasicService<Resource> {
 
-    List<Resource> selectListByUser(String userId);
-
     /**
      * 通过角色id查询资源
      * @param roleId 角色id
@@ -24,4 +23,9 @@ public interface IResourceService extends BasicService<Resource> {
      */
     List<Resource> findResourceByRoleId(String roleId);
 
+    void saveResource(ResourceDTO dto);
+
+    void deleteResource(String resourceId);
+
+    void updateResource(ResourceDTO dto);
 }

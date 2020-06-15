@@ -78,5 +78,12 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!--jetcache-core 包括注解-->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-core</artifactId>
+            <version>${jetcache.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

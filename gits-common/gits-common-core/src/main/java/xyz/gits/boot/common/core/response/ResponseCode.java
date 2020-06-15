@@ -33,12 +33,16 @@ public enum ResponseCode {
     VERIFY_CODE_ERROR(11011,"验证码错误"),
     NO_AUTHENTICATION(11012,"无权访问"),
 
-    //机构管理
+    // 资源
+    RESOURCE_INVALID(12001, "无效的资源ID"),
+    RESOURCE_PARENT_INVALID(12002, "无效资源父节点ID"),
+    RESOURCE_HAVE_SUB(12003, "该资源下有子资源，不能删除"),
+    // 机构管理
     ORG_NOT_EXIST(17002, "机构不存在"),
     ORG_HAVE_USER(17003, "机构下存在用户"),
     ORG_HAVE_SUB(17004, "机构存在子机构"),
 
-    //文件系统
+    // 文件系统
     FILE_DOES_NOT_EXIST(16001,"文件不存在"),
     FILE_UPLOAD_EXCEPTION(16002,"文件上传异常"),
     FILE_DOWNLOAD_ABNORMAL(16003,"文件下载异常"),

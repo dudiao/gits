@@ -2,8 +2,8 @@ package xyz.gits.boot.system.service;
 
 import xyz.gits.boot.api.system.dto.OrgDTO;
 import xyz.gits.boot.api.system.entity.Org;
+import xyz.gits.boot.api.system.vo.OrgTree;
 import xyz.gits.boot.common.core.basic.BasicService;
-import xyz.gits.boot.common.core.response.RestResponse;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface IOrgService extends BasicService<Org> {
     /**
      * 获取所有启用机构
      */
-    List<Org> getEnableOrgList();
+    List<OrgTree> getOrgTree();
 
     /**
      * 新增机构
@@ -31,15 +31,13 @@ public interface IOrgService extends BasicService<Org> {
     /**
      * 修改机构
      * @param dto
-     * @return
      */
-    RestResponse updateOrg(OrgDTO dto);
+    void updateOrg(OrgDTO dto);
 
     /**
      * 删除机构，机构下存在用户和有子机构时，不能删除
      * @param orgId
-     * @return
      */
-    RestResponse delete(String orgId);
+    void delete(String orgId);
 
 }
