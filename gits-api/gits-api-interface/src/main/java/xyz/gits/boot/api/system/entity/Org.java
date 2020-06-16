@@ -70,7 +70,7 @@ public class Org implements Serializable {
     @TableField("remark")
     private String remark;
 
-    @ApiModelProperty(value = "启停标志（0:停用,1:启用 用于数据是否有效）")
+    @ApiModelProperty(value = "启停标志（0:启用,1:停用 用于数据是否有效）")
     @TableField("record_stop_flag")
     private StopFlag recordStopFlag;
 

@@ -3,6 +3,7 @@ package xyz.gits.boot.system.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alicp.jetcache.anno.CacheInvalidate;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,13 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.gits.boot.api.system.dto.UserDTO;
+import xyz.gits.boot.api.system.dto.UserUpdateDTO;
+import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.entity.UserRoleRel;
 import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
+import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.BeanUtils;
@@ -68,9 +71,9 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserVO saveUser(UserDTO userDTO) {
+    public UserVO saveUser(UserSaveDTO dto) {
         User user = new User();
-        BeanUtils.copyPropertiesIgnoreNull(userDTO, user);
+        BeanUtils.copyPropertiesIgnoreNull(dto, user);
 
         user.setPwdLockFlag(LockFlag.UN_LOCKED);
         user.setStopFlag(StopFlag.ENABLE);
@@ -86,10 +89,10 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         BeanUtils.copyPropertiesIgnoreNull(user, userVO);
 
         // 保存用户的角色
-        if (CollUtil.isEmpty(userDTO.getRole())) {
+        if (CollUtil.isEmpty(dto.getRole())) {
             return userVO;
         }
-        List<UserRoleRel> userRoleList = userDTO.getRole()
+        List<UserRoleRel> userRoleList = dto.getRole()
             .stream().map(roleId -> {
                 UserRoleRel userRole = new UserRoleRel();
                 userRole.setUserId(user.getUserId());
@@ -99,13 +102,14 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         userRoleRelService.saveBatch(userRoleList);
 
         // TODO 缺少用户权限
-        userVO.setRoles(new HashSet<>(userDTO.getRole()));
+        userVO.setRoles(new HashSet<>(dto.getRole()));
         return userVO;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateUser(UserDTO userDTO) {
+    @CacheInvalidate(name= CacheConstants.LOGIN_USER)
+    public void updateUser(UserUpdateDTO userDTO) {
         User user = new User();
         BeanUtils.copyPropertiesIgnoreNull(userDTO, user);
         LocalDateTime now = LocalDateTime.now();
@@ -129,8 +133,14 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         userRoleRelService.saveBatch(userRoleRels);
     }
 
+    /**
+     * 修改本人信息（密码等）
+     *
+     * @param userDTO
+     */
     @Override
-    public void updateUserInfo(UserDTO userDTO) {
+    @CacheInvalidate(name= CacheConstants.LOGIN_USER)
+    public void updateUserInfo(UserUpdateDTO userDTO) {
         User user = baseMapper.selectById(userDTO.getUserId());
         if (null == user) {
             log.warn("[修改个人信息] - 用户[userId={}, userName={}]不存在", userDTO.getUserId(), userDTO.getUserName());

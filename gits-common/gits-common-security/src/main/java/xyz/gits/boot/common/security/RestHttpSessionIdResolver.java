@@ -40,6 +40,8 @@ public class RestHttpSessionIdResolver implements HttpSessionIdResolver {
         this.cookieHttpSessionIdResolver = new CookieHttpSessionIdResolver();
         DefaultCookieSerializer cookieSerializer = new DefaultCookieSerializer();
         cookieSerializer.setCookieName(this.sessionIdName);
+        // 不使用Base64编码
+        cookieSerializer.setUseBase64Encoding(false);
         this.cookieHttpSessionIdResolver.setCookieSerializer(cookieSerializer);
     }
 

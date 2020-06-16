@@ -2,7 +2,7 @@ package xyz.gits.boot.api.remote;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
-import xyz.gits.boot.api.system.dto.UserDTO;
+import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.UserVO;
 
@@ -25,5 +25,5 @@ public interface SystemFeign extends SystemService {
 
     @Override
     @PostMapping("/user/register")
-    UserVO registerUser(@RequestBody UserDTO user);
+    UserVO registerUser(@RequestBody UserSaveDTO user);
 }

@@ -8,7 +8,7 @@ import me.zhyd.oauth.model.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import xyz.gits.boot.api.system.dto.UserDTO;
+import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.enums.LoginType;
@@ -54,7 +54,7 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
 
         // 2. 用户不存在 --> 新增（注册）用户，之后返回 UserDetails
         if (ObjectUtil.isNull(userVO) || StrUtil.isBlank(userVO.getUserId())) {
-            UserDTO user = new UserDTO();
+            UserSaveDTO user = new UserSaveDTO();
             user.setUserName(authUser.getUsername());
             user.setNickName(authUser.getNickname());
             user.setAvatar(authUser.getAvatar());

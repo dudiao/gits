@@ -2,7 +2,8 @@ package xyz.gits.boot.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import xyz.gits.boot.api.system.dto.UserDTO;
+import xyz.gits.boot.api.system.dto.UserUpdateDTO;
+import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicService;
@@ -33,14 +34,19 @@ public interface IUserService extends BasicService<User> {
      */
     User getByUsername(String userName);
 
-    UserVO saveUser(UserDTO userDTO);
+    UserVO saveUser(UserSaveDTO userDTO);
 
     /**
      * 更新用户和其角色
      *
      * @param userDTO
      */
-    void updateUser(UserDTO userDTO);
+    void updateUser(UserUpdateDTO userDTO);
 
-    void updateUserInfo(UserDTO userDTO);
+    /**
+     * 修改本人信息（密码等）
+     *
+     * @param userDTO
+     */
+    void updateUserInfo(UserUpdateDTO userDTO);
 }

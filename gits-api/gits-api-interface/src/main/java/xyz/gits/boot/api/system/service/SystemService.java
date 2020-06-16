@@ -1,7 +1,9 @@
 package xyz.gits.boot.api.system.service;
 
-import xyz.gits.boot.api.system.dto.UserDTO;
+import com.alicp.jetcache.anno.Cached;
+import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.common.core.constants.CacheConstants;
 
 /**
  * @author songyinyin
@@ -15,6 +17,7 @@ public interface SystemService {
      * @param userName 用户名
      * @return 当没有该用户时，返回 null 或者空对象
      */
+    @Cached(name = CacheConstants.LOGIN_USER, key = "#userName", postCondition = "#result != null")
     UserVO loadUserByUsername(String userName);
 
     /**
@@ -29,6 +32,6 @@ public interface SystemService {
     /**
      * 注册用户
      */
-    UserVO registerUser(UserDTO user);
+    UserVO registerUser(UserSaveDTO user);
 
 }

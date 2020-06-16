@@ -32,6 +32,7 @@ public class RoleResourceRelServiceImpl extends BasicServiceImpl<RoleResourceRel
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheInvalidate(name= CacheConstants.LOGIN_USER)
     @CacheInvalidate(name= CacheConstants.ROLE_RESOURCE, key="#dto.roleId")
     public void updateResource(RoleResourceDTO dto) {
         this.remove(Wrappers.<RoleResourceRel>query().lambda()
@@ -51,6 +52,5 @@ public class RoleResourceRelServiceImpl extends BasicServiceImpl<RoleResourceRel
             }).collect(Collectors.toList());
 
         this.saveBatch(list);
-        // TODO 清空用户信息缓存
     }
 }

@@ -119,6 +119,8 @@ swagger:
       base-package: xyz.gits.boot.system
     server:
       base-package: xyz.gits.boot.single.controller
+  authorization:
+    key-name: GitsSessionID
 
 management:
   endpoints:

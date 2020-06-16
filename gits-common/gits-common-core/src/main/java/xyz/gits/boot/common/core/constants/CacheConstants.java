@@ -22,7 +22,7 @@ public interface CacheConstants {
     /**
      * 机构树
      */
-    String ORG_TREE = CACHE_PREFIX + "org_tree:";
+    String ORG_TREE = CACHE_PREFIX + "org_tree";
 
     /**
      * 角色资源

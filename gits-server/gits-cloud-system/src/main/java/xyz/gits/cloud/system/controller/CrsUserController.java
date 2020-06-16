@@ -4,9 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.gits.boot.api.system.dto.UserDTO;
+import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.vo.UserVO;
-import xyz.gits.boot.common.core.validate.CreateGroup;
 import xyz.gits.boot.system.controller.UserController;
 
 /**
@@ -26,8 +25,8 @@ public class CrsUserController extends UserController {
 
     @PostMapping("/user/register")
     @ApiOperation(value = "注册用户")
-    public UserVO register(@Validated(CreateGroup.class) @RequestBody UserDTO userDTO) {
-        UserVO userVO = userService.saveUser(userDTO);
+    public UserVO register(@Validated @RequestBody UserSaveDTO dto) {
+        UserVO userVO = userService.saveUser(dto);
         return userVO;
     }
 

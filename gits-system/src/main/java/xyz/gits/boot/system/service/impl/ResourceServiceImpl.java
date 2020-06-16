@@ -57,6 +57,29 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
         return resourceMapper.findResourceByRoleId(roleId);
     }
 
+    /**
+     * 删除资源
+     *
+     * @param resourceId 资源id
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @CacheInvalidate(name = CacheConstants.LOGIN_USER)
+    @CacheInvalidate(name = CacheConstants.ROLE_RESOURCE)
+    public void deleteResource(String resourceId) {
+        List<Resource> resourceList = resourceMapper.selectList(Wrappers.<Resource>lambdaQuery()
+            .eq(Resource::getParentResourceId, resourceId));
+        if (CollUtil.isNotEmpty(resourceList)) {
+            log.warn("[资源管理 - 删除资源信息] - 资源[resourceId={}]下有子资源，不能删除", resourceId);
+            throw new SystemNoLogException(ResponseCode.RESOURCE_HAVE_SUB);
+        }
+
+        // 删除角色资源关系
+        roleResourceRelMapper.delete(Wrappers.<RoleResourceRel>query()
+            .lambda().eq(RoleResourceRel::getResourceId, resourceId));
+        this.removeById(resourceId);
+    }
+
     @Override
     public void saveResource(ResourceDTO dto) {
         // 根据当前资源ID查询资源，判断是否重复
@@ -70,23 +93,6 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
         resource.setCreateUserId(UserUtil.getUserId());
         resource.setCreateTime(LocalDateTime.now());
         this.save(resource);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    @CacheInvalidate(name= CacheConstants.ROLE_RESOURCE)
-    public void deleteResource(String resourceId) {
-        List<Resource> resourceList = resourceMapper.selectList(Wrappers.<Resource>lambdaQuery()
-            .eq(Resource::getParentResourceId, resourceId));
-        if (CollUtil.isNotEmpty(resourceList)) {
-            log.warn("[资源管理 - 删除资源信息] - 资源[resourceId={}]下有子资源，不能删除", resourceId);
-            throw new SystemNoLogException(ResponseCode.RESOURCE_HAVE_SUB);
-        }
-
-        // 删除角色资源关系
-        roleResourceRelMapper.delete(Wrappers.<RoleResourceRel>query()
-            .lambda().eq(RoleResourceRel::getResourceId, resourceId));
-        this.removeById(resourceId);
     }
 
     @Override

@@ -25,6 +25,10 @@ public interface IResourceService extends BasicService<Resource> {
 
     void saveResource(ResourceDTO dto);
 
+    /**
+     * 删除资源
+     * @param resourceId 资源id
+     */
     void deleteResource(String resourceId);
 
     void updateResource(ResourceDTO dto);

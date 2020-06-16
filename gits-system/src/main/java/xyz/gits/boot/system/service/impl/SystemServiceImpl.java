@@ -2,10 +2,9 @@ package xyz.gits.boot.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import xyz.gits.boot.api.system.dto.UserDTO;
+import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.api.system.entity.Role;
 import xyz.gits.boot.api.system.entity.User;
@@ -16,7 +15,6 @@ import xyz.gits.boot.system.service.IResourceService;
 import xyz.gits.boot.system.service.IRoleService;
 import xyz.gits.boot.system.service.IUserService;
 
-import java.sql.Struct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +55,7 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
-    public UserVO registerUser(UserDTO user) {
+    public UserVO registerUser(UserSaveDTO user) {
         return userService.saveUser(user);
     }
 
