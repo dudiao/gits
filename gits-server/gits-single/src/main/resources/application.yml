@@ -115,6 +115,8 @@ swagger:
   title: Gits_接口文档
   version: ${revision}
   docket:
+    login:
+      base-package: xyz.gits.boot.security.login
     system:
       base-package: xyz.gits.boot.system
     server:

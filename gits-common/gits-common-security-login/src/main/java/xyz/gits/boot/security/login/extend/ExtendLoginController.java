@@ -1,10 +1,12 @@
 package xyz.gits.boot.security.login.extend;
 
-import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.EnumUtil;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CreateCache;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.xkcoding.justauth.AuthRequestFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.request.AuthRequest;
@@ -35,6 +37,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @RestController
+@Api(value = "login", tags = "登录")
 public class ExtendLoginController {
 
     @Autowired
@@ -55,13 +58,17 @@ public class ExtendLoginController {
     }
 
     @GetMapping("/open/oauth/login/{type}")
-    public void login(@PathVariable String type, HttpServletResponse response) throws IOException {
+    @ApiOperation(value = "第三方登录")
+    public void login(@ApiParam(name = "type", value = "登录类型", allowableValues = "gitee")
+                      @PathVariable("type") String type, HttpServletResponse response) throws IOException {
         AuthRequest authRequest = factory.get(type);
         response.sendRedirect(authRequest.authorize(AuthStateUtils.createState()));
     }
 
     @GetMapping("/open/code")
-    public ResponseEntity validateCode(@ApiParam(name = "randomKey", value = "验证码随机数key") @RequestParam("randomKey") String randomKey) {
+    @ApiOperation(value = "图形验证码", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity validateCode(@ApiParam(name = "randomKey", value = "验证码随机数key（前端随机传入）", defaultValue = "666666")
+                                       @RequestParam("randomKey") String randomKey) {
         ArithmeticCaptcha captcha = new ArithmeticCaptcha(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
         String result = captcha.text();
 
