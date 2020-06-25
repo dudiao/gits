@@ -12,6 +12,7 @@ import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.dto.UserUpdateDTO;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicController;
 import xyz.gits.boot.common.core.response.RestResponse;
@@ -45,8 +46,6 @@ public class UserController extends BasicController {
         List<UserVO> userVOList = page.getRecords().stream().map(e -> {
             UserVO userVO = new UserVO();
             BeanUtils.copyPropertiesIgnoreNull(e, userVO);
-            // 不返回密码
-            userVO.setPassword(null);
             return userVO;
         }).collect(Collectors.toList());
 
@@ -78,11 +77,11 @@ public class UserController extends BasicController {
 
     @GetMapping("/system/user/{userName}")
     @ApiOperation(value = "查看用户详情")
-    public RestResponse<UserVO> detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
-        UserVO userVO = systemService.loadUserByUsername(userName);
+    public RestResponse<LoginUser> detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
+        LoginUser loginUser = systemService.loadUserByUsername(userName);
         // 不返回密码
-        userVO.setPassword(null);
-        return RestResponse.success(userVO);
+        loginUser.setPassword(null);
+        return RestResponse.success(loginUser);
     }
 
 }

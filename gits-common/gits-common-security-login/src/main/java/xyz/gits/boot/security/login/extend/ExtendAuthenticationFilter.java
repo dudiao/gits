@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.common.security.SecurityConstant;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +60,7 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
             ExtendAuthenticationToken token;
             if (StrUtil.isNotBlank(extendKey)) {
                 token = new ExtendAuthenticationToken(extendKey, extendType, extendCredentials);
-            }else {
+            } else {
                 // 从第三方拿到用户信息
                 token = new ExtendAuthenticationToken(obtainAuthUser(request));
             }
@@ -72,26 +72,25 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
     }
 
 
-
     /**
      * 获取扩展登录extendKey，可以是用户名、手机号等，根据业务需要去扩展
      */
     protected String obtainExtendKey(HttpServletRequest request) {
-        return request.getParameter(UserUtil.EXTEND_KEY_PARAMETER);
+        return request.getParameter(SecurityConstant.EXTEND_KEY_PARAMETER);
     }
 
     /**
      * 获取扩展登录extendCredentials，可以是手机号的验证码等，根据业务需要去扩展
      */
     protected String obtainCredentials(HttpServletRequest request) {
-        return request.getParameter(UserUtil.EXTEND_CREDENTIALS_PARAMETER);
+        return request.getParameter(SecurityConstant.EXTEND_CREDENTIALS_PARAMETER);
     }
 
     /**
      * 获取扩展登录类型
      */
     protected String obtainExtendType(HttpServletRequest request) {
-        return request.getParameter(UserUtil.EXTEND_TYPE_PARAMETER);
+        return request.getParameter(SecurityConstant.EXTEND_TYPE_PARAMETER);
     }
 
     /**
@@ -118,13 +117,13 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
     private AuthCallback getCallback(HttpServletRequest request) {
 
         AuthCallback authCallback = AuthCallback.builder()
-                .code(request.getParameter("code"))
-                .auth_code(request.getParameter("auth_code"))
-                .authorization_code(request.getParameter("authorization_code"))
-                .oauthToken(request.getParameter("oauth_token"))
-                .state(request.getParameter("state"))
-                .oauthVerifier(request.getParameter("oauth_verifier"))
-                .build();
+            .code(request.getParameter("code"))
+            .auth_code(request.getParameter("auth_code"))
+            .authorization_code(request.getParameter("authorization_code"))
+            .oauthToken(request.getParameter("oauth_token"))
+            .state(request.getParameter("state"))
+            .oauthVerifier(request.getParameter("oauth_verifier"))
+            .build();
 
         return authCallback;
     }
@@ -138,7 +137,7 @@ public class ExtendAuthenticationFilter extends AbstractAuthenticationProcessing
         // "/open/oauth/callback/".length()
         int common = EXTEND_LOGIN_URL.length() - 2;
         int start = uri.indexOf(EXTEND_LOGIN_URL.substring(0, common));
-        if(start == -1) {
+        if (start == -1) {
             log.warn("【justauth 第三方登录 response】回调类型为空，uri={}", uri);
             return null;
         }

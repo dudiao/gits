@@ -3,8 +3,6 @@ package xyz.gits.boot.api.system.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import xyz.gits.boot.common.core.validate.CreateGroup;
-import xyz.gits.boot.common.core.validate.UpdateGroup;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -28,7 +26,6 @@ public class UserUpdateDTO implements Serializable {
     private String userId;
 
     @ApiModelProperty(value = "用户名，登录名")
-    @NotBlank(message = "用户名不能为空")
     @Size(max = 64, message = "用户名长度不能超过64位")
     private String userName;
 

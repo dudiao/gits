@@ -6,8 +6,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import xyz.gits.boot.common.core.enums.LoginType;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
-import xyz.gits.boot.common.security.LoginUser;
-import xyz.gits.boot.common.security.RestHttpSessionIdResolver;
+import xyz.gits.boot.common.security.SecurityLoginUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +26,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         // TODO 登录成功 记录日志，需要区分密码登录还是第三方登录
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        SecurityLoginUser securityLoginUser = (SecurityLoginUser) authentication.getPrincipal();
         // 不是密码登陆，需要重定向到前端首页
-        if (!LoginType.PASSWORD.equals(loginUser.getLoginType())) {
+        if (!LoginType.PASSWORD.equals(securityLoginUser.getLoginUser().getLoginType())) {
             log.info("第三方登陆，重定向到首页");
             response.sendRedirect("/web/index");
             return;

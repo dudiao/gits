@@ -17,7 +17,7 @@ import xyz.gits.boot.security.login.extend.ExtendAuthenticationSecurityConfig;
 import xyz.gits.boot.security.login.handler.LoginFailureHandler;
 import xyz.gits.boot.security.login.handler.LoginSuccessHandler;
 import xyz.gits.boot.security.login.handler.LogoutSuccessHandler;
-import xyz.gits.boot.security.login.service.DefaultUserDetailsService;
+import xyz.gits.boot.security.login.service.DefaultUserDetailsServiceImpl;
 import xyz.gits.boot.security.login.verifycode.VerifyCodeFilter;
 
 /**
@@ -28,7 +28,7 @@ import xyz.gits.boot.security.login.verifycode.VerifyCodeFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DefaultUserDetailsService userDetailsService;
+    private DefaultUserDetailsServiceImpl userDetailsService;
     /**
      * 登出成功的处理
      */

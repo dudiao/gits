@@ -1,6 +1,5 @@
 package xyz.gits.boot.security.login.extend;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.MessageSource;
@@ -16,7 +15,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.userdetails.cache.NullUserCache;
 import org.springframework.util.Assert;
 import xyz.gits.boot.common.core.enums.LoginType;
-import xyz.gits.boot.common.security.LoginUser;
+import xyz.gits.boot.common.security.SecurityLoginUser;
 
 /**
  * @author songyinyin
@@ -281,8 +280,8 @@ public class ExtendAuthenticationProvider implements AuthenticationProvider, Ini
     private class DefaultPostAuthenticationChecks implements UserDetailsChecker {
         @Override
         public void check(UserDetails user) {
-            LoginUser loginUser = (LoginUser) user;
-            if (!LoginType.PASSWORD.equals(loginUser.getLoginType())) {
+            SecurityLoginUser securityLoginUser = (SecurityLoginUser) user;
+            if (!LoginType.PASSWORD.equals(securityLoginUser.getLoginUser().getLoginType())) {
                 return;
             }
             if (!user.isCredentialsNonExpired()) {

@@ -18,13 +18,13 @@ import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.entity.UserRoleRel;
 import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.BeanUtils;
-import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.system.mapper.UserMapper;
 import xyz.gits.boot.system.service.IUserRoleRelService;
 import xyz.gits.boot.system.service.IUserService;
@@ -71,7 +71,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserVO saveUser(UserSaveDTO dto) {
+    public LoginUser saveUser(UserSaveDTO dto) {
         User user = new User();
         BeanUtils.copyPropertiesIgnoreNull(dto, user);
 
@@ -85,12 +85,12 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         }
         baseMapper.insert(user);
 
-        UserVO userVO = new UserVO();
-        BeanUtils.copyPropertiesIgnoreNull(user, userVO);
+        LoginUser loginUser = new LoginUser();
+        BeanUtils.copyPropertiesIgnoreNull(user, loginUser);
 
         // 保存用户的角色
         if (CollUtil.isEmpty(dto.getRole())) {
-            return userVO;
+            return loginUser;
         }
         List<UserRoleRel> userRoleList = dto.getRole()
             .stream().map(roleId -> {
@@ -102,8 +102,8 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         userRoleRelService.saveBatch(userRoleList);
 
         // TODO 缺少用户权限
-        userVO.setRoles(new HashSet<>(dto.getRole()));
-        return userVO;
+        loginUser.setRoles(new HashSet<>(dto.getRole()));
+        return loginUser;
     }
 
     @Override
@@ -147,10 +147,9 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
             throw new SystemNoLogException(ResponseCode.USER_NOT_FIND);
         }
 
-        User currentUser = UserUtil.loginUser().getUser();
-        if (!StrUtil.equals(currentUser.getUserId(), userDTO.getUserId())) {
+        if (!StrUtil.equals(UserUtil.getUserId(), userDTO.getUserId())) {
             log.warn("[修改个人信息] - 不是本人的操作，当前登录用户[userId={}, userName={}]，被操作用户[userId={}, userName={}]",
-                currentUser.getUserId(), currentUser.getUserName(), userDTO.getUserId(), userDTO.getUserName());
+                UserUtil.getUserId(), UserUtil.getUserName(), userDTO.getUserId(), userDTO.getUserName());
             throw new SystemNoLogException(ResponseCode.NO_AUTHENTICATION);
         }
 

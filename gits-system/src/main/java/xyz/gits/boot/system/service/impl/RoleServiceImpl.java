@@ -10,7 +10,7 @@ import xyz.gits.boot.api.system.entity.Role;
 import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.utils.BeanUtils;
-import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.system.mapper.RoleMapper;
 import xyz.gits.boot.system.service.IRoleService;
 

@@ -14,7 +14,7 @@ import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
 import xyz.gits.boot.common.core.utils.TreeUtil;
-import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.system.service.IResourceService;
 
 import javax.validation.Valid;

@@ -2,12 +2,14 @@ package xyz.gits.boot.common.security;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.Data;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.UserDetails;
 import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.enums.LoginType;
 
@@ -15,51 +17,20 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
- * 扩展用户信息
+ * Security 扩展用户信息
  *
  * @author songyinyin
  * @date 2020/3/14 下午 05:29
  */
 @Data
-public class LoginUser implements UserDetails, CredentialsContainer {
+public class SecurityLoginUser<T extends UserVO> implements UserDetails, CredentialsContainer {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-    /**
-     * 用户
-     */
-    private UserVO user;
+    private LoginUser<T> loginUser;
 
-    /**
-     * 登录ip
-     */
-    private String loginIp;
-
-    /**
-     * 登录时间
-     */
-    private LocalDateTime loginTime;
-
-    /**
-     * 登陆类型
-     */
-    private LoginType loginType;
-
-    public LoginUser() {
-    }
-
-    public LoginUser(UserVO user, String loginIp, LocalDateTime loginTime, LoginType loginType) {
-        this.user = user;
-        this.loginIp = loginIp;
-        this.loginTime = loginTime;
-        this.loginType = loginType;
-    }
-
-    public LoginUser(UserVO user, String loginIp, LocalDateTime loginTime, String loginType) {
-        this.user = user;
-        this.loginIp = loginIp;
-        this.loginTime = loginTime;
-        this.loginType = LoginType.valueOf(loginType);
+    public SecurityLoginUser(LoginUser<T> user) {
+        this.loginUser = user;
     }
 
     @Override
@@ -69,12 +40,12 @@ public class LoginUser implements UserDetails, CredentialsContainer {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return loginUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return loginUser.getUser().getUserName();
     }
 
     /**
@@ -93,7 +64,7 @@ public class LoginUser implements UserDetails, CredentialsContainer {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return ObjectUtil.equal(user.getPwdLockFlag(), LockFlag.UN_LOCKED);
+        return ObjectUtil.equal(loginUser.getUser().getPwdLockFlag(), LockFlag.UN_LOCKED);
     }
 
     /**
@@ -109,7 +80,7 @@ public class LoginUser implements UserDetails, CredentialsContainer {
      */
     @Override
     public boolean isEnabled() {
-        return ObjectUtil.equal(user.getStopFlag(), StopFlag.ENABLE);
+        return ObjectUtil.equal(loginUser.getUser().getStopFlag(), StopFlag.ENABLE);
     }
 
     /**
@@ -117,6 +88,6 @@ public class LoginUser implements UserDetails, CredentialsContainer {
      */
     @Override
     public void eraseCredentials() {
-        user.setPassword(null);
+        loginUser.setPassword(null);
     }
 }

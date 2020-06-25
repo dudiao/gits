@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   xyz.gits.boot.common.core.config.JacksonConfig,\
-  xyz.gits.boot.common.core.config.GitsAutoConfiguration
+  xyz.gits.boot.common.core.config.GitsAutoConfiguration,\
+  xyz.gits.boot.common.core.utils.SpringContextHolder

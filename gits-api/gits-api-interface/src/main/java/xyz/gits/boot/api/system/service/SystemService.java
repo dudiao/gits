@@ -2,10 +2,12 @@ package xyz.gits.boot.api.system.service;
 
 import com.alicp.jetcache.anno.Cached;
 import xyz.gits.boot.api.system.dto.UserSaveDTO;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 
 /**
+ * 系统接口
+ *
  * @author songyinyin
  * @date 2020/4/4 下午 09:24
  */
@@ -18,7 +20,7 @@ public interface SystemService {
      * @return 当没有该用户时，返回 null 或者空对象
      */
     @Cached(name = CacheConstants.LOGIN_USER, key = "#userName", postCondition = "#result != null")
-    UserVO loadUserByUsername(String userName);
+    LoginUser loadUserByUsername(String userName);
 
     /**
      * 自定义查询用户信息
@@ -27,11 +29,12 @@ public interface SystemService {
      * @param value     属性值
      * @return 当没有该用户时，返回 null 或者空对象
      */
-    UserVO loadUserByBiz(String fieldName, String value);
+    LoginUser loadUserByBiz(String fieldName, String value);
 
     /**
      * 注册用户
+     * @return
      */
-    UserVO registerUser(UserSaveDTO user);
+    LoginUser registerUser(UserSaveDTO user);
 
 }

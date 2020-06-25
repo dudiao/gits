@@ -98,6 +98,12 @@ public class SwaggerAddtion implements ApiListingScannerPlugin {
         return Arrays.asList(loginApiDescription);
     }
 
+    /**
+     * 是否使用此插件
+     *
+     * @param documentationType swagger文档类型
+     * @return true 启用
+     */
     @Override
     public boolean supports(DocumentationType documentationType) {
         return DocumentationType.SWAGGER_2.equals(documentationType);

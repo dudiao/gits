@@ -10,10 +10,11 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
-import xyz.gits.boot.common.security.LoginUser;
+import xyz.gits.boot.common.security.SecurityLoginUser;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -37,11 +38,12 @@ public class ConcurrentSessionController {
     public RestResponse getCurrentUser() {
         List<Object> list = sessionRegistry.getAllPrincipals();
 
-        List<UserVO> userVOList = list.stream().filter(e -> e instanceof LoginUser).map(e -> {
-            LoginUser loginUser = (LoginUser) e;
-            UserVO userVO = new UserVO();
-            BeanUtils.copyPropertiesIgnoreNull(loginUser, userVO);
-            return userVO;
+        List<LoginUser> userVOList = list.stream().filter(e -> e instanceof SecurityLoginUser).map(e -> {
+            SecurityLoginUser securityLoginUser = (SecurityLoginUser) e;
+
+            LoginUser loginUser = securityLoginUser.getLoginUser();
+
+            return loginUser;
         }).collect(Collectors.toList());
 
         return RestResponse.success(userVOList);
@@ -56,18 +58,18 @@ public class ConcurrentSessionController {
         List<Object> list = sessionRegistry.getAllPrincipals();
 
         for (Object principal : list) {
-            if (principal instanceof LoginUser) {
-                LoginUser loginUser = (LoginUser) principal;
-                if (StrUtil.equals(userId, loginUser.getUser().getUserId())) {
+            if (principal instanceof SecurityLoginUser) {
+                SecurityLoginUser securityLoginUser = (SecurityLoginUser) principal;
+                if (StrUtil.equals(userId, securityLoginUser.getLoginUser().getUser().getUserId())) {
                     // 获取该用户没有过期的会话
-                    List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(loginUser, false);
+                    List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(securityLoginUser, false);
 
                     List<UserVO> userVOList = sessionsInfo.stream().map(e -> {
-                        LoginUser sessionUser = (LoginUser) e.getPrincipal();
+                        SecurityLoginUser sessionUser = (SecurityLoginUser) e.getPrincipal();
                         UserVO userVO = new UserVO();
                         BeanUtils.copyPropertiesIgnoreNull(sessionUser, userVO);
-                        userVO.setLoginSuccessTime(sessionUser.getLoginTime());
-                        userVO.setLoginIp(sessionUser.getLoginIp());
+                        userVO.setLoginSuccessTime(sessionUser.getLoginUser().getLoginTime());
+                        userVO.setLoginIp(sessionUser.getLoginUser().getLoginIp());
                         userVO.setSessionId(e.getSessionId());
                         return userVO;
                     }).collect(Collectors.toList());

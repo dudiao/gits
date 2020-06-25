@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import xyz.gits.boot.api.system.dto.UserUpdateDTO;
 import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.entity.User;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicService;
 
@@ -34,7 +35,7 @@ public interface IUserService extends BasicService<User> {
      */
     User getByUsername(String userName);
 
-    UserVO saveUser(UserSaveDTO userDTO);
+    LoginUser saveUser(UserSaveDTO userDTO);
 
     /**
      * 更新用户和其角色

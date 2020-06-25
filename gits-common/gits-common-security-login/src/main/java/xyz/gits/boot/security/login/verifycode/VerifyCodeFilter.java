@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import xyz.gits.boot.common.core.constants.CacheConstants;
-import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.security.login.handler.LoginFailureHandler;
 
 import javax.servlet.FilterChain;

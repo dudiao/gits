@@ -10,11 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.service.SystemService;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.common.core.enums.LoginType;
 import xyz.gits.boot.common.core.utils.IpUtils;
 import xyz.gits.boot.common.core.utils.ServletUtils;
-import xyz.gits.boot.common.security.LoginUser;
+import xyz.gits.boot.common.security.SecurityLoginUser;
 import xyz.gits.boot.security.login.extend.ExtendAuthenticationToken;
 import xyz.gits.boot.security.login.extend.ExtendUserDetailsService;
 
@@ -31,7 +31,7 @@ import java.time.LocalDateTime;
 public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
 
     @Autowired
-    private DefaultUserDetailsService userDetailsService;
+    private DefaultUserDetailsServiceImpl userDetailsService;
     @Autowired
     private SystemService systemService;
 
@@ -50,10 +50,10 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
         /**
          * 这里要求 user 表中有 authUser.getSource()+'_id' 字段（小写，如 gitee_id），authUser.getSource()的取值见 {@link AuthDefaultSource}
          */
-        UserVO userVO = systemService.loadUserByBiz(authUser.getSource().toLowerCase() + "_id", authUser.getUuid());
+        LoginUser loginUser = systemService.loadUserByBiz(authUser.getSource().toLowerCase() + "_id", authUser.getUuid());
 
         // 2. 用户不存在 --> 新增（注册）用户，之后返回 UserDetails
-        if (ObjectUtil.isNull(userVO) || StrUtil.isBlank(userVO.getUserId())) {
+        if (ObjectUtil.isNull(loginUser) || StrUtil.isBlank(loginUser.getUser().getUserId())) {
             UserSaveDTO user = new UserSaveDTO();
             user.setUserName(authUser.getUsername());
             user.setNickName(authUser.getNickname());
@@ -62,12 +62,18 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
             if (StrUtil.equalsIgnoreCase(authUser.getSource(), AuthDefaultSource.GITEE.getName())) {
                 user.setGiteeId(authUser.getUuid());
             }
-            UserVO registerUser = systemService.registerUser(user);
-            return new LoginUser(registerUser, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now(), authUser.getSource());
+            LoginUser registerUser = systemService.registerUser(user);
+            registerUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+            registerUser.setLoginTime(LocalDateTime.now());
+            registerUser.setLoginType(LoginType.valueOf(authUser.getSource()));
+            return new SecurityLoginUser(registerUser);
         }
 
         // 3. 用户存在 --> 返回 UserDetails
-        return new LoginUser(userVO, IpUtils.getIpAddr(ServletUtils.getRequest()), LocalDateTime.now(), LoginType.EXTEND);
+        loginUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        loginUser.setLoginTime(LocalDateTime.now());
+        loginUser.setLoginType(LoginType.EXTEND);
+        return new SecurityLoginUser(loginUser);
     }
 
 }

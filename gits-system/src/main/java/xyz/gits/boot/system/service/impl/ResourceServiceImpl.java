@@ -20,7 +20,7 @@ import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.BeanUtils;
-import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.system.mapper.ResourceMapper;
 import xyz.gits.boot.system.mapper.RoleResourceRelMapper;
 import xyz.gits.boot.system.service.IResourceService;

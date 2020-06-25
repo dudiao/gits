@@ -11,7 +11,7 @@ import xyz.gits.boot.security.login.handler.LoginFailureHandler;
 import xyz.gits.boot.security.login.handler.LoginSuccessHandler;
 import xyz.gits.boot.security.login.handler.LogoutSuccessHandler;
 import xyz.gits.boot.security.login.service.ExtendUserDetailsServiceImpl;
-import xyz.gits.boot.security.login.service.DefaultUserDetailsService;
+import xyz.gits.boot.security.login.service.DefaultUserDetailsServiceImpl;
 import xyz.gits.boot.security.login.verifycode.VerifyCodeFilter;
 
 @Configuration
@@ -37,8 +37,8 @@ public class GitsSecurityLoginAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DefaultUserDetailsService defaultUserDetailsService() {
-        return new DefaultUserDetailsService();
+    public DefaultUserDetailsServiceImpl defaultUserDetailsService() {
+        return new DefaultUserDetailsServiceImpl();
     }
 
     @Bean

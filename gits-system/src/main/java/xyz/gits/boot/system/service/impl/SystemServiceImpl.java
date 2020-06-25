@@ -9,6 +9,7 @@ import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.api.system.entity.Role;
 import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.utils.BeanUtils;
 import xyz.gits.boot.system.service.IResourceService;
@@ -34,16 +35,16 @@ public class SystemServiceImpl implements SystemService {
     private IRoleService roleService;
 
     @Override
-    public UserVO loadUserByUsername(String userName) {
+    public LoginUser loadUserByUsername(String userName) {
         User user = userService.getByUsername(userName);
         if (ObjectUtil.isNull(user)) {
             return null;
         }
-        return getUserVO(user);
+        return getLoginUser(user);
     }
 
     @Override
-    public UserVO loadUserByBiz(String fieldName, String value) {
+    public LoginUser loadUserByBiz(String fieldName, String value) {
         if (StrUtil.isBlank(fieldName) || StrUtil.isBlank(value)) {
             throw new IllegalArgumentException("SystemServiceImpl#loadUserByBiz() fieldName 或者 value 不能为空");
         }
@@ -51,22 +52,24 @@ public class SystemServiceImpl implements SystemService {
         if (ObjectUtil.isNull(user)) {
             return null;
         }
-        return getUserVO(user);
+        return getLoginUser(user);
     }
 
     @Override
-    public UserVO registerUser(UserSaveDTO user) {
+    public LoginUser registerUser(UserSaveDTO user) {
         return userService.saveUser(user);
     }
 
-    private UserVO getUserVO(User user) {
+    private LoginUser getLoginUser(User user) {
+        LoginUser<UserVO> loginUser = new LoginUser();
         UserVO userVO = new UserVO();
         BeanUtils.copyPropertiesIgnoreNull(user, userVO);
+        loginUser.setUser(userVO);
 
         // 角色 Role::getRoleId
         Set<String> roleIds = roleService.getRolesByUserId(user.getUserId())
                 .stream().map(Role::getRoleId).collect(Collectors.toSet());
-        userVO.setRoles(roleIds);
+        loginUser.setRoles(roleIds);
 
         // 权限 Resource::getPermission
         Set<String> permissions = new HashSet<>();
@@ -78,8 +81,11 @@ public class SystemServiceImpl implements SystemService {
                 .collect(Collectors.toList());
             permissions.addAll(permissionList);
         });
-        userVO.setPermissions(permissions);
-        return userVO;
+        loginUser.setPermissions(permissions);
+
+        // 密码
+        loginUser.setPassword(user.getPassword());
+        return loginUser;
     }
 
 }

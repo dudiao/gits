@@ -7,7 +7,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
-import xyz.gits.boot.common.security.UserUtil;
+import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.security.login.verifycode.VerifyCodeException;
 
 import javax.servlet.ServletException;

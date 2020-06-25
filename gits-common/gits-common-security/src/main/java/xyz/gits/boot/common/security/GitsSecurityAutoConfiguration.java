@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.session.web.http.HttpSessionIdResolver;
+import xyz.gits.boot.api.system.service.AuthService;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
 import xyz.gits.boot.common.security.hander.LoginUserAccessDeniedHandler;
@@ -78,5 +79,11 @@ public class GitsSecurityAutoConfiguration {
     @ConditionalOnMissingBean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public AuthService authService() {
+        return new SecurityAuthServiceImpl();
     }
 }

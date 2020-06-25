@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.gits.boot.api.system.dto.UserSaveDTO;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.system.controller.UserController;
 
 /**
@@ -17,23 +17,23 @@ public class CrsUserController extends UserController {
 
     @GetMapping("/user/info/{userName}")
     @ApiOperation(value = "查看用户详情（内部接口调用）")
-    public UserVO info(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
+    public LoginUser info(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
         // TODO 需要鉴权
-        UserVO userVO = systemService.loadUserByUsername(userName);
-        return userVO;
+        LoginUser loginUser = systemService.loadUserByUsername(userName);
+        return loginUser;
     }
 
     @PostMapping("/user/register")
     @ApiOperation(value = "注册用户")
-    public UserVO register(@Validated @RequestBody UserSaveDTO dto) {
-        UserVO userVO = userService.saveUser(dto);
-        return userVO;
+    public LoginUser register(@Validated @RequestBody UserSaveDTO dto) {
+        LoginUser loginUser = userService.saveUser(dto);
+        return loginUser;
     }
 
     @GetMapping("/user/find")
     @ApiOperation(value = "查找用户")
-    public UserVO find(String fieldName, String value) {
-        UserVO userVO = systemService.loadUserByBiz(fieldName, value);
-        return userVO;
+    public LoginUser find(String fieldName, String value) {
+        LoginUser loginUser = systemService.loadUserByBiz(fieldName, value);
+        return loginUser;
     }
 }
