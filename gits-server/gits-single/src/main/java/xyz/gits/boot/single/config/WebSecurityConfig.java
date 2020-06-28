@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import xyz.gits.boot.common.core.config.GitsProperties;
 import xyz.gits.boot.common.security.GitsResourceServerConfiguration;
+import xyz.gits.boot.common.security.RestHttpSessionIdResolver;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
 import xyz.gits.boot.common.security.hander.LoginUserAccessDeniedHandler;
@@ -99,28 +100,42 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.apply(extendAuthenticationSecurityConfig) // 扩展用户登录
-                .and().authorizeRequests()
-                // 放行接口
-                .antMatchers(GitsResourceServerConfiguration.AUTH_WHITELIST).permitAll()
-                // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated()
-                // 异常处理(权限拒绝、登录失效等)
-                .and().exceptionHandling()
-                .authenticationEntryPoint(anonymousAuthenticationEntryPoint)//匿名用户访问无权限资源时的异常处理
-                .accessDeniedHandler(accessDeniedHandler)//登录用户没有权限访问资源
-                // 登入
-                .and().formLogin().permitAll()//允许所有用户
-                .successHandler(loginSuccessHandler)//登录成功处理逻辑
-                .failureHandler(loginFailureHandler)//登录失败处理逻辑
-                // 登出
-                .and().logout().permitAll()//允许所有用户
-                .logoutSuccessHandler(logoutSuccessHandler)//登出成功处理逻辑
-                .deleteCookies("SESSION")
-                // 会话管理
-                .and().sessionManagement().invalidSessionStrategy(invalidSessionHandler) // 超时处理
-                .maximumSessions(1)//同一账号同时登录最大用户数
-                .expiredSessionStrategy(sessionInformationExpiredHandler) // 顶号处理
+        // 扩展用户登录
+        http.apply(extendAuthenticationSecurityConfig)
+            .and().authorizeRequests()
+            // 放行接口
+            .antMatchers(GitsResourceServerConfiguration.AUTH_WHITELIST).permitAll()
+            // 除上面外的所有请求全部需要鉴权认证
+            .anyRequest().authenticated()
+            // 异常处理(权限拒绝、登录失效等)
+            .and().exceptionHandling()
+            // 匿名用户访问无权限资源时的异常处理
+            .authenticationEntryPoint(anonymousAuthenticationEntryPoint)
+            // 登录用户没有权限访问资源
+            .accessDeniedHandler(accessDeniedHandler)
+            // ==========登入===========
+            .and().formLogin()
+            // 允许所有用户
+            .permitAll()
+            // 登录成功处理逻辑
+            .successHandler(loginSuccessHandler)
+            // 登录失败处理逻辑
+            .failureHandler(loginFailureHandler)
+            // ==========登出===========
+            .and().logout()
+            // 允许所有用户
+            .permitAll()
+            // 登出成功处理逻辑
+            .logoutSuccessHandler(logoutSuccessHandler)
+            .deleteCookies(RestHttpSessionIdResolver.AUTH_TOKEN)
+            // ==========会话管理=========
+            .and().sessionManagement()
+            // 超时处理
+            .invalidSessionStrategy(invalidSessionHandler)
+            // 同一账号同时登录最大用户数
+            .maximumSessions(1)
+            // 顶号处理
+            .expiredSessionStrategy(sessionInformationExpiredHandler)
         ;
 
         // 验证码过滤器
