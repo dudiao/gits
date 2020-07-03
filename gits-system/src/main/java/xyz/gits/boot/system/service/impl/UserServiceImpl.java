@@ -19,6 +19,7 @@ import xyz.gits.boot.api.system.entity.UserRoleRel;
 import xyz.gits.boot.api.system.enums.LockFlag;
 import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.api.system.vo.LoginUser;
+import xyz.gits.boot.api.system.vo.UserVO;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
@@ -71,7 +72,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public LoginUser saveUser(UserSaveDTO dto) {
+    public LoginUser<UserVO> saveUser(UserSaveDTO dto) {
         User user = new User();
         BeanUtils.copyPropertiesIgnoreNull(dto, user);
 
@@ -85,8 +86,11 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         }
         baseMapper.insert(user);
 
-        LoginUser loginUser = new LoginUser();
-        BeanUtils.copyPropertiesIgnoreNull(user, loginUser);
+        LoginUser<UserVO> loginUser = new LoginUser<>();
+        UserVO userVO = new UserVO();
+        BeanUtils.copyPropertiesIgnoreNull(user, userVO);
+        loginUser.setUser(userVO);
+        loginUser.setPassword(user.getPassword());
 
         // 保存用户的角色
         if (CollUtil.isEmpty(dto.getRole())) {
@@ -144,7 +148,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
         User user = baseMapper.selectById(userDTO.getUserId());
         if (null == user) {
             log.warn("[修改个人信息] - 用户[userId={}, userName={}]不存在", userDTO.getUserId(), userDTO.getUserName());
-            throw new SystemNoLogException(ResponseCode.USER_NOT_FIND);
+            throw new SystemNoLogException(ResponseCode.USER_NOT_EXIST);
         }
 
         if (!StrUtil.equals(UserUtil.getUserId(), userDTO.getUserId())) {

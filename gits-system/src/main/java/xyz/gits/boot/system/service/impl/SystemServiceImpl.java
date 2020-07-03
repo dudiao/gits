@@ -11,6 +11,8 @@ import xyz.gits.boot.api.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.common.core.response.ResponseCode;
+import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
 import xyz.gits.boot.system.service.IResourceService;
 import xyz.gits.boot.system.service.IRoleService;
@@ -35,33 +37,36 @@ public class SystemServiceImpl implements SystemService {
     private IRoleService roleService;
 
     @Override
-    public LoginUser loadUserByUsername(String userName) {
+    public RestResponse<LoginUser<UserVO>> loadUserByUsername(String userName) {
         User user = userService.getByUsername(userName);
         if (ObjectUtil.isNull(user)) {
-            return null;
+            return RestResponse.build(ResponseCode.USER_NOT_EXIST);
         }
-        return getLoginUser(user);
+        LoginUser<UserVO> loginUser = getLoginUser(user);
+        return RestResponse.success(loginUser);
     }
 
     @Override
-    public LoginUser loadUserByBiz(String fieldName, String value) {
+    public RestResponse<LoginUser<UserVO>> loadUserByBiz(String fieldName, String value) {
         if (StrUtil.isBlank(fieldName) || StrUtil.isBlank(value)) {
             throw new IllegalArgumentException("SystemServiceImpl#loadUserByBiz() fieldName 或者 value 不能为空");
         }
         User user = userService.getOne(Wrappers.<User>query().eq(fieldName, value));
         if (ObjectUtil.isNull(user)) {
-            return null;
+            return RestResponse.build(ResponseCode.USER_NOT_EXIST);
         }
-        return getLoginUser(user);
+        LoginUser<UserVO> loginUser = getLoginUser(user);
+        return RestResponse.success(loginUser);
     }
 
     @Override
-    public LoginUser registerUser(UserSaveDTO user) {
-        return userService.saveUser(user);
+    public RestResponse<LoginUser<UserVO>> registerUser(UserSaveDTO user) {
+        LoginUser<UserVO> loginUser = userService.saveUser(user);
+        return RestResponse.success(loginUser);
     }
 
-    private LoginUser getLoginUser(User user) {
-        LoginUser<UserVO> loginUser = new LoginUser();
+    private LoginUser<UserVO> getLoginUser(User user) {
+        LoginUser<UserVO> loginUser = new LoginUser<>();
         UserVO userVO = new UserVO();
         BeanUtils.copyPropertiesIgnoreNull(user, userVO);
         loginUser.setUser(userVO);

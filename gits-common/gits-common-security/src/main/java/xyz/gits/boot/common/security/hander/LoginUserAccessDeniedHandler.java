@@ -23,6 +23,7 @@ public class LoginUserAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        log.warn("用户无权访问", accessDeniedException);
         ServletUtils.render(request, response, RestResponse.build(ResponseCode.NO_AUTHENTICATION));
     }
 }

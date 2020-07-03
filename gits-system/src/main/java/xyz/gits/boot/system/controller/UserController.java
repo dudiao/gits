@@ -77,11 +77,11 @@ public class UserController extends BasicController {
 
     @GetMapping("/system/user/{userName}")
     @ApiOperation(value = "查看用户详情")
-    public RestResponse<LoginUser> detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
-        LoginUser loginUser = systemService.loadUserByUsername(userName);
+    public RestResponse<LoginUser<UserVO>> detail(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
+        RestResponse<LoginUser<UserVO>> response = systemService.loadUserByUsername(userName);
         // 不返回密码
-        loginUser.setPassword(null);
-        return RestResponse.success(loginUser);
+        response.getData().setPassword(null);
+        return response;
     }
 
 }

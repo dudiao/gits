@@ -35,7 +35,7 @@ public interface IUserService extends BasicService<User> {
      */
     User getByUsername(String userName);
 
-    LoginUser saveUser(UserSaveDTO userDTO);
+    LoginUser<UserVO> saveUser(UserSaveDTO userDTO);
 
     /**
      * 更新用户和其角色

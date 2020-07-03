@@ -104,6 +104,10 @@ public class RestResponse<T> extends BaseResponse {
         return new RestResponse<T>(code, message, data);
     }
 
+    public boolean isSuccess() {
+        return ResponseCode.SUCCESS.getCode() == super.code;
+    }
+
     private RestResponse() {
     }
 

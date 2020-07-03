@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.LoginUser;
+import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.common.core.response.RestResponse;
 
 /**
  * 预留实现：Feign服务间调用
@@ -17,13 +19,13 @@ public interface SystemFeign extends SystemService {
 
     @Override
     @GetMapping("/user/info/{userName}")
-    LoginUser loadUserByUsername(@PathVariable("userName") String userName);
+    RestResponse<LoginUser<UserVO>> loadUserByUsername(@PathVariable("userName") String userName);
 
     @Override
     @GetMapping("/user/find")
-    LoginUser loadUserByBiz(@RequestParam("fieldName") String fieldName, @RequestParam("value") String value);
+    RestResponse<LoginUser<UserVO>> loadUserByBiz(@RequestParam("fieldName") String fieldName, @RequestParam("value") String value);
 
     @Override
     @PostMapping("/user/register")
-    LoginUser registerUser(@RequestBody UserSaveDTO user);
+    RestResponse<LoginUser<UserVO>> registerUser(@RequestBody UserSaveDTO user);
 }

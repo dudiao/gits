@@ -6,9 +6,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.vo.LoginUser;
+import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.system.controller.UserController;
 
 /**
+ * Feign调用接口
+ *
  * @author songyinyin
  * @date 2020/5/3 上午 12:38
  */
@@ -17,23 +21,21 @@ public class CrsUserController extends UserController {
 
     @GetMapping("/user/info/{userName}")
     @ApiOperation(value = "查看用户详情（内部接口调用）")
-    public LoginUser info(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
+    public RestResponse<LoginUser<UserVO>> info(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
         // TODO 需要鉴权
-        LoginUser loginUser = systemService.loadUserByUsername(userName);
-        return loginUser;
+        return systemService.loadUserByUsername(userName);
     }
 
     @PostMapping("/user/register")
     @ApiOperation(value = "注册用户")
-    public LoginUser register(@Validated @RequestBody UserSaveDTO dto) {
-        LoginUser loginUser = userService.saveUser(dto);
-        return loginUser;
+    public RestResponse<LoginUser<UserVO>> register(@Validated @RequestBody UserSaveDTO dto) {
+        LoginUser<UserVO> loginUser = userService.saveUser(dto);
+        return RestResponse.success(loginUser);
     }
 
     @GetMapping("/user/find")
     @ApiOperation(value = "查找用户")
-    public LoginUser find(String fieldName, String value) {
-        LoginUser loginUser = systemService.loadUserByBiz(fieldName, value);
-        return loginUser;
+    public RestResponse<LoginUser<UserVO>> find(String fieldName, String value) {
+        return systemService.loadUserByBiz(fieldName, value);
     }
 }
