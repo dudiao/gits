@@ -99,7 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().and().csrf().disable();
+        http.cors().and().csrf().disable();
         // 扩展用户登录
         http.apply(extendAuthenticationSecurityConfig)
             .and().authorizeRequests()
