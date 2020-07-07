@@ -14,13 +14,13 @@ import xyz.gits.boot.api.system.entity.Resource;
 import xyz.gits.boot.api.system.entity.RoleResourceRel;
 import xyz.gits.boot.api.system.enums.ResourceType;
 import xyz.gits.boot.api.system.enums.VisibleType;
+import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.BeanUtils;
-import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.system.mapper.ResourceMapper;
 import xyz.gits.boot.system.mapper.RoleResourceRelMapper;
 import xyz.gits.boot.system.service.IResourceService;
@@ -82,13 +82,6 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
 
     @Override
     public void saveResource(ResourceDTO dto) {
-        // 根据当前资源ID查询资源，判断是否重复
-        Resource resourceNew = resourceMapper.selectById(dto.getResourceId());
-        if (resourceNew != null) {
-            log.warn("[资源管理 - 新增资源信息] - 资源[resourceId={}, resourceName={}]已存在", dto.getResourceId(), dto.getResourceName());
-            throw new SystemNoLogException(ResponseCode.RESOURCE_INVALID);
-        }
-
         Resource resource = getResource(dto);
         resource.setCreateUserId(UserUtil.getUserId());
         resource.setCreateTime(LocalDateTime.now());
@@ -111,7 +104,7 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
      */
     private Resource getResource(ResourceDTO dto) {
         Resource resource = new Resource();
-        // 如果是PID为0则为系统资源
+        // 如果是PID为0000则为系统资源
         if (StrUtil.equals(resource.getParentResourceId(), SystemConstants.RESOURCE_ROOT_ID)) {
             resource.setResourceType(ResourceType.A);
         } else {
