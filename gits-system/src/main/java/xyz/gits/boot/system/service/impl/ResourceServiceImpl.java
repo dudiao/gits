@@ -104,8 +104,8 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
      */
     private Resource getResource(ResourceDTO dto) {
         Resource resource = new Resource();
-        // 如果是PID为0000则为系统资源
-        if (StrUtil.equals(resource.getParentResourceId(), SystemConstants.RESOURCE_ROOT_ID)) {
+        // 如果是PID为 0000 则为系统资源
+        if (StrUtil.equals(dto.getParentResourceId(), SystemConstants.RESOURCE_ROOT_ID)) {
             resource.setResourceType(ResourceType.A);
         } else {
             Resource parentResource = resourceMapper.selectById(resource.getParentResourceId());

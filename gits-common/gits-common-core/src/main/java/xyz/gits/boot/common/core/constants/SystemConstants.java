@@ -14,5 +14,5 @@ public interface SystemConstants {
     /**
      * 根资源id
      */
-    String RESOURCE_ROOT_ID = "0";
+    String RESOURCE_ROOT_ID = "0000";
 }

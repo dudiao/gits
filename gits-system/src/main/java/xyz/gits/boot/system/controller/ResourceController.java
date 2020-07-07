@@ -41,11 +41,11 @@ public class ResourceController extends BasicController {
     private IResourceService resourceService;
 
     @GetMapping("/system/resource/tree/current")
-    @ApiOperation(value = "获取当前用户的树形资源集合")
+    @ApiOperation(value = "获取当前用户的树形资源集合，用户登录后或者刷新页面时访问")
     public RestResponse<List<ResourceTree>> getUserResource() {
         Set<Resource> resourceSet = new HashSet<>();
-
         UserUtil.getUserRoles().forEach(roleId -> resourceSet.addAll(resourceService.findResourceByRoleId(roleId)));
+
         List<ResourceTree> resourceTreeList = resourceSet.stream().map(resource -> {
             ResourceTree tree = new ResourceTree();
             BeanUtils.copyPropertiesIgnoreNull(resource, tree);
@@ -53,6 +53,7 @@ public class ResourceController extends BasicController {
             tree.setParentId(resource.getParentResourceId());
             return tree;
         }).sorted(Comparator.comparingInt(ResourceTree::getOrderNum)).collect(Collectors.toList());
+
         return RestResponse.success(TreeUtil.bulid(resourceTreeList, SystemConstants.RESOURCE_ROOT_ID));
     }
 

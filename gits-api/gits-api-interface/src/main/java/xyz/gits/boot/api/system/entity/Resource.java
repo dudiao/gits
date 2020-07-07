@@ -8,13 +8,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import xyz.gits.boot.api.system.enums.ResourceType;
 import xyz.gits.boot.api.system.enums.VisibleType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * <p>
@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
  * @date 2020-02-29
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("system_resource")
 @ApiModel(value = "Resource对象", description = "资源表")
@@ -101,5 +100,10 @@ public class Resource implements Serializable {
             return StrUtil.equals(resourceId, targetResourceId);
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(resourceId);
     }
 }
