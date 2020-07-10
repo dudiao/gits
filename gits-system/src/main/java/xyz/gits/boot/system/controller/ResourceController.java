@@ -57,6 +57,18 @@ public class ResourceController extends BasicController {
         return RestResponse.success(TreeUtil.bulid(resourceTreeList, SystemConstants.RESOURCE_ROOT_ID));
     }
 
+    @GetMapping("/system/resource/tree")
+    @ApiOperation("完整菜单树")
+    public RestResponse<List<ResourceTree>> tree() {
+        List<Resource> list = resourceService.list();
+        List<ResourceTree> resourceTreeList = list.stream().map(resource -> {
+            ResourceTree tree = new ResourceTree();
+            BeanUtils.copyPropertiesIgnoreNull(resource, tree);
+            return tree;
+        }).sorted(Comparator.comparingInt(ResourceTree::getOrderNum)).collect(Collectors.toList());
+        return RestResponse.success(resourceTreeList);
+    }
+
     @GetMapping("/system/resource/tree/role")
     @ApiOperation(value = "角色的资源集合")
     public RestResponse<List<Resource>> getUserResource(@NotBlank(message = "角色id不能为空") @ApiParam(name = "roleId", value = "角色id")
