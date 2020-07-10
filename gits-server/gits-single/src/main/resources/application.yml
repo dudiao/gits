@@ -2,9 +2,17 @@
 logging:
   level:
     xyz.gits.boot: debug
+  file:
+    path: logs
+    name: logs/${spring.application.name}.log
 gits:
   logging:
-#    path: E:\logs\gits
+    # 日志最长保存多久
+    max-history: 60
+    # 单个日志文件大小
+    max-file-size: 512MB
+    # 每个服务总共的日志文件大小
+    total-size-cap: 1GB
 
 server:
   port: 8200
@@ -14,14 +22,15 @@ server:
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
-    # tomcat最大线程数，默认为200
-    max-threads: 800
-    # Tomcat启动初始化的线程数，默认值10
-    min-spare-threads: 30
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 300
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 10
 
 spring:
   application:
-    name: gits
+    name: gits-single
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -125,6 +134,9 @@ swagger:
     key-name: GitsSessionID
 
 management:
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:

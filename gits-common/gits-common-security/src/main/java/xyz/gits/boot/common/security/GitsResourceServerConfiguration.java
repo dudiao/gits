@@ -77,7 +77,7 @@ public class GitsResourceServerConfiguration extends WebSecurityConfigurerAdapte
         "/swagger-ui.html",
         "/webjars/**",
         "/swagger-resources/**",
-        "/v2/api-docs",
+        "/v2/**",
         "/csrf",
         "/",
 
