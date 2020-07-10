@@ -1,5 +1,6 @@
 package xyz.gits.boot.api.system.utils;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import xyz.gits.boot.api.system.service.AuthService;
 import xyz.gits.boot.common.core.utils.SpringContextHolder;
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 /**
+ * 获取当前登录用户工具类
+ *
  * @author songyinyin
  * @date 2020/3/14 下午 05:16
  */
@@ -86,5 +89,14 @@ public class UserUtil {
         return authService.loginExtendType(request);
     }
 
+    /**
+     * 是否为管理员
+     *
+     * @author songyinyin
+     * @date 2020/5/12
+     */
+    public static boolean isAdmin() {
+        return StrUtil.equals(getUserId(), "1");
+    }
 
 }

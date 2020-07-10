@@ -15,18 +15,23 @@ import xyz.gits.boot.api.system.entity.RoleResourceRel;
 import xyz.gits.boot.api.system.enums.ResourceType;
 import xyz.gits.boot.api.system.enums.VisibleType;
 import xyz.gits.boot.api.system.utils.UserUtil;
+import xyz.gits.boot.api.system.vo.ResourceTree;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.common.core.constants.SystemConstants;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.BeanUtils;
+import xyz.gits.boot.common.core.utils.TreeUtil;
 import xyz.gits.boot.system.mapper.ResourceMapper;
 import xyz.gits.boot.system.mapper.RoleResourceRelMapper;
 import xyz.gits.boot.system.service.IResourceService;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -94,6 +99,18 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
         resource.setUpdateUserId(UserUtil.getUserId());
         resource.setUpdateTime(LocalDateTime.now());
         this.updateById(resource);
+    }
+
+    @Override
+    public List<ResourceTree> buildTree(Collection<Resource> list) {
+        List<ResourceTree> resourceTreeList = list.stream().map(resource -> {
+            ResourceTree tree = new ResourceTree();
+            BeanUtils.copyPropertiesIgnoreNull(resource, tree);
+            tree.setId(resource.getResourceId());
+            tree.setParentId(resource.getParentResourceId());
+            return tree;
+        }).sorted(Comparator.comparingInt(ResourceTree::getOrderNum)).collect(Collectors.toList());
+        return TreeUtil.bulid(resourceTreeList, SystemConstants.RESOURCE_ROOT_ID);
     }
 
     /**
