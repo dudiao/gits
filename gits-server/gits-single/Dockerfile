@@ -1,17 +1,15 @@
-FROM anapsix/alpine-java:8_server-jre_unlimited
-
+FROM openjdk:8-jre-slim
 MAINTAINER idudiao@163.com
 
-ENV TZ=Asia/Shanghai
+ENV PARAMS=""
 
-RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV TZ=PRC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN mkdir -p /gits
-
 WORKDIR /gits
-
 EXPOSE 8200
 
-ADD ./target/gits-single-1.0.0-SNAPSHOT.jar ./
+ADD target/gits-single-1.0.0-SNAPSHOT.jar ./
 
-ENTRYPOINT java -Djava.security.egd=file:/dev/./urandom -jar gits-single-1.0.0-SNAPSHOT.jar
+ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS /gits/gits-single-1.0.0-SNAPSHOT.jar $PARAMS"]
