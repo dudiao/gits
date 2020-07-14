@@ -3,3 +3,15 @@ server:
 spring:
   application:
     name: gits-admin
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    jmx:
+      exposure:
+        include: '*'
