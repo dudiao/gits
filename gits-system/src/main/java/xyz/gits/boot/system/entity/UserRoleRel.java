@@ -1,4 +1,4 @@
-package xyz.gits.boot.api.system.entity;
+package xyz.gits.boot.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -3,7 +3,7 @@
 <mapper namespace="xyz.gits.boot.system.mapper.ResourceMapper">
 
     <!-- 通过角色查询资源信息 -->
-    <select id="findResourceByRoleId" resultType="xyz.gits.boot.api.system.entity.Resource">
+    <select id="findResourceByRoleId" resultType="xyz.gits.boot.system.entity.Resource">
 		SELECT
 			sr.*
 		FROM

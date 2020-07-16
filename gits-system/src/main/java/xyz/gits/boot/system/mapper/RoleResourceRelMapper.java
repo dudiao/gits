@@ -1,6 +1,6 @@
 package xyz.gits.boot.system.mapper;
 
-import xyz.gits.boot.api.system.entity.RoleResourceRel;
+import xyz.gits.boot.system.entity.RoleResourceRel;
 import xyz.gits.boot.common.core.basic.BasicMapper;
 
 /**

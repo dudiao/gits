@@ -3,7 +3,7 @@
 <mapper namespace="xyz.gits.boot.system.mapper.RoleMapper">
 
     <!-- 通过用户ID，查询角色信息-->
-    <select id="getRolesByUserId" resultType="xyz.gits.boot.api.system.entity.Role">
+    <select id="getRolesByUserId" resultType="xyz.gits.boot.system.entity.Role">
         SELECT
             r.*
         FROM

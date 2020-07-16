@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.gits.boot.api.system.dto.ResourceDTO;
-import xyz.gits.boot.api.system.entity.Resource;
+import xyz.gits.boot.system.entity.Resource;
 import xyz.gits.boot.api.system.enums.VisibleType;
 import xyz.gits.boot.api.system.utils.UserUtil;
 import xyz.gits.boot.api.system.vo.ResourceTree;

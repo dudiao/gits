@@ -1,4 +1,4 @@
-package xyz.gits.boot.api.system.entity;
+package xyz.gits.boot.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import xyz.gits.boot.api.system.enums.Status;
 import xyz.gits.boot.api.system.enums.StopFlag;
 
 /**

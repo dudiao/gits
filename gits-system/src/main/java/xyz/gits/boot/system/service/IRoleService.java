@@ -2,11 +2,9 @@ package xyz.gits.boot.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import xyz.gits.boot.api.system.dto.RoleResourceDTO;
 import xyz.gits.boot.api.system.dto.RoleSaveDTO;
 import xyz.gits.boot.api.system.dto.RoleUpdateDTO;
-import xyz.gits.boot.api.system.entity.Role;
-import xyz.gits.boot.api.system.entity.User;
+import xyz.gits.boot.system.entity.Role;
 import xyz.gits.boot.common.core.basic.BasicService;
 
 import java.util.List;

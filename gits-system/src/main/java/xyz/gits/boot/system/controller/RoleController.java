@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.gits.boot.api.system.dto.RoleResourceDTO;
 import xyz.gits.boot.api.system.dto.RoleSaveDTO;
 import xyz.gits.boot.api.system.dto.RoleUpdateDTO;
-import xyz.gits.boot.api.system.entity.Role;
+import xyz.gits.boot.system.entity.Role;
 import xyz.gits.boot.common.core.basic.BasicController;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.response.TableResponse;

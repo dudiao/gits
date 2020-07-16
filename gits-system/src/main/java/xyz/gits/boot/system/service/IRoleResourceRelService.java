@@ -1,7 +1,7 @@
 package xyz.gits.boot.system.service;
 
 import xyz.gits.boot.api.system.dto.RoleResourceDTO;
-import xyz.gits.boot.api.system.entity.RoleResourceRel;
+import xyz.gits.boot.system.entity.RoleResourceRel;
 import xyz.gits.boot.common.core.basic.BasicService;
 
 /**

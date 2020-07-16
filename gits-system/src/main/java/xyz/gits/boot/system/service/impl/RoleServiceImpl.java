@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.gits.boot.api.system.dto.RoleSaveDTO;
 import xyz.gits.boot.api.system.dto.RoleUpdateDTO;
-import xyz.gits.boot.api.system.entity.Role;
+import xyz.gits.boot.system.entity.Role;
 import xyz.gits.boot.api.system.enums.StopFlag;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.utils.BeanUtils;

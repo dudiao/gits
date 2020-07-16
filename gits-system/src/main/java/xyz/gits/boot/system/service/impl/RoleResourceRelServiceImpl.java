@@ -5,7 +5,7 @@ import com.alicp.jetcache.anno.CacheInvalidate;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.gits.boot.api.system.dto.RoleResourceDTO;
-import xyz.gits.boot.api.system.entity.RoleResourceRel;
+import xyz.gits.boot.system.entity.RoleResourceRel;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.system.mapper.RoleResourceRelMapper;

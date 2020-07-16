@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.gits.boot.api.system.dto.OrgDTO;
-import xyz.gits.boot.api.system.entity.Org;
+import xyz.gits.boot.system.entity.Org;
 import xyz.gits.boot.api.system.vo.OrgTree;
 import xyz.gits.boot.common.core.basic.BasicController;
 import xyz.gits.boot.common.core.response.ResponseCode;

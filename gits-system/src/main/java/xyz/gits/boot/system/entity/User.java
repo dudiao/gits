@@ -1,4 +1,4 @@
-package xyz.gits.boot.api.system.entity;
+package xyz.gits.boot.system.entity;
 
 import java.math.BigDecimal;
 

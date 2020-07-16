@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.gits.boot.api.system.dto.UserSaveDTO;
 import xyz.gits.boot.api.system.dto.UserUpdateDTO;
-import xyz.gits.boot.api.system.entity.User;
+import xyz.gits.boot.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserVO;

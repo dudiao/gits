@@ -1,7 +1,7 @@
 package xyz.gits.boot.system.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import xyz.gits.boot.api.system.entity.Resource;
+import xyz.gits.boot.system.entity.Resource;
 import xyz.gits.boot.common.core.basic.BasicMapper;
 
 import java.util.List;
