@@ -3,6 +3,9 @@ logging:
   level:
     xyz.gits.boot: debug
   file:
+    # 修改日志路径时，path和name需要同时修改，且文件名必须为：${spring.application.name}.log，比如：
+    # path: /opt/apps/logs
+    # name: /opt/apps/logs/${spring.application.name}.log
     path: logs
     name: logs/${spring.application.name}.log
 gits:

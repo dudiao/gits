@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: gits-admin
+  cloud:
+    kubernetes:
+      discovery:
+        service-labels:
+          spring-boot: true
 
 management:
   endpoint:
