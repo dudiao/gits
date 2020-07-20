@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @author: null
- * @date: 2020/6/5 10:41
+ * @author null
+ * @date 2020/6/5 10:41
  */
 @Data
 @ApiModel(value = "前端用户详情展示")

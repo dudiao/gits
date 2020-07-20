@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 系统资源传输对象
  *
  * @author null
- * @date 2020/4/2815:02
+ * @date 2020/4/28 15:02
  */
 @Data
 @ApiModel(value = "系统资源传输对象")

@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 /**
  * 角色查询传输对象
  *
- * @author: null
- * @date: 2020/7/10 10:50
+ * @author null
+ * @date 2020/7/10 10:50
  */
 @Data
 @ApiModel("用户查询参数")

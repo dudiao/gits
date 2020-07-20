@@ -2,7 +2,7 @@ package xyz.gits.boot.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import xyz.gits.boot.api.system.dto.UserAddDTO;
-import xyz.gits.boot.system.dto.user.SysUserQueryDTO;
+import xyz.gits.boot.system.dto.user.UserQueryDTO;
 import xyz.gits.boot.system.dto.user.UserUpdateDTO;
 import xyz.gits.boot.system.entity.User;
 import xyz.gits.boot.api.system.vo.LoginUser;
@@ -28,7 +28,7 @@ public interface IUserService extends BasicService<User> {
      * @author null
      * @date 2020/5/26 17:38
      */
-    IPage<User> getPage(SysUserQueryDTO sysUserQueryDTO);
+    IPage<User> getPage(UserQueryDTO userQueryDTO);
 
     /**
      * 根据用户名获取用户信息

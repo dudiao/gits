@@ -20,6 +20,7 @@ import java.util.List;
 public class UserAddDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @ApiModelProperty(value = "用户id", required = true)
     @NotBlank(message = "用户id不能为空")
     @Size(max = 31, message = "用户id不能超过31")

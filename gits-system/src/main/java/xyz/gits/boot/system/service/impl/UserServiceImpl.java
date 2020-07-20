@@ -23,7 +23,7 @@ import xyz.gits.boot.common.core.exception.SystemException;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.BeanUtils;
-import xyz.gits.boot.system.dto.user.SysUserQueryDTO;
+import xyz.gits.boot.system.dto.user.UserQueryDTO;
 import xyz.gits.boot.system.dto.user.UserUpdateDTO;
 import xyz.gits.boot.system.entity.Org;
 import xyz.gits.boot.system.entity.User;
@@ -64,20 +64,20 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
     /**
      * 分页查询
      *
-     * @return 用户详情 {@link IPage< User>}
+     * @return 用户详情 {@link IPage<User>}
      * @author null
      * @date 2020/5/26 17:38
      */
     @Override
-    public IPage<User> getPage(SysUserQueryDTO sysUserQueryDTO) {
+    public IPage<User> getPage(UserQueryDTO userQueryDTO) {
         QueryWrapper<User> queryWrapper = parseParameter();
         queryWrapper.lambda()
-            .like(StrUtil.isNotEmpty(sysUserQueryDTO.getPwdLockStatusCode()), User::getPwdLockStatus, sysUserQueryDTO.getPwdLockStatusCode())
-            .like(StrUtil.isNotEmpty(sysUserQueryDTO.getStopStatusCode()), User::getStopStatus, sysUserQueryDTO.getStopStatusCode())
-            .eq(StrUtil.isNotEmpty(sysUserQueryDTO.getNickName()), User::getNickName, sysUserQueryDTO.getNickName())
-            .eq(StrUtil.isNotEmpty(sysUserQueryDTO.getOrgId()), User::getOrgId, sysUserQueryDTO.getOrgId())
-            .eq(StrUtil.isNotEmpty(sysUserQueryDTO.getUserName()), User::getUserName, sysUserQueryDTO.getUserName());
-        return page(queryWrapper).setCurrent(sysUserQueryDTO.getCurrentPage()).setSize(sysUserQueryDTO.getPageSize());
+            .like(StrUtil.isNotEmpty(userQueryDTO.getPwdLockStatusCode()), User::getPwdLockStatus, userQueryDTO.getPwdLockStatusCode())
+            .like(StrUtil.isNotEmpty(userQueryDTO.getStopStatusCode()), User::getStopStatus, userQueryDTO.getStopStatusCode())
+            .eq(StrUtil.isNotEmpty(userQueryDTO.getNickName()), User::getNickName, userQueryDTO.getNickName())
+            .eq(StrUtil.isNotEmpty(userQueryDTO.getOrgId()), User::getOrgId, userQueryDTO.getOrgId())
+            .eq(StrUtil.isNotEmpty(userQueryDTO.getUserName()), User::getUserName, userQueryDTO.getUserName());
+        return page(queryWrapper).setCurrent(userQueryDTO.getCurrentPage()).setSize(userQueryDTO.getPageSize());
     }
 
     /**
@@ -107,7 +107,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
         Org org = orgMapper.selectById(dto.getOrgId());
         if (BeanUtil.isEmpty(org)) {
-            log.warn("[用户管理-修改用户]-机构不存在,机构id:orgId{}", dto.getOrgId());
+            log.warn("[用户管理-修改用户]-机构不存在，机构id:orgId{}", dto.getOrgId());
             throw new SystemNoLogException(ResponseCode.ORG_NOT_EXIST);
         }
 
@@ -165,13 +165,13 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
         Org org = orgMapper.selectById(userUpdateDTO.getOrgId());
         if (BeanUtil.isEmpty(org)) {
-            log.warn("[用户管理-修改用户]-机构不存在,机构id:orgId{}", userUpdateDTO.getOrgId());
+            log.warn("[用户管理-修改用户]-机构不存在，机构id:orgId{}", userUpdateDTO.getOrgId());
             throw new SystemNoLogException(ResponseCode.ORG_NOT_EXIST);
         }
 
         User user = baseMapper.selectById(userUpdateDTO.getUserId());
         if (null == user) {
-            log.warn("[用户管理-修改个人信息]-用户不存在,用户id:userId={}, 用户名:userName={}", userUpdateDTO.getUserId(), userUpdateDTO.getUserName());
+            log.warn("[用户管理-修改个人信息]-用户不存在，用户id:userId={}, 用户名:userName={}", userUpdateDTO.getUserId(), userUpdateDTO.getUserName());
             throw new SystemNoLogException(ResponseCode.USER_NOT_EXIST);
         }
         BeanUtils.copyPropertiesIgnoreNull(userUpdateDTO, user);
@@ -208,14 +208,14 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
     public void updateUserInfo(UserUpdateDTO userUpdateDTO) {
         User user = baseMapper.selectById(userUpdateDTO.getUserId());
         if (null == user) {
-            log.warn("[用户管理-修改个人信息]-用户不存在,用户id:userId={}, 用户名:userName={}", userUpdateDTO.getUserId(), userUpdateDTO.getUserName());
+            log.warn("[用户管理-修改个人信息]-用户不存在，用户id:userId={}, 用户名:userName={}", userUpdateDTO.getUserId(), userUpdateDTO.getUserName());
             throw new SystemNoLogException(ResponseCode.USER_NOT_EXIST);
         }
 
         LoginUser loginUser = (LoginUser) AuthUtils.loginUser();
         UserDetailsVO currentUser = loginUser.getUser();
         if (!StrUtil.equals(currentUser.getUserId(), userUpdateDTO.getUserId())) {
-            log.warn("[用户管理-修改个人信息]-不是本人的操作,当前登录用户id:userId={},用户名:userName={},被操作用户id:userId={}, 用户名:userName={}",
+            log.warn("[用户管理-修改个人信息]-不是本人的操作，当前登录用户id:userId={}，用户名:userName={}，被操作用户id:userId={}, 用户名:userName={}",
                 currentUser.getUserId(), currentUser.getUserName(), userUpdateDTO.getUserId(), userUpdateDTO.getUserName());
             throw new SystemException(ResponseCode.NO_AUTHENTICATION);
         }
@@ -225,7 +225,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
                 user.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
                 user.setPwdUpdateTime(LocalDateTime.now());
             } else {
-                log.warn("[用户管理-修改个人信息]-用户原密码错误,修改密码失败,用户id:userId={}, 用户名userName={}", userUpdateDTO.getUserId(), userUpdateDTO.getUserName());
+                log.warn("[用户管理-修改个人信息]-用户原密码错误，修改密码失败，用户id:userId={}, 用户名userName={}", userUpdateDTO.getUserId(), userUpdateDTO.getUserName());
                 throw new SystemException(ResponseCode.USER_PASSWORD_ERROR);
             }
         }
@@ -262,11 +262,11 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
     public void updateUserStatus(String userId, String stopFlag) {
         User user = userMapper.selectById(userId);
         if (user == null) {
-            log.warn("[用户管理-修改个人状态]-用户不存在不可以修改状态,用户名:UserId={}", user.getUserId());
+            log.warn("[用户管理-修改个人状态]-用户不存在不可以修改状态，用户名:UserId={}", user.getUserId());
             throw new SystemNoLogException(ResponseCode.USER_NOT_EXIST);
         }
         if (user.isAdmin()) {
-            log.warn("[用户管理-修改个人状态]-用户是超级管理员不可以修改状态,用户名:UserName={}", user.getUserName());
+            log.warn("[用户管理-修改个人状态]-用户是超级管理员不可以修改状态，用户名:UserName={}", user.getUserName());
             throw new SystemNoLogException(ResponseCode.UPDATE_USER_STATUS);
         }
         user.setStopStatus(StopStatus.fromString(stopFlag));
@@ -285,11 +285,11 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
     public void updateUserLock(String userId, String pwdLockFlag) {
         User user = userMapper.selectById(userId);
         if (user == null) {
-            log.warn("[用户管理-修改个人状态]-用户名不存在不可以修改状态,用户id:UserId={}", user.getUserId());
+            log.warn("[用户管理-修改个人状态]-用户名不存在不可以修改状态，用户id:UserId={}", user.getUserId());
             throw new SystemNoLogException(ResponseCode.USER_NOT_EXIST);
         }
         if (user.isAdmin()) {
-            log.warn("[用户管理-修改个人状态]-用户名是超级管理员不可以修改状态,用户名UserName={}", user.getUserName());
+            log.warn("[用户管理-修改个人状态]-用户名是超级管理员不可以修改状态，用户名UserName={}", user.getUserName());
             throw new SystemNoLogException(ResponseCode.UPDATE_USER_STATUS);
         }
         user.setPwdLockStatus(LockStatus.fromString(pwdLockFlag));
@@ -307,7 +307,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
     @Override
     public void userPasswordReset(User user) {
         if (user.isAdmin()) {
-            log.warn("[用户管理-重置密码]-当前用户是超级管理员密码不可以被重置,用户名:UserName={}", user.getUserName());
+            log.warn("[用户管理-重置密码]-当前用户是超级管理员密码不可以被重置，用户名:UserName={}", user.getUserName());
             throw new SystemNoLogException(ResponseCode.UPDATE_USER_PASSWORD);
         }
         // 密码加密
@@ -323,7 +323,7 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
      * 获取该机构下用户
      *
      * @param orgId 机构id
-     * @return 用户集合 {@link List< User>}
+     * @return 用户集合 {@link List<User>}
      * @author null
      * @date 2020/5/29 14:44
      */

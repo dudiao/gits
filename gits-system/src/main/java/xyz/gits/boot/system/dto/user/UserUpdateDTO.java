@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * 系统用户修改传输对象
  *
- * @author: null
- * @date: 2020/6/8 16:08
+ * @author null
+ * @date 2020/6/8 16:08
  */
 @Data
 @ApiModel(value = "系统用户修改传输对象")

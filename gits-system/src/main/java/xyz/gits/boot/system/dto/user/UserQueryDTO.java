@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
  */
 @Data
 @ApiModel("用户查询参数")
-public class SysUserQueryDTO extends BaseQueryDTO {
+public class UserQueryDTO extends BaseQueryDTO {
 
     /**
      * 用户ID（工号）

@@ -16,11 +16,10 @@ import java.time.LocalDateTime;
  *
  * @author null
  * @date 2020/5/21 9:25
- * @since
  */
 @Data
 @ApiModel("系统配置DTO")
-public class ConfigUtilDTO {
+public class ConfigDTO {
 
 
     @ApiModelProperty(value = "配置KEY")

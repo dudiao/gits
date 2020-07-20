@@ -13,8 +13,8 @@ import java.io.Serializable;
 /**
  * 配置传输对象
  *
- * @author: null
- * @date: 2020/6/12 9:38
+ * @author null
+ * @date 2020/6/12 9:38
  */
 @Data
 @ApiModel("配置传输对象")
