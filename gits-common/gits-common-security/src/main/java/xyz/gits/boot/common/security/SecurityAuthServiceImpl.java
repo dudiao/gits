@@ -3,7 +3,7 @@ package xyz.gits.boot.common.security;
 import org.springframework.security.core.context.SecurityContextHolder;
 import xyz.gits.boot.api.system.service.AuthService;
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.exception.SystemException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author songyinyin
  * @date 2020/6/25 下午 10:32
  */
-public class SecurityAuthServiceImpl<T extends LoginUser<M>, M extends UserVO> implements AuthService<T,M> {
+public class SecurityAuthServiceImpl<T extends LoginUser<M>, M extends UserDetailsVO> implements AuthService<T,M> {
 
     @Override
     public T loginUser() {

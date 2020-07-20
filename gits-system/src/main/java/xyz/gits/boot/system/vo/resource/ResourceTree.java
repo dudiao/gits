@@ -1,21 +1,23 @@
-package xyz.gits.boot.api.system.vo;
+package xyz.gits.boot.system.vo.resource;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xyz.gits.boot.api.system.enums.ResourceType;
-import xyz.gits.boot.api.system.enums.VisibleType;
+import xyz.gits.boot.api.system.enums.VisibleStatus;
 import xyz.gits.boot.common.core.utils.TreeNode;
 
 import java.time.LocalDateTime;
 
 /**
+ * 资源详情树
+ *
  * @author songyinyin
  * @date 2020/6/14 下午 09:31
  */
 @Data
-@ApiModel(value = "资源树")
+@ApiModel(value = "资源详情树")
 @EqualsAndHashCode(callSuper = true)
 public class ResourceTree extends TreeNode<ResourceTree> {
 
@@ -29,7 +31,7 @@ public class ResourceTree extends TreeNode<ResourceTree> {
     private ResourceType resourceType;
 
     @ApiModelProperty(value = "资源状态（0显示 1隐藏）")
-    private VisibleType visible;
+    private VisibleStatus visible;
 
     @ApiModelProperty(value = "资源排序，越大越排在上边")
     private Integer orderNum;

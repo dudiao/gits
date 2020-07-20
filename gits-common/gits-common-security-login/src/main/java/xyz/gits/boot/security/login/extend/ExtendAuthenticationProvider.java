@@ -14,7 +14,7 @@ import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.userdetails.cache.NullUserCache;
 import org.springframework.util.Assert;
-import xyz.gits.boot.common.core.enums.LoginType;
+import xyz.gits.boot.api.system.enums.LoginType;
 import xyz.gits.boot.common.security.SecurityLoginUser;
 
 /**

@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationEvent;
 /**
  * Spring 工具类，用来获取spring上下文
  *
- * @author dingmingyang
+ * @author null
  */
 @Slf4j
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {

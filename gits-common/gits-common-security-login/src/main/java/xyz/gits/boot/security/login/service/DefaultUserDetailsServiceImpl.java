@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import xyz.gits.boot.api.system.enums.LoginType;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
-import xyz.gits.boot.common.core.enums.LoginType;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.IpUtils;
@@ -36,12 +36,12 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService {
         }
 
         // 查出密码
-        RestResponse<LoginUser<UserVO>> response = systemService.loadUserByUsername(username);
+        RestResponse<LoginUser<UserDetailsVO>> response = systemService.loadUserByUsername(username);
         if (ResponseCode.USER_NOT_EXIST.getCode() == response.getCode()) {
             log.info("登录用户：{} 不存在", username);
             throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
         }
-        LoginUser<UserVO> loginUser = response.getData();
+        LoginUser<UserDetailsVO> loginUser = response.getData();
         loginUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         loginUser.setLoginTime(LocalDateTime.now());
         loginUser.setLoginType(LoginType.PASSWORD);

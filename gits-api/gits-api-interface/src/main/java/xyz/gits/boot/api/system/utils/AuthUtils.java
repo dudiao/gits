@@ -15,7 +15,7 @@ import java.util.Set;
  * @date 2020/3/14 下午 05:16
  */
 @Slf4j
-public class UserUtil {
+public class AuthUtils {
 
     private static AuthService authService = SpringContextHolder.getBean(AuthService.class);
 

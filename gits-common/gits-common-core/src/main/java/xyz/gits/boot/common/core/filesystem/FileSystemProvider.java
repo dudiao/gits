@@ -7,7 +7,7 @@ import java.io.InputStream;
 /**
  * 文件系统
  *
- * @author dingmingyang
+ * @author null
  * @date 2019/12/06/18:04
  */
 public interface FileSystemProvider<T extends UploadParameter> extends Closeable {

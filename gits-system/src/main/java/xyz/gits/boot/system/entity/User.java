@@ -1,20 +1,21 @@
 package xyz.gits.boot.system.entity;
 
-import java.math.BigDecimal;
-
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import xyz.gits.boot.api.system.enums.LockFlag;
-import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.enums.LockStatus;
+import xyz.gits.boot.api.system.enums.Sex;
+import xyz.gits.boot.api.system.enums.StopStatus;
+import xyz.gits.boot.common.core.basic.BasicEntity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -28,106 +29,140 @@ import xyz.gits.boot.api.system.enums.StopFlag;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("system_user")
-@ApiModel(value="User对象", description="用户表")
-public class User implements Serializable {
+@ApiModel(value = "User对象", description = "用户表")
+public class User extends BasicEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "用户id")
+    /**
+     * 用户id
+     */
     @TableId("user_id")
     private String userId;
 
-    @ApiModelProperty(value = "用户名，登录名")
-    @TableField("user_name")
-    private String userName;
-
-    @ApiModelProperty(value = "昵称")
-    @TableField("nick_name")
-    private String nickName;
-
-    @ApiModelProperty(value = "头像")
-    @TableField("avatar")
-    private String avatar;
-
-    @ApiModelProperty(value = "用户密码")
-    @TableField("password")
-    private String password;
-
-    @ApiModelProperty(value = "所属机构代码")
+    /**
+     * 所属机构代码
+     */
     @TableField("org_id")
     private String orgId;
 
-    @ApiModelProperty(value = "邮箱")
+    /**
+     * 用户名，登录名【不能为中文】
+     */
+    @TableField("user_name")
+    private String userName;
+
+    /**
+     * 性别[0:女;1:男]
+     */
+    @TableField("sex")
+    private Sex sex;
+
+    /**
+     * 昵称、姓名
+     */
+    @TableField("nick_name")
+    private String nickName;
+
+    /**
+     * 头像
+     */
+    @TableField("avatar")
+    private String avatar;
+
+    /**
+     * 用户密码
+     */
+    @TableField("password")
+    private String password;
+
+    /**
+     * 邮箱
+     */
     @TableField("email")
     private String email;
 
-    @ApiModelProperty(value = "手机号码")
+    /**
+     * 手机号码
+     */
     @TableField("mobile")
     private String mobile;
 
-    @ApiModelProperty(value = "微信号")
+    /**
+     * 微信号
+     */
     @TableField("wechat")
     private String wechat;
 
-    @ApiModelProperty(value = "备注")
-    @TableField("remark")
-    private String remark;
-
-    @ApiModelProperty(value = "密码修改时间")
+    /**
+     * 密码修改时间
+     */
     @TableField("pwd_update_time")
     private LocalDateTime pwdUpdateTime;
 
-    @ApiModelProperty(value = "停用标志（0:停用，1:启用）")
-    @TableField("stop_flag")
-    private StopFlag stopFlag;
+    /**
+     * 启停状态[0:启用;1:停用]
+     */
+    @TableField("stop_status")
+    private StopStatus stopStatus;
 
-    @ApiModelProperty(value = "停用时间")
+    /**
+     * 停用时间
+     */
     @TableField("stop_time")
     private LocalDateTime stopTime;
 
-    @ApiModelProperty(value = "停用原因")
+    /**
+     * 停用原因
+     */
     @TableField("stop_reason")
     private String stopReason;
 
-    @ApiModelProperty(value = "密码错误次数")
+    /**
+     * 密码错误次数
+     */
     @TableField("pwd_error_number")
     private BigDecimal pwdErrorNumber;
 
-    @ApiModelProperty(value = "密码锁定标志（0-未锁定，1-密码错误锁定）")
-    @TableField("pwd_lock_flag")
-    private LockFlag pwdLockFlag;
+    /**
+     * 密码锁定状态[0:未锁定;1:已锁定]
+     */
+    @TableField("pwd_lock_status")
+    private LockStatus pwdLockStatus;
 
-    @ApiModelProperty(value = "用户锁定时间")
+    /**
+     * 用户锁定时间
+     */
     @TableField("lock_time")
     private LocalDateTime lockTime;
 
-    @ApiModelProperty(value = "编辑用户")
-    @TableField("update_user_id")
-    private String updateUserId;
-
-    @ApiModelProperty(value = "编辑时间")
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty(value = "创建用户")
-    @TableField("create_user_id")
-    private String createUserId;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "最近成功登陆时间")
+    /**
+     * 最近成功登陆时间
+     */
     @TableField("login_success_time")
     private LocalDateTime loginSuccessTime;
 
-    @ApiModelProperty(value = "gitee用户id")
+    /**
+     * 备注
+     */
+    @TableField("remark")
+    private String remark;
+
+
+    /**
+     * gitee用户id
+     */
     @TableField("gitee_id")
     private String giteeId;
 
-    @TableLogic
-    @ApiModelProperty(value = "删除标记，0:正常，1:已删除")
-    @TableField("delete_flag")
-    private String deleteFlag;
+    /**
+     * 是否为管理员
+     *
+     * @author songyinyin
+     * @date 2020/5/12
+     */
+    public boolean isAdmin() {
+        return StrUtil.equals(this.userId, "1");
+    }
 
 }

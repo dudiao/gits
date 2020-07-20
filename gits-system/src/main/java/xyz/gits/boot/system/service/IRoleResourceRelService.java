@@ -1,6 +1,6 @@
 package xyz.gits.boot.system.service;
 
-import xyz.gits.boot.api.system.dto.RoleResourceDTO;
+import xyz.gits.boot.system.dto.role.RoleResourceDTO;
 import xyz.gits.boot.system.entity.RoleResourceRel;
 import xyz.gits.boot.common.core.basic.BasicService;
 
@@ -15,8 +15,11 @@ import xyz.gits.boot.common.core.basic.BasicService;
 public interface IRoleResourceRelService extends BasicService<RoleResourceRel> {
 
     /**
-     * 更新角色对应的资源
-     * @param dto
+     * 给角色授权菜单
+     *
+     * @param dto 角色菜单添加DTO{@link RoleResourceDTO}
+     * @author null
+     * @date 2020/5/26 17:14
      */
     void updateResource(RoleResourceDTO dto);
 

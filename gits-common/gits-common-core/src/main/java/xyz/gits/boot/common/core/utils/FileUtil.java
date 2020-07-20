@@ -23,7 +23,7 @@ import java.net.URLEncoder;
 /**
  * 文件上传工具
  *
- * @author dingmingyang
+ * @author null
  * @date 2019/12/11/16:47
  */
 @Slf4j

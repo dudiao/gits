@@ -5,8 +5,19 @@
     <!-- 通过用户ID，查询角色信息-->
     <select id="getRolesByUserId" resultType="xyz.gits.boot.system.entity.Role">
         SELECT
-            r.*
+        r.role_id,r.role_name,r.role_key,r.role_desc,r.stop_status,
+        r.stop_reason,r.create_org_id,r.create_user_id,r.create_time,r.update_user_id,r.update_time
         FROM
-        system_role r, system_user_role_rel ur WHERE r.role_id = ur.role_id AND r.stop_flag = '0' and  ur.user_id = #{userId}
+        system_role r, system_user_role_rel ur
+        <where>
+            r.role_id = ur.role_id
+            <if test="status != null and status != ''">
+                AND r.stop_status = #{status.code}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND ur.user_id = #{userId}
+            </if>
+        </where>
     </select>
+
 </mapper>

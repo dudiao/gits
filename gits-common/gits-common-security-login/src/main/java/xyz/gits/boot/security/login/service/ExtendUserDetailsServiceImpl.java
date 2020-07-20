@@ -8,11 +8,11 @@ import me.zhyd.oauth.model.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import xyz.gits.boot.api.system.dto.UserSaveDTO;
+import xyz.gits.boot.api.system.dto.UserAddDTO;
+import xyz.gits.boot.api.system.enums.LoginType;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
-import xyz.gits.boot.common.core.enums.LoginType;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.IpUtils;
@@ -53,11 +53,11 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
         /**
          * 这里要求 user 表中有 authUser.getSource()+'_id' 字段（小写，如 gitee_id），authUser.getSource()的取值见 {@link AuthDefaultSource}
          */
-        RestResponse<LoginUser<UserVO>> loadResponse = systemService.loadUserByBiz(authUser.getSource().toLowerCase() + "_id", authUser.getUuid());
+        RestResponse<LoginUser<UserDetailsVO>> loadResponse = systemService.loadUserByBiz(authUser.getSource().toLowerCase() + "_id", authUser.getUuid());
 
         // 2. 用户存在 --> 返回 UserDetails
         if (loadResponse.isSuccess()) {
-            LoginUser<UserVO> loginUser = loadResponse.getData();
+            LoginUser<UserDetailsVO> loginUser = loadResponse.getData();
             loginUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
             loginUser.setLoginTime(LocalDateTime.now());
             loginUser.setLoginType(LoginType.EXTEND);
@@ -65,7 +65,7 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
         }
         // 3. 用户不存在 --> 新增（注册）用户，之后返回 UserDetails
         if (ResponseCode.USER_NOT_EXIST.getCode() == loadResponse.getCode()) {
-            UserSaveDTO user = new UserSaveDTO();
+            UserAddDTO user = new UserAddDTO();
             user.setUserName(authUser.getUsername());
             user.setNickName(authUser.getNickname());
             user.setAvatar(authUser.getAvatar());
@@ -73,9 +73,9 @@ public class ExtendUserDetailsServiceImpl implements ExtendUserDetailsService {
             if (StrUtil.equalsIgnoreCase(authUser.getSource(), AuthDefaultSource.GITEE.getName())) {
                 user.setGiteeId(authUser.getUuid());
             }
-            RestResponse<LoginUser<UserVO>> response = systemService.registerUser(user);
+            RestResponse<LoginUser<UserDetailsVO>> response = systemService.registerUser(user);
             if (response.isSuccess()) {
-                LoginUser<UserVO> loginUser = loadResponse.getData();
+                LoginUser<UserDetailsVO> loginUser = loadResponse.getData();
                 loginUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
                 loginUser.setLoginTime(LocalDateTime.now());
                 loginUser.setLoginType(LoginType.valueOf(authUser.getSource()));

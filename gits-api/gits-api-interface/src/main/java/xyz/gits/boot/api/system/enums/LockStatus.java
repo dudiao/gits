@@ -1,35 +1,38 @@
 package xyz.gits.boot.api.system.enums;
 
+import xyz.gits.boot.common.core.enums.CodeEnum;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import xyz.gits.boot.common.core.enums.CodeEnum;
-
-import java.util.Arrays;
 
 /**
- * 显示类型
+ * 锁定状态[0:未锁定;1:已锁定]
+ *
+ * @author null
+ * @date 2020/06/04/11:20
  */
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum VisibleType implements CodeEnum {
+public enum LockStatus implements CodeEnum {
 
     /**
-     * 显示
+     * 未锁定
      */
-    SHOW("0", "显示"),
+    UN_LOCK("0", "未锁定"),
 
     /**
-     * 隐藏
+     * 已锁定
      */
-    HIDE("1", "隐藏");
+    LOCK("1", "已锁定");
 
     @EnumValue
     private String code;
-
     private String message;
 
-    VisibleType(String code, String message) {
+    LockStatus() {
+    }
+
+    LockStatus(String code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -38,14 +41,16 @@ public enum VisibleType implements CodeEnum {
      * code转枚举类型
      *
      * @param code code码
-     * @return {@link VisibleType}
+     * @return {@link LockStatus}
+     * @author null
+     * @date 2020/6/5 11:36
      */
-    public static VisibleType fromString(String code) {
-        for (VisibleType b : VisibleType.values()) {
+    public static LockStatus fromString(String code) {
+        for (LockStatus b : LockStatus.values()) {
             if (b.code.equalsIgnoreCase(code)) {
                 return b;
             }
         }
-        throw new IllegalArgumentException("请传入枚举类型：" + Arrays.toString(VisibleType.values()));
+        return null;
     }
 }

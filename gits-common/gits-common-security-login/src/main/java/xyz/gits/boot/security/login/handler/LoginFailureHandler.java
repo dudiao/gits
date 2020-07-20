@@ -7,7 +7,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
-import xyz.gits.boot.api.system.utils.UserUtil;
+import xyz.gits.boot.api.system.utils.AuthUtils;
 import xyz.gits.boot.security.login.verifycode.VerifyCodeException;
 
 import javax.servlet.ServletException;
@@ -27,7 +27,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         RestResponse result;
-        String username = UserUtil.loginUsername(request);
+        String username = AuthUtils.loginUsername(request);
         if (e instanceof AccountExpiredException) {
             // 账号过期
             log.info("[登录失败] - 用户[{}]账号过期", username);

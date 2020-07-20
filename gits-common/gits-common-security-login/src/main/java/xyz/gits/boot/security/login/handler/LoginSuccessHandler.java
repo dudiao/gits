@@ -3,7 +3,7 @@ package xyz.gits.boot.security.login.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import xyz.gits.boot.common.core.enums.LoginType;
+import xyz.gits.boot.api.system.enums.LoginType;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.ServletUtils;
 import xyz.gits.boot.common.security.SecurityLoginUser;

@@ -4,16 +4,31 @@
 
     <!-- 通过角色查询资源信息 -->
     <select id="findResourceByRoleId" resultType="xyz.gits.boot.system.entity.Resource">
-		SELECT
-			sr.*
-		FROM
-			system_resource sr
-		LEFT JOIN system_role_resource_rel srrr ON sr.resource_id = srrr.resource_id
-		WHERE
-			sr.delete_flag = '0'
-		AND srrr.role_id = #{roleId}
-		ORDER BY
-			sr.order_num DESC
+        SELECT
+        sr.*
+        FROM
+        system_resource sr
+        LEFT JOIN system_role_resource_rel srrr ON sr.resource_id = srrr.resource_id
+        <where>
+            <if test="roleId != null and roleId != '' ">
+                AND srrr.role_id = #{roleId}
+            </if>
+            <if test="visible != null">
+                AND sr.visible = #{visible.code}
+            </if>>
+        </where>
+        ORDER BY
+        sr.order_num DESC
     </select>
+
+
+    <!--根据用户ID查询权限-->
+    <select id="selectResourcePermsByUserId" resultType="java.lang.String">
+		select distinct sr.permission
+		from system_resource sr
+			 left join system_role_resource_rel str on sr.resource_id = str.resource_id
+			 left join system_user_role_rel sur on str.role_id = sur.role_id
+		where sur.user_id = #{userId}
+	</select>
 
 </mapper>

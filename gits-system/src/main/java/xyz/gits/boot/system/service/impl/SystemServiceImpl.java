@@ -4,13 +4,14 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import xyz.gits.boot.api.system.dto.UserSaveDTO;
+import xyz.gits.boot.api.system.dto.UserAddDTO;
+import xyz.gits.boot.api.system.enums.Status;
 import xyz.gits.boot.system.entity.Resource;
 import xyz.gits.boot.system.entity.Role;
 import xyz.gits.boot.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
@@ -30,24 +31,24 @@ import java.util.stream.Collectors;
 public class SystemServiceImpl implements SystemService {
 
     @Autowired
-    private IResourceService resourceService;
-    @Autowired
     private IUserService userService;
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private IResourceService resourceService;
 
     @Override
-    public RestResponse<LoginUser<UserVO>> loadUserByUsername(String userName) {
+    public RestResponse<LoginUser<UserDetailsVO>> loadUserByUsername(String userName) {
         User user = userService.getByUsername(userName);
         if (ObjectUtil.isNull(user)) {
             return RestResponse.build(ResponseCode.USER_NOT_EXIST);
         }
-        LoginUser<UserVO> loginUser = getLoginUser(user);
+        LoginUser<UserDetailsVO> loginUser = getLoginUser(user);
         return RestResponse.success(loginUser);
     }
 
     @Override
-    public RestResponse<LoginUser<UserVO>> loadUserByBiz(String fieldName, String value) {
+    public RestResponse<LoginUser<UserDetailsVO>> loadUserByBiz(String fieldName, String value) {
         if (StrUtil.isBlank(fieldName) || StrUtil.isBlank(value)) {
             throw new IllegalArgumentException("SystemServiceImpl#loadUserByBiz() fieldName 或者 value 不能为空");
         }
@@ -55,24 +56,24 @@ public class SystemServiceImpl implements SystemService {
         if (ObjectUtil.isNull(user)) {
             return RestResponse.build(ResponseCode.USER_NOT_EXIST);
         }
-        LoginUser<UserVO> loginUser = getLoginUser(user);
+        LoginUser<UserDetailsVO> loginUser = getLoginUser(user);
         return RestResponse.success(loginUser);
     }
 
     @Override
-    public RestResponse<LoginUser<UserVO>> registerUser(UserSaveDTO user) {
-        LoginUser<UserVO> loginUser = userService.saveUser(user);
+    public RestResponse<LoginUser<UserDetailsVO>> registerUser(UserAddDTO user) {
+        LoginUser<UserDetailsVO> loginUser = userService.saveUser(user);
         return RestResponse.success(loginUser);
     }
 
-    private LoginUser<UserVO> getLoginUser(User user) {
-        LoginUser<UserVO> loginUser = new LoginUser<>();
-        UserVO userVO = new UserVO();
-        BeanUtils.copyPropertiesIgnoreNull(user, userVO);
-        loginUser.setUser(userVO);
+    private LoginUser<UserDetailsVO> getLoginUser(User user) {
+        LoginUser<UserDetailsVO> loginUser = new LoginUser<>();
+        UserDetailsVO userDetailsVO = new UserDetailsVO();
+        BeanUtils.copyPropertiesIgnoreNull(user, userDetailsVO);
+        loginUser.setUser(userDetailsVO);
 
         // 角色 Role::getRoleId
-        Set<String> roleIds = roleService.getRolesByUserId(user.getUserId())
+        Set<String> roleIds = roleService.getRolesByUserId(user.getUserId(), Status.VALID)
                 .stream().map(Role::getRoleId).collect(Collectors.toSet());
         loginUser.setRoles(roleIds);
 

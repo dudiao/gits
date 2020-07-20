@@ -1,17 +1,16 @@
 package xyz.gits.boot.system.entity;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.enums.Status;
+import xyz.gits.boot.common.core.basic.BasicEntity;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -25,58 +24,51 @@ import xyz.gits.boot.api.system.enums.StopFlag;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("system_role")
-@ApiModel(value="Role对象", description="角色表")
-public class Role implements Serializable {
+@ApiModel(value = "Role对象", description = "角色表")
+public class Role extends BasicEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "角色ID")
+    /**
+     * 角色ID
+     */
     @TableId("role_id")
     private String roleId;
 
-    @ApiModelProperty(value = "角色代码")
-    @TableField("role_code")
-    private String roleCode;
-
-    @ApiModelProperty(value = "角色名称")
+    /**
+     * 角色名称
+     */
     @TableField("role_name")
     private String roleName;
 
-    @ApiModelProperty(value = "角色描述")
+    /**
+     * 角色代码(英文名称)
+     */
+    @TableField("role_code")
+    private String roleCode;
+
+    /**
+     * 角色描述
+     */
     @TableField("role_desc")
     private String roleDesc;
 
-    @ApiModelProperty(value = "创建机构代码")
-    @TableField("create_org_id")
-    private String createOrgId;
+    /**
+     * 启停状态[0:启用;1:停用]
+     */
+    @TableField("stop_status")
+    private Status status;
 
-    @ApiModelProperty(value = "启停标志（0启用1停用）")
-    @TableField("stop_flag")
-    private StopFlag stopFlag;
-
-    @ApiModelProperty(value = "停用原因")
+    /**
+     * 停用原因
+     */
     @TableField("stop_reason")
     private String stopReason;
 
-    @ApiModelProperty(value = "创建用户")
-    @TableField("create_user_id")
-    private String createUserId;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "编辑用户")
-    @TableField("update_user_id")
-    private String updateUserId;
-
-    @ApiModelProperty(value = "编辑时间")
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
-    @TableLogic
-    @ApiModelProperty(value = "删除标记，0:正常，1:已删除")
-    @TableField("delete_flag")
-    private String deleteFlag;
+    /**
+     * 创建机构代码
+     */
+    @TableField("create_org_id")
+    private String createOrgId;
 
 }

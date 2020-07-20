@@ -1,4 +1,4 @@
-package xyz.gits.boot.api.system.vo;
+package xyz.gits.boot.system.vo.org;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
 import xyz.gits.boot.common.security.SecurityLoginUser;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +34,7 @@ public class ConcurrentSessionController {
 
     @ApiOperation("在线用户列表")
     @GetMapping("/session/list")
-    public RestResponse getCurrentUser() {
+    public RestResponse<List<LoginUser>> getCurrentUser() {
         List<Object> list = sessionRegistry.getAllPrincipals();
 
         List<LoginUser> userVOList = list.stream().filter(e -> e instanceof SecurityLoginUser).map(e -> {
@@ -51,9 +50,8 @@ public class ConcurrentSessionController {
 
     @ApiOperation("用户在线详情")
     @GetMapping("/session/detail")
-    public RestResponse detail(@ApiParam(name = "userId", value = "用户Id")
-                               @RequestParam("userId")
-                               @NotNull(message = "用户id不能为空") String userId) {
+    public RestResponse detail(@ApiParam(name = "userId", value = "用户Id", required = true)
+                               @RequestParam("userId") String userId) {
         // 获取session中所有的用户信息
         List<Object> list = sessionRegistry.getAllPrincipals();
 
@@ -64,16 +62,16 @@ public class ConcurrentSessionController {
                     // 获取该用户没有过期的会话
                     List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(securityLoginUser, false);
 
-                    List<UserVO> userVOList = sessionsInfo.stream().map(e -> {
+                    List<UserDetailsVO> userDetailsVOList = sessionsInfo.stream().map(e -> {
                         SecurityLoginUser sessionUser = (SecurityLoginUser) e.getPrincipal();
-                        UserVO userVO = new UserVO();
-                        BeanUtils.copyPropertiesIgnoreNull(sessionUser, userVO);
-                        userVO.setLoginSuccessTime(sessionUser.getLoginUser().getLoginTime());
-                        userVO.setLoginIp(sessionUser.getLoginUser().getLoginIp());
-                        userVO.setSessionId(e.getSessionId());
-                        return userVO;
+                        UserDetailsVO userDetailsVO = new UserDetailsVO();
+                        BeanUtils.copyPropertiesIgnoreNull(sessionUser, userDetailsVO);
+                        userDetailsVO.setLoginSuccessTime(sessionUser.getLoginUser().getLoginTime());
+                        userDetailsVO.setLoginIp(sessionUser.getLoginUser().getLoginIp());
+                        userDetailsVO.setSessionId(e.getSessionId());
+                        return userDetailsVO;
                     }).collect(Collectors.toList());
-                    return RestResponse.success(userVOList);
+                    return RestResponse.success(userDetailsVOList);
                 }
             }
         }
@@ -83,9 +81,8 @@ public class ConcurrentSessionController {
 
     @ApiOperation("踢出用户")
     @GetMapping("/session/kick")
-    public RestResponse kick(@ApiParam(name = "sessionId", value = "用户会话id")
-                             @RequestParam("sessionId")
-                             @NotNull(message = "用户会话id不能为空") String sessionId) {
+    public RestResponse kick(@ApiParam(name = "sessionId", value = "用户会话id", required = true)
+                             @RequestParam("sessionId") String sessionId) {
         sessionRegistry.refreshLastRequest(sessionId);
         return RestResponse.success();
     }

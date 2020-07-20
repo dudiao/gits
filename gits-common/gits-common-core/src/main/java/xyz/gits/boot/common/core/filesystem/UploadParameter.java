@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 文件上传参数
  *
- * @author dingmingyang
+ * @author null
  * @date 2019/12/06/17:12
  */
 @Data

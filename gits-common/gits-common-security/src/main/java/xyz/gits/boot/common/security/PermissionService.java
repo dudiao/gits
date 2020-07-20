@@ -1,7 +1,7 @@
 package xyz.gits.boot.common.security;
 
 import lombok.extern.slf4j.Slf4j;
-import xyz.gits.boot.api.system.utils.UserUtil;
+import xyz.gits.boot.api.system.utils.AuthUtils;
 
 import java.util.Set;
 
@@ -15,17 +15,17 @@ import java.util.Set;
 public class PermissionService {
 
     public boolean permission(String permission) {
-        Set<String> userPermissions = UserUtil.getUserPermissions();
+        Set<String> userPermissions = AuthUtils.getUserPermissions();
         for (String userPermission : userPermissions) {
             if (permission.matches(userPermission)) {
                 return true;
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("用户userId={}, userName={} 权限不足以访问[{}], 用户具有权限：{}, 访问", UserUtil.getUserId(),
-                UserUtil.getUserName(), permission, UserUtil.getUserPermissions());
+            log.debug("用户userId={}, userName={} 权限不足以访问[{}], 用户具有权限：{}, 访问", AuthUtils.getUserId(),
+                AuthUtils.getUserName(), permission, AuthUtils.getUserPermissions());
         } else {
-            log.info("用户userId={}, userName={} 权限不足以访问[{}]", UserUtil.getUserId(), UserUtil.getUserName(), permission);
+            log.info("用户userId={}, userName={} 权限不足以访问[{}]", AuthUtils.getUserId(), AuthUtils.getUserName(), permission);
         }
         return false;
     }

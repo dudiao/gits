@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import xyz.gits.boot.common.core.constants.CacheConstants;
-import xyz.gits.boot.api.system.utils.UserUtil;
+import xyz.gits.boot.api.system.utils.AuthUtils;
 import xyz.gits.boot.security.login.handler.LoginFailureHandler;
 
 import javax.servlet.FilterChain;
@@ -53,13 +53,13 @@ public class VerifyCodeFilter extends OncePerRequestFilter {
 
         String randomKey = request.getParameter("randomKey");
         if (StrUtil.isBlank(code) || StrUtil.isBlank(randomKey)) {
-            log.info("请输入验证码，用户[{}]输入code={}，randomKey={}", UserUtil.loginUsername(request), code, randomKey);
+            log.info("请输入验证码，用户[{}]输入code={}，randomKey={}", AuthUtils.loginUsername(request), code, randomKey);
             throw new VerifyCodeException();
         }
         // 系统生成的验证码
         String cacheCode = codeCache.get(randomKey);
         if (!StrUtil.equals(code, cacheCode)) {
-            log.info("登录验证码错误，用户[{}]输入code={}，系统生成code={}", UserUtil.loginUsername(request), code, cacheCode);
+            log.info("登录验证码错误，用户[{}]输入code={}，系统生成code={}", AuthUtils.loginUsername(request), code, cacheCode);
             throw new VerifyCodeException();
         }
         codeCache.remove(randomKey);

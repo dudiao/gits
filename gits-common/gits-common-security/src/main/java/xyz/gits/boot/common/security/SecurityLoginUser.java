@@ -2,18 +2,15 @@ package xyz.gits.boot.common.security;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.Data;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.UserDetails;
-import xyz.gits.boot.api.system.enums.LockFlag;
-import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.enums.LockStatus;
+import xyz.gits.boot.api.system.enums.StopStatus;
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
-import xyz.gits.boot.common.core.enums.LoginType;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
@@ -23,7 +20,7 @@ import java.util.Collection;
  * @date 2020/3/14 下午 05:29
  */
 @Data
-public class SecurityLoginUser<T extends UserVO> implements UserDetails, CredentialsContainer {
+public class SecurityLoginUser<T extends UserDetailsVO> implements UserDetails, CredentialsContainer {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
@@ -64,7 +61,7 @@ public class SecurityLoginUser<T extends UserVO> implements UserDetails, Credent
      */
     @Override
     public boolean isAccountNonLocked() {
-        return ObjectUtil.equal(loginUser.getUser().getPwdLockFlag(), LockFlag.UN_LOCKED);
+        return ObjectUtil.equal(loginUser.getUser().getPwdLockStatus(), LockStatus.UN_LOCK);
     }
 
     /**
@@ -80,7 +77,7 @@ public class SecurityLoginUser<T extends UserVO> implements UserDetails, Credent
      */
     @Override
     public boolean isEnabled() {
-        return ObjectUtil.equal(loginUser.getUser().getStopFlag(), StopFlag.ENABLE);
+        return ObjectUtil.equal(loginUser.getUser().getStopStatus(), StopStatus.ENABLE);
     }
 
     /**

@@ -2,8 +2,7 @@ package xyz.gits.boot.api.system.vo;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
-import xyz.gits.boot.common.core.enums.LoginType;
-
+import xyz.gits.boot.api.system.enums.LoginType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -11,11 +10,11 @@ import java.util.Set;
 /**
  * 登录用户
  *
- * @author dingmingyang
+ * @author null
  * @date 2020/06/03/15:53
  */
 @Data
-public class LoginUser<T extends UserVO> implements Serializable {
+public class LoginUser<T extends UserDetailsVO> implements Serializable {
 
     /**
      * 用户

@@ -1,17 +1,17 @@
 package xyz.gits.boot.system.entity;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import xyz.gits.boot.api.system.enums.StopFlag;
+import xyz.gits.boot.api.system.enums.StopStatus;
+import xyz.gits.boot.common.core.basic.BasicEntity;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -25,81 +25,86 @@ import xyz.gits.boot.api.system.enums.StopFlag;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("system_org")
-@ApiModel(value="Org对象", description="机构表")
-public class Org implements Serializable {
+@ApiModel(value = "Org对象", description = "机构表")
+public class Org extends BasicEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "机构代码")
+    /**
+     * 机构代码
+     */
     @TableId("org_id")
     private String orgId;
 
-    @ApiModelProperty(value = "机构名称")
+    /**
+     * 机构名称
+     */
     @TableField("org_name")
     private String orgName;
 
-    @ApiModelProperty(value = "上级机构")
+    /**
+     * 上级机构
+     */
     @TableField("parent_org_id")
     private String parentOrgId;
 
-    @ApiModelProperty(value = "排序值，值越大排序越靠前")
-    @TableField("org_order")
-    private Integer orgOrder;
-
-    @ApiModelProperty(value = "机构所在地区代码")
+    /**
+     * 机构所在地区代码
+     */
     @TableField("area_code")
     private String areaCode;
 
-    @ApiModelProperty(value = "详细地址")
+    /**
+     * 详细地址
+     */
     @TableField("address")
     private String address;
 
-    @ApiModelProperty(value = "邮政编码")
+    /**
+     * 邮政编码
+     */
     @TableField("post_code")
     private String postCode;
 
-    @ApiModelProperty(value = "联系人")
+    /**
+     * 联系人
+     */
     @TableField("link_man")
     private String linkMan;
 
-    @ApiModelProperty(value = "联系方式")
+    /**
+     * 联系方式
+     */
     @TableField("link_mode")
     private String linkMode;
 
-    @ApiModelProperty(value = "备注")
+    /**
+     * 备注
+     */
     @TableField("remark")
     private String remark;
 
-    @ApiModelProperty(value = "启停标志（0:启用,1:停用 用于数据是否有效）")
-    @TableField("record_stop_flag")
-    private StopFlag recordStopFlag;
+    /**
+     * 启停状态[0:启用;1:停用]
+     */
+    @TableField("stop_status")
+    private StopStatus stopStatus;
 
-    @ApiModelProperty(value = "停用原因")
+    /**
+     * 停用原因
+     */
     @TableField("stop_reason")
     private String stopReason;
 
-    @ApiModelProperty(value = "启停时间")
-    @TableField("record_stop_time")
-    private LocalDateTime recordStopTime;
+    /**
+     * 启停时间
+     */
+    @TableField("stop_time")
+    private LocalDateTime stopTime;
 
-    @ApiModelProperty(value = "创建用户")
-    @TableField("create_user_id")
-    private String createUserId;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "编辑用户")
-    @TableField("update_user_id")
-    private String updateUserId;
-
-    @ApiModelProperty(value = "编辑时间")
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
-    @TableLogic
-    @ApiModelProperty(value = "删除标记，0:正常，1:已删除")
-    @TableField("delete_flag")
-    private String deleteFlag;
+    /**
+     * 显示顺序
+     */
+    @TableField("order_num")
+    private Integer orderNum;
 }

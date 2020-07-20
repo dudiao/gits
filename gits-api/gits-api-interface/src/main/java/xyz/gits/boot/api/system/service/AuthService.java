@@ -1,7 +1,7 @@
 package xyz.gits.boot.api.system.service;
 
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author songyinyin
  * @date 2020/6/25 下午 10:30
  */
-public interface AuthService<T extends LoginUser<M>, M extends UserVO> {
+public interface AuthService<T extends LoginUser<M>, M extends UserDetailsVO> {
 
     /**
      * 获取登录用户

@@ -1,9 +1,9 @@
 package xyz.gits.boot.api.system.service;
 
 import com.alicp.jetcache.anno.Cached;
-import xyz.gits.boot.api.system.dto.UserSaveDTO;
+import xyz.gits.boot.api.system.dto.UserAddDTO;
 import xyz.gits.boot.api.system.vo.LoginUser;
-import xyz.gits.boot.api.system.vo.UserVO;
+import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.common.core.response.RestResponse;
 
@@ -22,7 +22,7 @@ public interface SystemService {
      * @return 当没有该用户时，返回 null 或者空对象
      */
     @Cached(name = CacheConstants.LOGIN_USER, key = "#userName", postCondition = "#result != null")
-    RestResponse<LoginUser<UserVO>> loadUserByUsername(String userName);
+    RestResponse<LoginUser<UserDetailsVO>> loadUserByUsername(String userName);
 
     /**
      * 自定义查询用户信息
@@ -31,13 +31,13 @@ public interface SystemService {
      * @param value     属性值
      * @return 当没有该用户时，返回 null 或者空对象
      */
-    RestResponse<LoginUser<UserVO>> loadUserByBiz(String fieldName, String value);
+    RestResponse<LoginUser<UserDetailsVO>> loadUserByBiz(String fieldName, String value);
 
     /**
      * 注册用户
      * @param user
      * @return
      */
-    RestResponse<LoginUser<UserVO>> registerUser(UserSaveDTO user);
+    RestResponse<LoginUser<UserDetailsVO>> registerUser(UserAddDTO user);
 
 }

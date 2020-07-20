@@ -56,4 +56,11 @@ public class GitsSystemServiceAutoConfiguration {
         return new SystemServiceImpl();
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    public IConfigService configService() {
+        return new ConfigServiceImpl();
+    }
+
+
 }

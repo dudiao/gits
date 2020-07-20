@@ -1,15 +1,14 @@
 package xyz.gits.boot.api.system.enums;
 
-import cn.hutool.core.util.EnumUtil;
+import xyz.gits.boot.common.core.enums.CodeEnum;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import xyz.gits.boot.common.core.enums.CodeEnum;
 
 import java.util.Arrays;
 
 /**
- * 资源类型
+ * 资源类型[A:顶级目录;B:菜单;C:按钮;D:链接]
  *
  * @author songyinyin
  */
@@ -18,9 +17,9 @@ import java.util.Arrays;
 public enum ResourceType implements CodeEnum {
 
     /**
-     * 系统
+     * 顶级目录
      */
-    A("A", "系统"),
+    A("A", "顶级目录"),
 
     /**
      * 菜单
@@ -42,6 +41,9 @@ public enum ResourceType implements CodeEnum {
 
     private String message;
 
+    ResourceType() {
+    }
+
     ResourceType(String code, String message) {
         this.code = code;
         this.message = message;
@@ -52,6 +54,8 @@ public enum ResourceType implements CodeEnum {
      *
      * @param code code码
      * @return {@link ResourceType}
+     * @author null
+     * @date 2020/6/5 11:36
      */
     public static ResourceType fromString(String code) {
         for (ResourceType b : ResourceType.values()) {
