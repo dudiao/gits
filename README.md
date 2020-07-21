@@ -75,4 +75,4 @@ docker push ccr.ccs.tencentyun.com/dudiao/gits-single:1.0.0
 
 可以关注我的微信公众号
 
-![读钓的YY](doc/images/wexin-mp.png)
+![读钓的YY](doc/images/weixin-mp.png)
