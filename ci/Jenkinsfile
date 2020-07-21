@@ -1,0 +1,34 @@
+pipeline {
+  agent {
+    node {
+      label 'maven'
+    }
+
+  }
+  stages {
+    stage('拉取代码') {
+      steps {
+        git(url: 'https://gitee.com/songyinyin/gits.git', changelog: true, poll: false, branch: 'master')
+      }
+    }
+    stage('构建并推送镜像') {
+      steps {
+        container('maven') {
+          sh 'mvn -Dmaven.test.skip=true -gs `pwd`/ci/settings.xml clean package'
+          sh 'docker build -f gits-server/gits-single/Dockerfile -t ccr.ccs.tencentyun.com/dudiao/gits-single:$DOCKER_TAG ./gits-server/gits-single'
+          withCredentials([usernamePassword(credentialsId : 'tencentyun-id' ,passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,)]) {
+            sh 'echo "$DOCKER_PASSWORD" | docker login ccr.ccs.tencentyun.com -u "$DOCKER_USERNAME" --password-stdin'
+            sh 'docker push ccr.ccs.tencentyun.com/dudiao/gits-single:$DOCKER_TAG'
+          }
+
+        }
+
+      }
+    }
+    stage('保存制品') {
+      steps {
+        archiveArtifacts 'gits-server/gits-single/target/*.jar'
+      }
+    }
+  }
+}

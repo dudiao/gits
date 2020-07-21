@@ -1,0 +1,86 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: gits-single
+  namespace: aml-single
+  labels:
+    app: gits-single
+    spring-boot: 'true'
+  annotations:
+    deployment.kubernetes.io/revision: '2'
+    kubesphere.io/maxSurgePod: '2'
+    kubesphere.io/minAvailablePod: '1'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gits-single
+  template:
+    metadata:
+      labels:
+        app: gits-single
+      annotations:
+        kubesphere.io/containerSecrets: '{"gits-single":"tencent-docker-id"}'
+    spec:
+      containers:
+        - name: gits-single
+          image: 'ccr.ccs.tencentyun.com/dudiao/gits'
+          ports:
+            - name: tcp-8200
+              containerPort: 8200
+              protocol: TCP
+          env:
+            - name: JAVA_OPTS
+              value: '-Dspring.boot.admin.client.url=http://gits-admin-service:8300'
+            - name: PARAMS
+              valueFrom:
+                configMapKeyRef:
+                  name: gits-mysql-redis
+                  key: mysql-redis
+          resources:
+            limits:
+              cpu: '2'
+              memory: 1000Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8200
+              scheme: HTTP
+            initialDelaySeconds: 20
+            timeoutSeconds: 2
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8200
+              scheme: HTTP
+            initialDelaySeconds: 20
+            timeoutSeconds: 2
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: default
+      serviceAccount: default
+      securityContext: {}
+      imagePullSecrets:
+        - name: tencent-docker-id
+      affinity: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 100%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

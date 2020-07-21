@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-MAINTAINER idudiao@163.com
+MAINTAINER song_yinyin@163.com
 
 ENV PARAMS=""
 
@@ -11,6 +11,6 @@ RUN mkdir -p /gits
 WORKDIR /gits
 EXPOSE 8200
 
-ADD target/gits-single-1.0.0-SNAPSHOT.jar ./
+ADD target/gits-single-1.0.0-SNAPSHOT.jar ./gits-single.jar
 
-ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS  /gits/gits-single-1.0.0-SNAPSHOT.jar $PARAMS"]
+ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS  /gits/gits-single.jar $PARAMS"]
