@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: gits-single
-          image: 'ccr.ccs.tencentyun.com/dudiao/gits'
+          image: 'ccr.ccs.tencentyun.com/dudiao/gits-single'
           ports:
             - name: tcp-8200
               containerPort: 8200
