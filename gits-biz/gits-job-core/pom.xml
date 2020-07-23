@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>xyz.gits.boot</groupId>
+        <artifactId>gits-biz</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>gits-job-core</artifactId>
+    <packaging>jar</packaging>
+
+    <description>gits 调度执行器 核心业务代码</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>xyz.gits.boot</groupId>
+            <artifactId>gits-common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.kfcfans</groupId>
+            <artifactId>powerjob-worker</artifactId>
+            <version>${powerjob.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>

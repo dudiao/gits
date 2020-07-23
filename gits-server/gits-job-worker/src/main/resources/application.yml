@@ -1,0 +1,9 @@
+powerjob:
+  app-name: ${spring.application.name}
+  server-address: 127.0.0.1:7700
+
+server:
+  port: 8600
+spring:
+  application:
+    name: gits-job-worker

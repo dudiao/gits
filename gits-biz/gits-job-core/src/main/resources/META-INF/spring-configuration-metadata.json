@@ -1,0 +1,44 @@
+{
+  "groups": [
+    {
+      "name": "powerjob",
+      "type": "xyz.gits.boot.job.core.config.PowerJobProperties",
+      "sourceType": "xyz.gits.boot.job.core.config.PowerJobProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "powerjob.app-name",
+      "type": "java.lang.String",
+      "description": "应用名称",
+      "sourceType": "xyz.gits.boot.job.core.config.PowerJobProperties"
+    },
+    {
+      "name": "powerjob.max-result-length",
+      "type": "java.lang.Integer",
+      "description": "最大返回值长度，超过会被截断 {@link ProcessResult}#msg 的最大长度",
+      "sourceType": "xyz.gits.boot.job.core.config.PowerJobProperties",
+      "defaultValue": 8096
+    },
+    {
+      "name": "powerjob.akka-port",
+      "type": "java.lang.Integer",
+      "description": "启动 akka 端口",
+      "sourceType": "xyz.gits.boot.job.core.config.PowerJobProperties"
+    },
+    {
+      "name": "powerjob.server-address",
+      "type": "java.lang.String",
+      "description": "调度服务器地址，ip:port 或 域名，多个用英文逗号分隔",
+      "sourceType": "xyz.gits.boot.job.core.config.PowerJobProperties",
+      "defaultValue": "127.0.0.1:7700"
+    },
+    {
+      "name": "powerjob.store-strategy",
+      "type": "com.github.kfcfans.powerjob.worker.common.constants.StoreStrategy",
+      "description": "本地持久化方式，默认使用磁盘",
+      "sourceType": "xyz.gits.boot.job.core.config.PowerJobProperties"
+    }
+  ],
+  "hints": []
+}

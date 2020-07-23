@@ -9,23 +9,16 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>gits-server</artifactId>
+    <artifactId>gits-biz</artifactId>
     <packaging>pom</packaging>
+    <description>gits 业务模块</description>
 
     <modules>
-        <module>gits-single</module>
-        <module>gits-cloud-auth</module>
-        <module>gits-cloud-gateway</module>
-        <module>gits-cloud-system</module>
-        <module>gits-job-worker</module>
+        <module>gits-job-core</module>
     </modules>
 
     <dependencies>
-        <!-- 监控 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+
     </dependencies>
 
 </project>
