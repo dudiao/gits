@@ -2,8 +2,6 @@ FROM openjdk:8-jre-alpine
 
 MAINTAINER song_yinyin@163.com
 
-ENV PARAMS=""
-
 ENV TZ=PRC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
