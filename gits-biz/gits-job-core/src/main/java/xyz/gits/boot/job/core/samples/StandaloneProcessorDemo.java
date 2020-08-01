@@ -1,4 +1,4 @@
-package xyz.gits.boot.job.worker.samples;
+package xyz.gits.boot.job.core.samples;
 
 import com.github.kfcfans.powerjob.worker.core.processor.ProcessResult;
 import com.github.kfcfans.powerjob.worker.core.processor.TaskContext;
