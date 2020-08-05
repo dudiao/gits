@@ -38,13 +38,18 @@ public class GitsResourceServerConfiguration extends WebSecurityConfigurerAdapte
      */
     @Autowired
     private LoginUserAccessDeniedHandler loginUserAccessDeniedHandler;
+    /**
+     * 放行URL
+     */
+    @Autowired
+    private PermitAllUrlProperties permitAllUrlProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
             // 放行接口
-            .antMatchers(AUTH_WHITELIST).permitAll()
+            .antMatchers(permitAllUrlProperties.getIgnoreUrls().toArray(new String[0])).permitAll()
             // 除上面外的所有请求全部需要鉴权认证
             .anyRequest().authenticated()
             // 异常处理(权限拒绝、登录失效等)

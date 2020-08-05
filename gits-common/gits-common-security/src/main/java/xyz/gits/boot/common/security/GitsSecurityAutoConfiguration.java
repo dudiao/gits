@@ -1,6 +1,7 @@
 package xyz.gits.boot.common.security;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.annotation.Secured;
@@ -30,6 +31,7 @@ import xyz.gits.boot.common.security.hander.SessionInformationExpiredHandler;
  */
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties(PermitAllUrlProperties.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class GitsSecurityAutoConfiguration {
 

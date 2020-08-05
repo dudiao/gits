@@ -24,4 +24,12 @@ public class SecurityConstant {
      * 用户登录扩展凭证，如手机号的验证码
      */
     public static String EXTEND_CREDENTIALS_PARAMETER = "extendCredentials";
+    /**
+     * 请求来源
+     */
+    public static String FROM = "from";
+    /**
+     * 请求来源：内部
+     */
+    public static String FROM_IN = "in";
 }

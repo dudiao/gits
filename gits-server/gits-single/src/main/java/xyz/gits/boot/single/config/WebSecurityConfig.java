@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import xyz.gits.boot.common.core.config.GitsProperties;
-import xyz.gits.boot.common.security.GitsResourceServerConfiguration;
+import xyz.gits.boot.common.security.PermitAllUrlProperties;
 import xyz.gits.boot.common.security.RestHttpSessionIdResolver;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
 import xyz.gits.boot.common.security.hander.InvalidSessionHandler;
@@ -80,6 +80,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private GitsProperties properties;
 
+    @Autowired
+    private PermitAllUrlProperties permitAllUrlProperties;
+
     /**
      * 配置认证方式等
      *
@@ -104,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.apply(extendAuthenticationSecurityConfig)
             .and().authorizeRequests()
             // 放行接口
-            .antMatchers(GitsResourceServerConfiguration.AUTH_WHITELIST).permitAll()
+            .antMatchers(permitAllUrlProperties.getIgnoreUrls().toArray(new String[0])).permitAll()
             // 除上面外的所有请求全部需要鉴权认证
             .anyRequest().authenticated()
             // 异常处理(权限拒绝、登录失效等)
