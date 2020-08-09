@@ -3,7 +3,7 @@ package xyz.gits.boot.common.core.basic;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.SpringSecurityCoreVersion;
+import xyz.gits.boot.common.core.constants.SecurityConstant;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Slf4j
 public class BaseQueryDTO implements Serializable {
 
-    private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
+    private static final long serialVersionUID = SecurityConstant.SERIAL_VERSION_UID;
 
     @ApiModelProperty(value = "页数")
     private Integer currentPage = 1;

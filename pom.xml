@@ -89,13 +89,20 @@
                 <scope>import</scope>
             </dependency>
 
-            <!--spring cloud alibaba-->
+            <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- spring cloud alibaba 2.2.1 使用的是nacos 1.2.1，这里先使用1.3.2版本，报错了再说 -->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>1.3.2</version>
+                <!--<version>1.2.1</version>-->
             </dependency>
 
             <!-- hutool工具类 -->

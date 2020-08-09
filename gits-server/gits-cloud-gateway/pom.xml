@@ -12,12 +12,6 @@
     <description>gits 网关</description>
 
     <dependencies>
-        <!-- 鉴权模块 -->
-        <dependency>
-            <groupId>xyz.gits.boot</groupId>
-            <artifactId>gits-common-security</artifactId>
-        </dependency>
-
         <!-- Sentinel Spring Cloud Gateway 适配模块 -->
         <dependency>
             <groupId>xyz.gits.boot</groupId>
@@ -28,7 +22,7 @@
             <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
         </dependency>
 
-        <!--gateway 网关依赖,内置webflux 依赖-->
+        <!--gateway 网关依赖，内置webflux 依赖，与webmvc不兼容，否则会项目启动不起来-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>

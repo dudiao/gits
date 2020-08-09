@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.web.http.HttpSessionIdResolver;
 import xyz.gits.boot.api.system.service.AuthService;
 import xyz.gits.boot.common.security.hander.AnonymousAuthenticationEntryPoint;
@@ -34,6 +38,25 @@ import xyz.gits.boot.common.security.hander.SessionInformationExpiredHandler;
 @EnableConfigurationProperties(PermitAllUrlProperties.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class GitsSecurityAutoConfiguration {
+
+    /**
+     * 用户加密方式
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public PasswordEncoder passwordEncoder() {
+        // 委托密码编码器，默认使用是 bcrypt 算法加密
+        DelegatingPasswordEncoder passwordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        // 设置默认加密算法 TODO 测试方便，默认不加密
+//        passwordEncoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder());
+        passwordEncoder.setDefaultPasswordEncoderForMatches(NoOpPasswordEncoder.getInstance());
+        return passwordEncoder;
+    }
+
+    @Bean
+    public NullUserDetailsServiceImpl userDetailsService() {
+        return new NullUserDetailsServiceImpl();
+    }
 
     @Bean
     @ConditionalOnMissingBean

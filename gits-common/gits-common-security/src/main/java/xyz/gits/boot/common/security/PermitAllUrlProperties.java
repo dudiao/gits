@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import xyz.gits.boot.common.core.utils.SpringContextHolder;
 import xyz.gits.boot.common.security.annotation.Inner;
 
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ import java.util.regex.Pattern;
 @ConfigurationProperties(prefix = PermitAllUrlProperties.PREFIX)
 public class PermitAllUrlProperties implements InitializingBean {
 
+    @Autowired
+    private WebApplicationContext applicationContext;
+
     /**
      * Prefix of {@link PermitAllUrlProperties}.
      */
@@ -43,7 +47,7 @@ public class PermitAllUrlProperties implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        RequestMappingHandlerMapping mapping = SpringContextHolder.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
         map.keySet().forEach(info -> {

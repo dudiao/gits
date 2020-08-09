@@ -7,10 +7,10 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.gits.boot.common.security.SecurityConstant;
+import xyz.gits.boot.common.core.constants.SecurityConstant;
 
 /**
- * 请求头清洗，移除 form。配合服务间调用 {@link xyz.gits.boot.common.security.annotation.Inner}
+ * 请求头清洗，移除 form。配合服务间调用 @Inner
  *
  * @author songyinyin
  * @date 2020/8/6 下午 11:28

@@ -1,10 +1,10 @@
 package xyz.gits.boot.api.system.vo;
 
 import lombok.Data;
-import org.springframework.security.core.SpringSecurityCoreVersion;
 import xyz.gits.boot.api.system.enums.LockStatus;
 import xyz.gits.boot.api.system.enums.Sex;
 import xyz.gits.boot.api.system.enums.StopStatus;
+import xyz.gits.boot.common.core.constants.SecurityConstant;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 public class UserDetailsVO implements Serializable {
 
-    private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
+    private static final long serialVersionUID = SecurityConstant.SERIAL_VERSION_UID;
 
     /**
      * 用户id

@@ -30,6 +30,7 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
     @Override
     public List<SwaggerResource> get() {
         List<RouteDefinition> routes = new ArrayList<>();
+        // TODO 获取路由为空，需要排查一下
         routeDefinitionRepository.getRouteDefinitions().subscribe(routes::add);
         return routes.stream().flatMap(routeDefinition -> routeDefinition.getPredicates().stream()
                 .filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))

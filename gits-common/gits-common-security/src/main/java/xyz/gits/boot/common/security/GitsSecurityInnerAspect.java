@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import xyz.gits.boot.common.core.constants.SecurityConstant;
 import xyz.gits.boot.common.core.exception.SystemNoLogException;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.ServletUtils;
