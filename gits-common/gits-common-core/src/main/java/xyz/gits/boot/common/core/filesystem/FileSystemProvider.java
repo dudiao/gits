@@ -23,19 +23,18 @@ public interface FileSystemProvider<T extends UploadParameter> extends Closeable
     /**
      * 文件下载
      *
-     * @param fileKey 全路径或者fileKey
+     * @param fileName 文件名，包含文件后缀在内的完整路径，如：abc/test.java
      * @return 文件输入流
      * @throws IOException
      */
-    InputStream download(String fileKey) throws IOException;
+    InputStream download(String fileName) throws IOException;
 
     /**
-     * 文件下载到本地服务器
+     * 删除文件
      *
-     * @param fileKey 全路径或者fileKey
-     * @param path    下载到本地服务器全路径
+     * @param fileName 文件名，包含文件后缀在内的完整路径，如：abc/test.java
      * @throws IOException
      */
-    void downloadLocal(String fileKey, String path) throws IOException;
+    boolean delete(String fileName);
 
 }

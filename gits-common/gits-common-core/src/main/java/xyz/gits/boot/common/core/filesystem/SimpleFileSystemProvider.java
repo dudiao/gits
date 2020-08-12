@@ -6,6 +6,8 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import xyz.gits.boot.common.core.exception.SystemException;
+import xyz.gits.boot.common.core.response.ResponseCode;
 
 import java.io.*;
 
@@ -17,7 +19,7 @@ import java.io.*;
  */
 @Slf4j
 @Setter
-public class SimpleFileSystemProvider extends AbstractFileSystemProvider {
+public class SimpleFileSystemProvider<T extends UploadParameter> extends AbstractFileSystemProvider<T> {
 
     /**
      * 服务器根路径 如:/opt/file
@@ -29,21 +31,19 @@ public class SimpleFileSystemProvider extends AbstractFileSystemProvider {
      * 文件上传服务器
      *
      * @param parameter 文件上传参数对象
-     * @return 文件存放全路径
+     * @return fileName 文件名，包含文件后缀在内的完整路径，如：/opt/file/abc/test.java
      */
     @Override
-    public String upload(UploadParameter parameter) throws IOException {
+    public String upload(T parameter) {
 
         InputStream inputStream = null;
         try {
-            //子目录
-            String subDirectory = parameter.getSubDirectory();
-            if (StrUtil.isBlank(parameter.getFileName())) {
+            if (StrUtil.isBlank(parameter.getUploadFileName())) {
                 throw new IORuntimeException("文件名为空");
             }
             inputStream = parameter.getInputStream();
-            // 拼接子目录
-            String url = StrUtil.isBlank(subDirectory) ? rootPath + "/" + parameter.getFileName() : rootPath + subDirectory + "/" + parameter.getFileName();
+            // 拼接全路径
+            String url = rootPath + "/" + parameter.getUploadFileName();
             // 写入文件
             File file = FileUtil.writeFromStream(inputStream, url);
             return file.getPath();
@@ -57,39 +57,30 @@ public class SimpleFileSystemProvider extends AbstractFileSystemProvider {
     /**
      * 从服务器上下载获取到输入流，不关闭流
      *
-     * @param fileKey 文件全路径 如:/opt/file/test.java
+     * @param fileName 文件名，包含文件后缀在内的完整路径，如：/opt/file/abc/test.java
      * @return 文件输入流 使用该方法需要手动关闭流 如果要下载的文件太大，或者一次性下载耗时太长，您可以通过流式下载，一次处理部分内容，直到完成文件的下载。
      */
     @Override
-    public InputStream download(String fileKey) throws IOException {
-        File file = new File(fileKey);
+    public InputStream download(String fileName) throws IOException {
+        File file = new File(fileName);
         FileInputStream fileInputStream = new FileInputStream(file);
         if (!file.exists()) {
-            throw new FileNotFoundException(fileKey);
+            throw new SystemException(ResponseCode.FILE_NOT_EXIST, fileName);
         }
         return fileInputStream;
     }
 
     /**
-     * 文件下载到本地服务器（相当于复制）
+     * 删除文件
      *
-     * @param fileKey 文件全路径 如:/opt/file/test.java
-     * @param path    文件下载存放的路径 如:/usr/local/file/test.java
+     * @param fileName 文件名，包含文件后缀在内的完整路径，如：/opt/file/abc/test.java
      */
     @Override
-    public void downloadLocal(String fileKey, String path) throws IOException {
-        FileInputStream fileInputStream = null;
-        try {
-            File file = new File(fileKey);
-            fileInputStream = new FileInputStream(file);
-            if (!file.exists()) {
-                throw new FileNotFoundException(fileKey);
-            }
-            FileUtil.writeFromStream(fileInputStream, path);
-        } finally {
-            IoUtil.close(fileInputStream);
+    public boolean delete(String fileName) {
+        if (StrUtil.isBlank(fileName) || !fileName.startsWith(rootPath)) {
+            throw new SystemException(ResponseCode.FILE_DELETE_FAILE, "fileName=" + fileName);
         }
-
+        return FileUtil.del(fileName);
     }
 
     @Override

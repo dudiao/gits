@@ -50,9 +50,10 @@ public enum ResponseCode {
     CONFIG_IS_NOT_DELETE(14003, "系统配置不允许删除"),
 
     //文件系统
-    FILE_DOES_NOT_EXIST(16001, "文件不存在"),
+    FILE_NOT_EXIST(16001, "文件不存在"),
     FILE_UPLOAD_EXCEPTION(16002, "文件上传异常"),
     FILE_DOWNLOAD_ABNORMAL(16003, "文件下载异常"),
+    FILE_DELETE_FAILE(16004, "文件删除失败"),
 
     //资源
     RESOURCE_NOT_FIND(12001, "无效的资源ID"),

@@ -16,6 +16,10 @@ public class SystemException extends BaseException {
         super(responseCode.getCode(), responseCode.getMessage());
     }
 
+    public SystemException(ResponseCode responseCode, String appendMessage) {
+        super(responseCode.getCode(), responseCode.getMessage() + ": " + appendMessage);
+    }
+
     /**
      * 抛出异常，该异常会被全局异常拦截打印出来
      *
