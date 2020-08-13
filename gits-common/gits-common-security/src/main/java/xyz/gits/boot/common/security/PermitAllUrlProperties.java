@@ -14,10 +14,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import xyz.gits.boot.common.security.annotation.Inner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 
@@ -47,9 +44,9 @@ public class PermitAllUrlProperties implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
+        // 放行 @Inner 注解的URI
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
-
         map.keySet().forEach(info -> {
             HandlerMethod handlerMethod = map.get(info);
 
@@ -64,5 +61,20 @@ public class PermitAllUrlProperties implements InitializingBean {
                 .forEach(url -> ignoreUrls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
         });
 
+        // 放行 swagger 相关路径
+        String[] AUTH_WHITELIST = {
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/swagger-resources/**",
+            "/v2/**",
+            "/csrf",
+            "/",
+
+            // other
+            "/open/**",
+            "/actuator/**",
+            "/favicon.ico",
+        };
+        ignoreUrls.addAll(Arrays.asList(AUTH_WHITELIST));
     }
 }
