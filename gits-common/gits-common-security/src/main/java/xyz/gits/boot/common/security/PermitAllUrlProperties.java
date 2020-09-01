@@ -53,16 +53,24 @@ public class PermitAllUrlProperties implements InitializingBean {
             // 获取方法上边的注解 替代path variable 为 *
             Inner method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Inner.class);
             Optional.ofNullable(method).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-                .forEach(url -> ignoreUrls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+                .forEach(url -> {
+                    String ignoreUrl = ReUtil.replaceAll(url, PATTERN, "*");
+                    ignoreUrls.add(ignoreUrl);
+                    log.info("[Inner - method] 内部 Feign 调用接口，不做鉴权：{}", ignoreUrl);
+                }));
 
             // 获取类上边的注解, 替代path variable 为 *
             Inner controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Inner.class);
             Optional.ofNullable(controller).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-                .forEach(url -> ignoreUrls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+                .forEach(url -> {
+                    String ignoreUrl = ReUtil.replaceAll(url, PATTERN, "*");
+                    ignoreUrls.add(ignoreUrl);
+                    log.info("[Inner - controller] 内部 Feign 调用接口，不做鉴权：{}", ignoreUrl);
+                }));
         });
 
         // 放行 swagger 相关路径
-        String[] AUTH_WHITELIST = {
+        String[] authWhiteList = {
             "/swagger-ui.html",
             "/webjars/**",
             "/swagger-resources/**",
@@ -73,8 +81,10 @@ public class PermitAllUrlProperties implements InitializingBean {
             // other
             "/open/**",
             "/actuator/**",
-            "/favicon.ico",
+            "/assets/**",
+            "/instances",
+            "/favicon.ico"
         };
-        ignoreUrls.addAll(Arrays.asList(AUTH_WHITELIST));
+        ignoreUrls.addAll(Arrays.asList(authWhiteList));
     }
 }

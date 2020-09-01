@@ -71,25 +71,4 @@ public class GitsResourceServerConfiguration extends WebSecurityConfigurerAdapte
         http.formLogin().disable().logout().disable();
     }
 
-    public static final String[] AUTH_WHITELIST = {
-        "/open/**",
-        "/assets/**",
-        "/instances",
-        "/actuator/**",
-        "/favicon.ico",
-
-        // swagger 相关
-        "/swagger-ui.html",
-        "/webjars/**",
-        "/swagger-resources/**",
-        "/v2/**",
-        "/csrf",
-        "/",
-
-        // TODO feign调用接口，暂时放行，后续需要加上鉴权
-        "/user/info/**",
-        "/user/register",
-        "/user/find"
-    };
-
 }

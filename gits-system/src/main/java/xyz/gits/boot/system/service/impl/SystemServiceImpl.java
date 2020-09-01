@@ -6,15 +6,15 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.gits.boot.api.system.dto.UserAddDTO;
 import xyz.gits.boot.api.system.enums.Status;
-import xyz.gits.boot.system.entity.Resource;
-import xyz.gits.boot.system.entity.Role;
-import xyz.gits.boot.system.entity.User;
 import xyz.gits.boot.api.system.service.SystemService;
 import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.response.RestResponse;
 import xyz.gits.boot.common.core.utils.BeanUtils;
+import xyz.gits.boot.system.entity.Resource;
+import xyz.gits.boot.system.entity.Role;
+import xyz.gits.boot.system.entity.User;
 import xyz.gits.boot.system.service.IResourceService;
 import xyz.gits.boot.system.service.IRoleService;
 import xyz.gits.boot.system.service.IUserService;
@@ -39,11 +39,7 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public RestResponse<LoginUser<UserDetailsVO>> loadUserByUsername(String userName) {
-        User user = userService.getByUsername(userName);
-        if (ObjectUtil.isNull(user)) {
-            return RestResponse.build(ResponseCode.USER_NOT_EXIST);
-        }
-        LoginUser<UserDetailsVO> loginUser = getLoginUser(user);
+        LoginUser<UserDetailsVO> loginUser = userService.getByUsername(userName);
         return RestResponse.success(loginUser);
     }
 
@@ -74,7 +70,7 @@ public class SystemServiceImpl implements SystemService {
 
         // 角色 Role::getRoleId
         Set<String> roleIds = roleService.getRolesByUserId(user.getUserId(), Status.VALID)
-                .stream().map(Role::getRoleId).collect(Collectors.toSet());
+            .stream().map(Role::getRoleId).collect(Collectors.toSet());
         loginUser.setRoles(roleIds);
 
         // 权限 Resource::getPermission

@@ -8,6 +8,7 @@ import xyz.gits.boot.api.system.dto.UserAddDTO;
 import xyz.gits.boot.api.system.vo.LoginUser;
 import xyz.gits.boot.api.system.vo.UserDetailsVO;
 import xyz.gits.boot.common.core.response.RestResponse;
+import xyz.gits.boot.common.security.annotation.Inner;
 import xyz.gits.boot.system.controller.UserController;
 
 /**
@@ -17,15 +18,17 @@ import xyz.gits.boot.system.controller.UserController;
  * @date 2020/5/3 上午 12:38
  */
 @RestController
-public class CrsUserController extends UserController {
+public class RemoteUserController extends UserController {
 
+    @Inner
     @GetMapping("/user/info/{userName}")
     @ApiOperation(value = "查看用户详情（内部接口调用）")
     public RestResponse<LoginUser<UserDetailsVO>> info(@ApiParam(name = "userName", value = "用户名") @PathVariable("userName") String userName) {
-        // TODO 需要鉴权
-        return systemService.loadUserByUsername(userName);
+        LoginUser<UserDetailsVO> loginUser = userService.getByUsername(userName);
+        return RestResponse.success(loginUser);
     }
 
+    @Inner
     @PostMapping("/user/register")
     @ApiOperation(value = "注册用户")
     public RestResponse<LoginUser<UserDetailsVO>> register(@Validated @RequestBody UserAddDTO dto) {
@@ -33,6 +36,7 @@ public class CrsUserController extends UserController {
         return RestResponse.success(loginUser);
     }
 
+    @Inner
     @GetMapping("/user/find")
     @ApiOperation(value = "查找用户")
     public RestResponse<LoginUser<UserDetailsVO>> find(String fieldName, String value) {

@@ -1,16 +1,22 @@
 package xyz.gits.boot.api.system.enums;
 
-import xyz.gits.boot.common.core.enums.CodeEnum;
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import xyz.gits.boot.common.core.enums.CodeEnum;
+
+import java.util.Arrays;
 
 /**
  * 显示状态[0:显示;1:隐藏]
  *
- * @author null
+ * @author dingmingyang
  * @date 2020/06/04/11:09
  */
+@Slf4j
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum VisibleStatus implements CodeEnum {
@@ -37,11 +43,25 @@ public enum VisibleStatus implements CodeEnum {
     }
 
     /**
+     * 反序列化时的初始化函数
+     */
+    @JsonCreator
+    public static VisibleStatus getItem(@JsonProperty("code") String code) {
+        for (VisibleStatus item : values()) {
+            if (item.getCode().equals(code)) {
+                return item;
+            }
+        }
+        log.warn("[VisibleStatus] 枚举反序列化异常：code={}", code);
+        throw new IllegalArgumentException("请传入枚举类型：" + Arrays.toString(VisibleStatus.values()));
+    }
+
+    /**
      * code转枚举类型
      *
      * @param code code码
      * @return {@link VisibleStatus}
-     * @author null
+     * @author dingmingyang
      * @date 2020/6/5 11:36
      */
     public static VisibleStatus fromString(String code) {
@@ -50,6 +70,7 @@ public enum VisibleStatus implements CodeEnum {
                 return b;
             }
         }
-        return null;
+        log.warn("[VisibleStatus] 无此枚举：code={}", code);
+        throw new IllegalArgumentException("请传入枚举类型：" + Arrays.toString(VisibleStatus.values()));
     }
 }

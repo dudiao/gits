@@ -9,6 +9,7 @@ import org.springframework.cloud.client.loadbalancer.reactive.Request;
 import org.springframework.cloud.client.loadbalancer.reactive.Response;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import reactor.core.publisher.Mono;
 
@@ -17,6 +18,8 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 方便测试的负载均衡器，参考：{@link RoundRobinLoadBalancer}
+ *
  * @author songyinyin
  * @date 2020/8/27 上午 12:18
  */
@@ -45,7 +48,6 @@ public class SupportTestLoadBalancer implements ReactorServiceInstanceLoadBalanc
      */
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
-        log.info("===> enter SupportTestLoadBalancer");
         ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider
             .getIfAvailable(NoopServiceInstanceListSupplier::new);
         return supplier.get().next().map(this::getInstanceResponse);

@@ -38,7 +38,7 @@ public interface IUserService extends BasicService<User> {
      * @author null
      * @date 2020/5/26 17:38
      */
-    User getByUsername(String userName);
+    LoginUser<UserDetailsVO> getByUsername(String userName);
 
     /**
      * 新增用户

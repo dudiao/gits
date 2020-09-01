@@ -1,16 +1,22 @@
 package xyz.gits.boot.api.system.enums;
 
-import xyz.gits.boot.common.core.enums.CodeEnum;
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import xyz.gits.boot.common.core.enums.CodeEnum;
+
+import java.util.Arrays;
 
 /**
- * 菜单打开方式[menuItem:页签;menuBlank:弹窗;link:链接]
+ * 资源打开方式[menuItem:页签;menuBlank:弹窗;link:链接]
  *
- * @author null
+ * @author dingmingyang
  * @date 2020/5/12 15:07
  */
+@Slf4j
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ResourceTarget implements CodeEnum {
@@ -43,11 +49,25 @@ public enum ResourceTarget implements CodeEnum {
     }
 
     /**
+     * 反序列化时的初始化函数
+     */
+    @JsonCreator
+    public static ResourceTarget getItem(@JsonProperty("code") String code) {
+        for (ResourceTarget item : values()) {
+            if (item.getCode().equals(code)) {
+                return item;
+            }
+        }
+        log.warn("[ResourceTarget] 枚举反序列化异常：code={}", code);
+        throw new IllegalArgumentException("请传入枚举类型：" + Arrays.toString(ResourceTarget.values()));
+    }
+
+    /**
      * code转枚举类型
      *
      * @param type type码
      * @return {@link ResourceTarget}
-     * @author null
+     * @author dingmingyang
      * @date 2020/6/5 11:36
      */
     public static ResourceTarget fromString(String type) {
@@ -56,7 +76,8 @@ public enum ResourceTarget implements CodeEnum {
                 return b;
             }
         }
-        return null;
+        log.warn("[ResourceTarget] 无此枚举：type={}", type);
+        throw new IllegalArgumentException("请传入枚举类型：" + Arrays.toString(ResourceTarget.values()));
     }
 
     @Override

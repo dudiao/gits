@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.gits.boot.api.system.dto.UserAddDTO;
-import xyz.gits.boot.api.system.enums.LockStatus;
-import xyz.gits.boot.api.system.enums.Sex;
-import xyz.gits.boot.api.system.enums.StopStatus;
+import xyz.gits.boot.api.system.enums.*;
 import xyz.gits.boot.api.system.utils.ConfigUtil;
 import xyz.gits.boot.api.system.utils.AuthUtils;
 import xyz.gits.boot.api.system.vo.LoginUser;
@@ -25,17 +23,18 @@ import xyz.gits.boot.common.core.response.ResponseCode;
 import xyz.gits.boot.common.core.utils.BeanUtils;
 import xyz.gits.boot.system.dto.user.UserQueryDTO;
 import xyz.gits.boot.system.dto.user.UserUpdateDTO;
-import xyz.gits.boot.system.entity.Org;
-import xyz.gits.boot.system.entity.User;
-import xyz.gits.boot.system.entity.UserRoleRel;
+import xyz.gits.boot.system.entity.*;
 import xyz.gits.boot.system.mapper.OrgMapper;
 import xyz.gits.boot.system.mapper.UserMapper;
+import xyz.gits.boot.system.service.IResourceService;
+import xyz.gits.boot.system.service.IRoleService;
 import xyz.gits.boot.system.service.IUserRoleRelService;
 import xyz.gits.boot.system.service.IUserService;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -54,6 +53,12 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private IRoleService roleService;
+
+    @Autowired
+    private IResourceService resourceService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -89,8 +94,34 @@ public class UserServiceImpl extends BasicServiceImpl<UserMapper, User> implemen
      * @date 2020/5/26 17:38
      */
     @Override
-    public User getByUsername(String userName) {
-        return baseMapper.selectOne(new QueryWrapper<User>().lambda().eq(User::getUserName, userName));
+    public LoginUser<UserDetailsVO> getByUsername(String userName) {
+        User user = baseMapper.selectOne(new QueryWrapper<User>().lambda().eq(User::getUserName, userName));
+
+        LoginUser<UserDetailsVO> loginUser = new LoginUser<>();
+        UserDetailsVO userDetailsVO = new UserDetailsVO();
+        BeanUtils.copyPropertiesIgnoreNull(user, userDetailsVO);
+        loginUser.setUser(userDetailsVO);
+
+        // 角色 Role::getRoleId
+        Set<String> roleIds = roleService.getRolesByUserId(user.getUserId(), Status.VALID)
+            .stream().map(Role::getRoleId).collect(Collectors.toSet());
+        loginUser.setRoles(roleIds);
+
+        // 权限 Resource::getPermission
+        Set<String> permissions = new HashSet<>();
+        roleIds.forEach(roleId -> {
+            List<String> permissionList = resourceService.findResourceByRoleId(roleId)
+                .stream()
+                .filter(resource -> StrUtil.isNotEmpty(resource.getPermission()))
+                .map(Resource::getPermission)
+                .collect(Collectors.toList());
+            permissions.addAll(permissionList);
+        });
+        loginUser.setPermissions(permissions);
+
+        // 密码
+        loginUser.setPassword(user.getPassword());
+        return loginUser;
     }
 
     /**
