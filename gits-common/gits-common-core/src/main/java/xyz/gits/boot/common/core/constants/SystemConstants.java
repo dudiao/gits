@@ -46,4 +46,9 @@ public interface SystemConstants {
      * 顶级配置中心组ID
      */
     String TOP_CONFIG="100";
+
+    /**
+     * 所有
+     */
+    String ALL = "all";
 }

@@ -21,7 +21,7 @@ public interface SystemService {
      * @param userName 用户名
      * @return 当没有该用户时，返回 null 或者空对象
      */
-    @Cached(name = CacheConstants.LOGIN_USER, key = "#userName", postCondition = "#result != null")
+    @Cached(name = CacheConstants.LOGIN_USER, key = "#userName", postCondition = "#result.data != null")
     RestResponse<LoginUser<UserDetailsVO>> loadUserByUsername(String userName);
 
     /**

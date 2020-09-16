@@ -29,7 +29,7 @@ public interface IOrgService extends BasicService<Org> {
      * @author null
      * @date 2020/7/20 09:44
      */
-    List<OrgTree> getOrgTree(StopStatus stopStatus);
+    List<OrgTree> getOrgTree(String stopStatus);
 
     /**
      * 机构管理新增

@@ -53,8 +53,9 @@ public class OrgController extends BasicController {
 
     @GetMapping("/system/org/tree")
     @ApiOperation(value = "机构树-名称&id")
-    public RestResponse<List<OrgTree>> tree(@ApiParam(name = "stopStatus", value = "启用停用标志[0:启用;1:停用]", required = true) @RequestParam("stopStatus") String stopStatusCode) {
-        List<OrgTree> orgTree = orgService.getOrgTree(StopStatus.fromString(stopStatusCode));
+    public RestResponse<List<OrgTree>> tree(@ApiParam(name = "stopStatus", value = "启用停用标志[0:启用;1:停用;a:所有]", required = true)
+                                            @RequestParam("stopStatus") String stopStatus) {
+        List<OrgTree> orgTree = orgService.getOrgTree(stopStatus);
         return RestResponse.success(orgTree);
     }
 

@@ -58,11 +58,17 @@ public class OrgServiceImpl extends BasicServiceImpl<OrgMapper, Org> implements 
      * @date 2020/7/20 09:44
      */
     @Override
-    @Cached(name = CacheConstants.ORG_TREE,key = "#stopStatus.code")
-    public List<OrgTree> getOrgTree(StopStatus stopStatus) {
+    @Cached(name = CacheConstants.ORG_TREE, key = "#stopStatus")
+    public List<OrgTree> getOrgTree(String stopStatus) {
+        // stopStatus=all 时，查出所有机构
+        StopStatus status = null;
+        if (!SystemConstants.ALL.equalsIgnoreCase(stopStatus)) {
+            status = StopStatus.fromString(stopStatus);
+        }
+
         List<Org> orgList = baseMapper.selectList(Wrappers.<Org>lambdaQuery()
             .orderByDesc(Org::getOrderNum)
-            .eq(Org::getStopStatus, stopStatus));
+            .eq(!SystemConstants.ALL.equalsIgnoreCase(stopStatus), Org::getStopStatus, status));
 
         List<OrgTree> orgTrees = orgList.stream().map(org -> {
             OrgTree tree = new OrgTree();

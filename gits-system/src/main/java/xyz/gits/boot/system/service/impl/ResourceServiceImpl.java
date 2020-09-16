@@ -60,7 +60,7 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
      */
     @Override
     @CachePenetrationProtect
-    @Cached(name = CacheConstants.ROLE_RESOURCE, key = "#roleId")
+    @Cached(name = CacheConstants.ROLE_RESOURCE, key = "#roleId", postCondition = "#result.size() > 0")
     public List<Resource> findResourceByRoleId(String roleId) {
         return resourceMapper.findResourceByRoleId(roleId, VisibleStatus.SHOW);
     }
