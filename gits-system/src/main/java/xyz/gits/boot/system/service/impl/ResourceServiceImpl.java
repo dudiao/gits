@@ -14,7 +14,6 @@ import xyz.gits.boot.api.system.enums.ResourceTarget;
 import xyz.gits.boot.api.system.enums.ResourceType;
 import xyz.gits.boot.api.system.enums.VisibleStatus;
 import xyz.gits.boot.api.system.utils.AuthUtils;
-import xyz.gits.boot.system.vo.resource.ResourceTree;
 import xyz.gits.boot.common.core.basic.BasicServiceImpl;
 import xyz.gits.boot.common.core.constants.CacheConstants;
 import xyz.gits.boot.common.core.constants.SystemConstants;
@@ -29,9 +28,12 @@ import xyz.gits.boot.system.entity.RoleResourceRel;
 import xyz.gits.boot.system.mapper.ResourceMapper;
 import xyz.gits.boot.system.mapper.RoleResourceRelMapper;
 import xyz.gits.boot.system.service.IResourceService;
+import xyz.gits.boot.system.vo.resource.ResourceTree;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -60,7 +62,7 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
      */
     @Override
     @CachePenetrationProtect
-    @Cached(name = CacheConstants.ROLE_RESOURCE, key = "#roleId", postCondition = "#result.size() > 0")
+    @Cached(name = CacheConstants.ROLE_RESOURCE, key = "#roleId")
     public List<Resource> findResourceByRoleId(String roleId) {
         return resourceMapper.findResourceByRoleId(roleId, VisibleStatus.SHOW);
     }
@@ -199,16 +201,4 @@ public class ResourceServiceImpl extends BasicServiceImpl<ResourceMapper, Resour
         this.save(resource);
     }
 
-    @Override
-    public Set<String> selectResourcePermsByUserId(String userId) {
-        // 根据用户id查询相关权限集合
-        List<String> permissions = resourceMapper.selectResourcePermsByUserId(userId);
-        Set<String> permsSet = new HashSet<>();
-        for (String perm : permissions) {
-            if (StrUtil.isNotEmpty(perm)) {
-                permsSet.addAll(Arrays.asList(perm.trim().split(",")));
-            }
-        }
-        return permsSet;
-    }
 }

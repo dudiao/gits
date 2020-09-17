@@ -64,13 +64,4 @@ public interface IResourceService extends BasicService<Resource> {
      */
     void saveResource(ResourceDTO resourceDTO);
 
-    /**
-     * 根据用户ID查询权限
-     *
-     * @param userId 用户ID
-     * @return {@link Set < String>}
-     * @author null
-     * @date 2020/5/26 17:13
-     */
-    Set<String> selectResourcePermsByUserId(String userId);
 }
